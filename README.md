@@ -1,11 +1,16 @@
 # SuperMassive
 
-SuperMassive is a shrinked selective set of reusable .NET components and utility classes.
-It is the toolbox you want to have with you when you start a new project.
+SuperMassive is a small condensed framework of reusable .NET components and utility classes.
 
 ### Version
 
 Current : 1.0.0-alpha
+
+### Installation
+
+Download the source or install it via NuGet
+
+```Ìnstall-Package SuperMassive```
 
 #### Licence
 
