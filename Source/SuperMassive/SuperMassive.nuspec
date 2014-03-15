@@ -6,12 +6,12 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>http://github.com/PulsarBlow/SuperMassive</licenseUrl>
+    <licenseUrl>https://raw.github.com/PulsarBlow/SuperMassive/master/LICENCE</licenseUrl>
     <projectUrl>http://github.com/PulsarBlow/SuperMassive</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>Initial release</releaseNotes>
-    <copyright>Copyright 2014</copyright>
+    <copyright>Copyright 2014 PulsarBlow (A.M.)</copyright>
     <tags>SuperMassive framework Toolbox</tags>
   </metadata>
 </package>

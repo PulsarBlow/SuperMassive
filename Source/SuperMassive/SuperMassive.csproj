@@ -61,6 +61,7 @@
     <Compile Include="Helpers\RegexHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\XmlHelper.cs" />
+    <Compile Include="Contracts\IResolver.cs" />
     <Compile Include="Maths\IntervalTypes.cs" />
     <Compile Include="Maths\Range.cs" />
     <Compile Include="Maths\RealInterval.cs" />
