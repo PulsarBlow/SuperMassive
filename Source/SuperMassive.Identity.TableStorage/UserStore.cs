@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
-using SuperMassive.TableStorage;
+using SuperMassive.Storage.TableStorage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,7 +120,7 @@ namespace SuperMassive.Identity.TableStorage
         {
             Guard.ArgumentNotNull(user, "user");
 
-            return Task.FromResult<IList<UserLoginInfo>>(user.Logins.Select(x=> new UserLoginInfo(x.LoginProvider, x.ProviderKey)).ToList());
+            return Task.FromResult<IList<UserLoginInfo>>(user.Logins.Select(x => new UserLoginInfo(x.LoginProvider, x.ProviderKey)).ToList());
         }
 
         public async Task RemoveLoginAsync(TUser user, UserLoginInfo login)
@@ -135,7 +135,7 @@ namespace SuperMassive.Identity.TableStorage
                 await UpdateUser(user);
                 var operation = TableOperation.Delete(new IdentityUserLogin(user.Id, login) { ETag = "*" });
                 await GetLoginTable().ExecuteAsync(operation);
-            }            
+            }
         }
         #endregion
 

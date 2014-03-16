@@ -1,4 +1,4 @@
-﻿using SuperMassive.TableStorage;
+﻿using SuperMassive.Storage.TableStorage;
 using System;
 
 namespace SuperMassive.Identity.TableStorage

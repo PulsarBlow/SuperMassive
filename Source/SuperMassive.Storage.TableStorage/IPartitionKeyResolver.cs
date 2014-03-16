@@ -1,5 +1,5 @@
 ﻿
-namespace SuperMassive.TableStorage
+namespace SuperMassive.Storage.TableStorage
 {
     public interface IPartitionKeyResolver<T>
     {
