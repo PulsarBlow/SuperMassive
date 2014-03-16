@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.Fakers", "Sour
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.Storage.TableStorage", "Source\SuperMassive.Storage.TableStorage\SuperMassive.Storage.TableStorage.csproj", "{41F81C41-D088-4820-89F1-B14D2935AE12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.Storage.TableStorageTests", "Source\UnitTests\SuperMassive.Storage.TableStorageTests\SuperMassive.Storage.TableStorageTests.csproj", "{CE4A0E5B-A855-499C-8B00-3BFCB06DEED5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{41F81C41-D088-4820-89F1-B14D2935AE12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41F81C41-D088-4820-89F1-B14D2935AE12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41F81C41-D088-4820-89F1-B14D2935AE12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE4A0E5B-A855-499C-8B00-3BFCB06DEED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE4A0E5B-A855-499C-8B00-3BFCB06DEED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE4A0E5B-A855-499C-8B00-3BFCB06DEED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE4A0E5B-A855-499C-8B00-3BFCB06DEED5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,5 +87,6 @@ Global
 		{5F8FF176-DBF8-4F67-9E76-882E5A731795} = {C5BD50D1-7BEA-4228-91F1-B43BD9741618}
 		{B15A713B-A954-44FE-B2F3-C9D85DED98E5} = {C5BD50D1-7BEA-4228-91F1-B43BD9741618}
 		{5720E2C8-CF3E-4FE9-8372-521D8D21C9AF} = {C5BD50D1-7BEA-4228-91F1-B43BD9741618}
+		{CE4A0E5B-A855-499C-8B00-3BFCB06DEED5} = {C5BD50D1-7BEA-4228-91F1-B43BD9741618}
 	EndGlobalSection
 EndGlobal

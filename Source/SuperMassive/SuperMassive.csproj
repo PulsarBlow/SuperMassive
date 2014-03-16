@@ -46,6 +46,7 @@
       <Link>GlobalAssemblyInfos.cs</Link>
     </Compile>
     <Compile Include="BitwiseMask.cs" />
+    <Compile Include="Contracts\IModelQuery.cs" />
     <Compile Include="Cryptography\ScrambledEncryption.cs" />
     <Compile Include="ExpressionComposer.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />

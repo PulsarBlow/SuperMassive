@@ -89,7 +89,7 @@
     "CompileOnBuild": true,
     "CompileOnSave": true,
     "EncodeProblemUrlCharacters": true,
-    "GenerateXHTML": true,
+    "GenerateXHTML": false,
     "LinkEmails": true,
     "MinifyInPlace": false,
     "OutputDirectory": null,
