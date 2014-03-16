@@ -19,11 +19,11 @@ Current : 1.1.0-alpha
 Pick the features you want by installing the corresponding NuGet package :
 
 
-```Ìnstall-Package SuperMassive```
-```Ìnstall-Package SuperMassive.Fakers```
+```Ìnstall-Package SuperMassive -Pre```
+```Ìnstall-Package SuperMassive.Fakers -Pre```
 etc..
 
-If you want the prerelease nugets, dont forget to select *Include prerelease* in the nuget manager window.
+If you want the prerelease nugets, dont forget to select *Include prerelease* in the nuget manager window or add ```-Pre``` to your Install Package command.
 
 ### Build & Tests
 

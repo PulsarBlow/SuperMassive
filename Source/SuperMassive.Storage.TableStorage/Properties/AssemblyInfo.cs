@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("SuperMassive.TableStorage")]
-[assembly: AssemblyDescription("SuperMassive Azure Table Storage Abstractions and utilities")]
+[assembly: AssemblyTitle("SuperMassive.Storage.TableStorage")]
+[assembly: AssemblyDescription("Azure Table Storage base types and abstractions")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 
