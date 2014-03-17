@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace SuperMassive.Identity.TableStorage
 {
+    /// <summary>
+    /// UserStore implementation for Azure Table Storage
+    /// </summary>
+    /// <typeparam name="TUser"></typeparam>
     public class UserStore<TUser> :
         IUserStore<TUser>,
         IUserPasswordStore<TUser>,
@@ -19,6 +23,7 @@ namespace SuperMassive.Identity.TableStorage
         IUserClaimStore<TUser>
         where TUser : IdentityUser
     {
+        private bool _disposed = false;
         private readonly IPartitionKeyResolver<string> _partitionKeyResolver;
         private readonly CloudTable _userTableReference;
         private readonly CloudTable _loginTableReference;
@@ -36,11 +41,6 @@ namespace SuperMassive.Identity.TableStorage
 
             _loginTableReference = tableClient.GetTableReference("Logins");
             _loginTableReference.CreateIfNotExists();
-        }
-
-        public void Dispose()
-        {
-
         }
 
         #region IUserStore
@@ -245,6 +245,24 @@ namespace SuperMassive.Identity.TableStorage
             }
 
             return Task.FromResult(0);
+        }
+        #endregion
+
+        #region IDisposable
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (disposing)
+            {
+                // Free managed
+            }
+            _disposed = true;
         }
         #endregion
 
