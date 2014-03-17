@@ -15,7 +15,7 @@ namespace SuperMassive.Storage.TableStorage
         private readonly ITableStorageQuery<TEntity> _query;
         private readonly CacheItemPolicy _cacheItemPolicy;
         private readonly string _cacheKey = String.Empty;
-        private readonly static MemoryCache Cache = new MemoryCache(DefaultCacheName);
+        private static ObjectCache Cache;
 
         public string UniqueIdentifier
         {
@@ -23,16 +23,33 @@ namespace SuperMassive.Storage.TableStorage
         }
 
         public TableStorageQueryCache(ITableStorageQuery<TEntity> query)
-            : this(query, null)
+            : this(query, String.Empty, null, null)
         { }
-
-        public TableStorageQueryCache(ITableStorageQuery<TEntity> query, string cacheKey, CacheItemPolicy policy = null)
+        public TableStorageQueryCache(ITableStorageQuery<TEntity> query, string cacheKey)
+            : this(query, cacheKey, null, null)
+        { }
+        public TableStorageQueryCache(ITableStorageQuery<TEntity> query, string cacheKey, ObjectCache cache)
+            : this(query, cacheKey, cache, null)
+        { }
+        public TableStorageQueryCache(ITableStorageQuery<TEntity> query, string cacheKey, CacheItemPolicy policy)
+            : this(query, cacheKey, null, policy)
+        { }
+        public TableStorageQueryCache(ITableStorageQuery<TEntity> query, string cacheKey, ObjectCache cache, CacheItemPolicy policy)
         {
             Guard.ArgumentNotNull(query, "query");
-            Guard.ArgumentNotNullOrWhiteSpace(cacheKey, "cacheKey");
+            Guard.ArgumentNotNull(cacheKey, "cacheKey");
 
             _query = query;
             _cacheKey = cacheKey;
+
+            if (cacheKey == null)
+            {
+                Cache = new MemoryCache(DefaultCacheName);
+            }
+            else
+            {
+                Cache = cache;
+            }
 
             if (policy == null)
             {
@@ -42,6 +59,7 @@ namespace SuperMassive.Storage.TableStorage
             {
                 _cacheItemPolicy = policy;
             }
+
         }
 
         public async Task<ICollection<TEntity>> Execute(CloudTable table)

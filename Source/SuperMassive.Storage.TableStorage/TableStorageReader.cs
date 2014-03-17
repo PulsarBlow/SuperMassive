@@ -25,7 +25,7 @@ namespace SuperMassive.Storage.TableStorage
                 if (_cachePolicy == null)
                     return query.Execute(_table);
 
-                TableStorageQueryCache<TEntity> cachedQuery = new TableStorageQueryCache<TEntity>(query, _cacheKey, _cachePolicy);
+                TableStorageQueryCache<TEntity> cachedQuery = new TableStorageQueryCache<TEntity>(query, _cacheKey, policy: _cachePolicy);
                 return cachedQuery.Execute(_table);
             });
         }

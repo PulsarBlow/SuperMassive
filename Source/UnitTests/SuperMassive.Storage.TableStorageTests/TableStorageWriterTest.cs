@@ -6,11 +6,11 @@ namespace SuperMassive.Storage.TableStorageTests
     [TestClass]
     public class TableStorageWriterTest
     {
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void CreateTableStorageWiter_NoTableName_WithException()
-        {
-            //TableStorageWriter writer = new TableStorageWriter("", )
-        }
+        //[TestMethod]
+        //[ExpectedException(typeof(ArgumentNullException))]
+        //public void CreateTableStorageWiter_NoTableName_WithException()
+        //{
+        //    //TableStorageWriter writer = new TableStorageWriter("", )
+        //}
     }
 }
