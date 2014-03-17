@@ -35,7 +35,6 @@ namespace SuperMassive.Identity.TableStorage
         { }
         public IdentityUserLogin(string userId, UserLoginInfo loginInfo)
         {
-            //Guard.ArgumentNotNullOrWhiteSpace(userId, "userId");
             Guard.ArgumentNotNull(loginInfo, "loginInfo");
 
             UserId = userId;

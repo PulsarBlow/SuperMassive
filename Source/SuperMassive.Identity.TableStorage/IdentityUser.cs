@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace SuperMassive.Identity.TableStorage
 {
+    /// <summary>
+    /// A table storage implementation of <see cref="IUser"/>
+    /// </summary>
     public class IdentityUser : TableEntity, IUser
     {
         // Keeping it simple and mapping IUser.Id to IUser.UserName.
@@ -32,6 +35,9 @@ namespace SuperMassive.Identity.TableStorage
 
         #region Logins
         private IList<IdentityUserLogin> _logins;
+        /// <summary>
+        /// Serialization pivot for <see cref="IList{IdentityUserLogin}"/> (logins)
+        /// </summary>
         public string SerializedLogins
         {
             get
@@ -45,7 +51,9 @@ namespace SuperMassive.Identity.TableStorage
                 _logins = JsonConvert.DeserializeObject<IList<IdentityUserLogin>>(value) ?? new List<IdentityUserLogin>();
             }
         }
-
+        /// <summary>
+        /// User Logins
+        /// </summary>
         [IgnoreProperty]
         public IList<IdentityUserLogin> Logins
         {
@@ -63,7 +71,9 @@ namespace SuperMassive.Identity.TableStorage
 
         #region Roles
         private IList<string> _roles;
-
+        /// <summary>
+        /// Serialization pivot for <see cref="IList{string}"/> (roles) 
+        /// </summary>
         public string SerializedRoles
         {
             get
@@ -95,6 +105,9 @@ namespace SuperMassive.Identity.TableStorage
 
         #region Claims
         private IList<IdentityUserClaim> _claims;
+        /// <summary>
+        /// Serialization pivot for <see cref="IList{IdentityUserClaim}"/> (claims)
+        /// </summary>
         public string SerializedClaims
         {
             get
@@ -108,6 +121,10 @@ namespace SuperMassive.Identity.TableStorage
                 _claims = JsonConvert.DeserializeObject<IList<IdentityUserClaim>>(value) ?? new List<IdentityUserClaim>();
             }
         }
+        /// <summary>
+        /// User Claims
+        /// </summary>
+        [IgnoreProperty]
         public IList<IdentityUserClaim> Claims
         {
             get
