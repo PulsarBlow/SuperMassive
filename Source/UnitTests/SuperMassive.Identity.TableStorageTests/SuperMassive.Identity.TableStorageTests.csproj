@@ -98,10 +98,6 @@
       <Project>{a565fc11-06d0-4e56-ab5b-78be5602fb3e}</Project>
       <Name>SuperMassive.Identity.TableStorage</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SuperMassive.Identity\SuperMassive.Identity.csproj">
-      <Project>{07675ee4-da8a-4282-bbd5-9e99ef38126c}</Project>
-      <Name>SuperMassive.Identity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SuperMassive.Storage.TableStorage\SuperMassive.Storage.TableStorage.csproj">
       <Project>{41f81c41-d088-4820-89f1-b14d2935ae12}</Project>
       <Name>SuperMassive.Storage.TableStorage</Name>

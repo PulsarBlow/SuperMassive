@@ -87,6 +87,10 @@
     <Compile Include="TableStorageWriterTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SuperMassive.Fakers\SuperMassive.Fakers.csproj">
+      <Project>{ff03956a-7b31-4054-ae65-3c1853bf4706}</Project>
+      <Name>SuperMassive.Fakers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SuperMassive.Storage.TableStorage\SuperMassive.Storage.TableStorage.csproj">
       <Project>{41f81c41-d088-4820-89f1-b14d2935ae12}</Project>
       <Name>SuperMassive.Storage.TableStorage</Name>

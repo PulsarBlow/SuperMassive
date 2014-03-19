@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B15A713B-A954-44FE-B2F3-C9D85DED98E5}</ProjectGuid>
+    <ProjectGuid>{84258898-63C4-498A-A7C7-FF3CBDFFD8B5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperMassive.IdentityTests</RootNamespace>
-    <AssemblyName>SuperMassive.IdentityTests</AssemblyName>
+    <RootNamespace>SuperMassive.FakersTests</RootNamespace>
+    <AssemblyName>SuperMassive.FakersTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -50,10 +50,21 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\..\..\GlobalAssemblyInfos.cs">
+    <Compile Include="..\..\GlobalAssemblyInfos.cs">
       <Link>GlobalAssemblyInfos.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="InternetTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SuperMassive.Fakers\SuperMassive.Fakers.csproj">
+      <Project>{ff03956a-7b31-4054-ae65-3c1853bf4706}</Project>
+      <Name>SuperMassive.Fakers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SuperMassive\SuperMassive.csproj">
+      <Project>{0671eeaf-72c5-4164-b728-5c6c516c8fc9}</Project>
+      <Name>SuperMassive</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

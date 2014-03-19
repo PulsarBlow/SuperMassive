@@ -17,7 +17,7 @@ namespace SuperMassive.Storage.TableStorageTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void CreateInstance_WithNullQueryAndNullCacheKey_WithException()
         {
-            TableStorageQueryCache<TableEntity> queryCache = new TableStorageQueryCache<TableEntity>(null, null);
+            TableStorageQueryCache<TableEntity> queryCache = new TableStorageQueryCache<TableEntity>(null);
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -30,7 +30,6 @@ namespace SuperMassive.Storage.TableStorageTests
         {
             TableStorageQueryCache<TableEntity> queryCache = new TableStorageQueryCache<TableEntity>(
                 new EmptyQuery(),
-                CryptographyHelper.ComputeSHA1Hash(Guid.NewGuid().ToString()),
                 new MemoryCache(CryptographyHelper.ComputeSHA1Hash(Guid.NewGuid().ToString())),
                 new CacheItemPolicy());
         }
@@ -39,12 +38,23 @@ namespace SuperMassive.Storage.TableStorageTests
         {
             TableStorageQueryCache<TableEntity> queryCache = new TableStorageQueryCache<TableEntity>(
                 new EmptyQuery(),
-                CryptographyHelper.ComputeSHA1Hash(Guid.NewGuid().ToString()),
                 new MemoryCache(CryptographyHelper.ComputeSHA1Hash(Guid.NewGuid().ToString())),
                 new CacheItemPolicy());
             CloudTable table = CreateTestTable();
             await queryCache.Execute(table);
         }
+
+        [TestMethod]
+        public async Task ExecuteAsync_WithCache_WithSuccess()
+        {
+            RandomResultQuery query = new RandomResultQuery();
+            TableStorageQueryCache<TableEntity> queryCache = new TableStorageQueryCache<TableEntity>(query);
+            CloudTable table = CreateTestTable();
+            var expected = await queryCache.Execute(table);
+            var actual = await queryCache.Execute(table);
+            CollectionAssert(expected, actual);
+        }
+
         public CloudTable CreateTestTable()
         {
             CloudStorageAccount storageAccount = CloudStorageAccount.DevelopmentStorageAccount;
@@ -64,8 +74,36 @@ namespace SuperMassive.Storage.TableStorageTests
 
             public string UniqueIdentifier
             {
-                get { return CryptographyHelper.ComputeSHA1Hash(Guid.NewGuid().ToString()); }
+                get { return "EmptyQuery"; }
             }
+        }
+        private class RandomResultQuery : ITableStorageQuery<TableEntity>
+        {
+            string _partitionKey = Randomizer.RandomString(15);
+
+            public Task<ICollection<TableEntity>> Execute(CloudTable table)
+            {
+                return Task.FromResult<ICollection<TableEntity>>(new List<TableEntity>
+                {
+                    new TableEntity(_partitionKey, Randomizer.RandomString(20)),
+                    new TableEntity(_partitionKey, Randomizer.RandomString(20)),
+                    new TableEntity(_partitionKey, Randomizer.RandomString(20))
+                });
+            }
+
+            public string UniqueIdentifier
+            {
+                get { return "SimpleQuery"; }
+            }
+        }
+
+        private void CollectionAssert(ICollection<TableEntity> expected, ICollection<TableEntity> actual)
+        {
+            if (expected == null && actual != null)
+                Assert.Fail();
+            if (expected != null && actual == null)
+                Assert.Fail();
+            Assert.AreEqual(expected.Count, actual.Count);
         }
     }
 }

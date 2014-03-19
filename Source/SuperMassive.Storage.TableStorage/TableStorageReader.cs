@@ -9,7 +9,6 @@ namespace SuperMassive.Storage.TableStorage
     public class TableStorageReader : TableStorageProvider
     {
         private CacheItemPolicy _cachePolicy;
-        private string _cacheKey = String.Empty;
 
         public TableStorageReader(string tableName, string connectionStringSettingName)
             : base(tableName, connectionStringSettingName)
@@ -25,7 +24,7 @@ namespace SuperMassive.Storage.TableStorage
                 if (_cachePolicy == null)
                     return query.Execute(_table);
 
-                TableStorageQueryCache<TEntity> cachedQuery = new TableStorageQueryCache<TEntity>(query, _cacheKey, policy: _cachePolicy);
+                TableStorageQueryCache<TEntity> cachedQuery = new TableStorageQueryCache<TEntity>(query, _cachePolicy);
                 return cachedQuery.Execute(_table);
             });
         }
@@ -36,15 +35,10 @@ namespace SuperMassive.Storage.TableStorage
         }
         public TableStorageReader WithCache(CacheItemPolicy policy)
         {
-            return WithCache(policy, String.Empty);
-        }
-        public TableStorageReader WithCache(CacheItemPolicy policy, string cacheKey)
-        {
             Guard.ArgumentNotNull(policy, "policy");
-            Guard.ArgumentNotNull(cacheKey, "cacheKey");
+            
 
             _cachePolicy = policy;
-            _cacheKey = cacheKey;
 
             return this;
         }

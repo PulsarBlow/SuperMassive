@@ -72,6 +72,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Randomizer.cs" />
     <Compile Include="RandomNumberGenerator.cs" />
   </ItemGroup>
   <ItemGroup>

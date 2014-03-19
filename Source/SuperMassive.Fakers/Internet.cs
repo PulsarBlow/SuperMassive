@@ -6,7 +6,7 @@ namespace SuperMassive.Fakers
 {
     public static class Internet
     {
-        private static readonly byte[] BYTE = ((int)(0)).To(255).Cast<byte>().ToArray();
+        static readonly string[] BYTE = 0.To(255).Select(x => x.ToString()).ToArray();
         static readonly string[] HOSTS = new[] { "gmail.com", "yahoo.com", "hotmail.com" };
         static readonly string[] DISPOSABLE_HOSTS = new[] { "mailinator.com", "suremail.info", "spamherelots.com", "binkmail.com", "safetymail.info", "tempinbox.com" };
         static readonly string[] DOMAIN_SUFFIXES = new[] { "co.uk", "com", "us", "uk", "ca", "biz", "info", "name" };
@@ -32,6 +32,12 @@ namespace SuperMassive.Fakers
             return UserName(name) + "@" + HOSTS.RandPick();
         }
 
+        /// <summary>
+        /// Generates a random user name.
+        /// You can pass some space separated names as bootstrap for random pick.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static string UserName(string name = null)
         {
             if (name != null)
