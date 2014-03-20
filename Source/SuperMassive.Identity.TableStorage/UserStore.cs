@@ -19,6 +19,7 @@ namespace SuperMassive.Identity.TableStorage
         IUserPasswordStore<TUser>,
         IUserLoginStore<TUser>,
         IUserRoleStore<TUser>,
+        IUserEmailStore<TUser>,
         IUserSecurityStampStore<TUser>,
         IUserClaimStore<TUser>
         where TUser : IdentityUser
@@ -28,13 +29,17 @@ namespace SuperMassive.Identity.TableStorage
         private readonly CloudTable _userTableReference;
         private readonly CloudTable _loginTableReference;
 
-        public UserStore(CloudStorageAccount storageAccount, IPartitionKeyResolver<string> partitionKeyResolver)
+        public UserStore(string storageConnectionString)
+            : this(storageConnectionString, new UserPartitionKeyResolver())
+        { }
+        public UserStore(string storageConnectionString, IPartitionKeyResolver<string> partitionKeyResolver)
         {
-            Guard.ArgumentNotNull(storageAccount, "storageAccount");
+            Guard.ArgumentNotNull(storageConnectionString, "storageConnectionString");
             Guard.ArgumentNotNull(partitionKeyResolver, "partitionKeyResolver");
 
             _partitionKeyResolver = partitionKeyResolver;
-            var tableClient = storageAccount.CreateCloudTableClient();
+
+            var tableClient = GetTableClient(storageConnectionString);
 
             _userTableReference = tableClient.GetTableReference("Users");
             _userTableReference.CreateIfNotExists();
@@ -266,6 +271,12 @@ namespace SuperMassive.Identity.TableStorage
         }
         #endregion
 
+        private CloudTableClient GetTableClient(string storageConnectionString)
+        {
+            Guard.ArgumentNotNullOrWhiteSpace(storageConnectionString, "storageConnectionString");
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+            return storageAccount.CreateCloudTableClient();
+        }
         private CloudTable GetUserTable()
         {
             return _userTableReference;
@@ -279,5 +290,37 @@ namespace SuperMassive.Identity.TableStorage
             var operation = TableOperation.Replace(user);
             await GetUserTable().ExecuteAsync(operation);
         }
+
+        #region IUserEmailStore
+        public Task<TUser> FindByEmailAsync(string email)
+        {
+            var operation = TableOperation.Retrieve<TUser>(
+            var result = await GetLoginTable().ExecuteAsync(operation);
+            var loginInfoEntity = (IdentityUserLogin)result.Result;
+            if (loginInfoEntity == null)
+                return null;
+            return await FindByIdAsync(loginInfoEntity.UserId);
+        }
+
+        public Task<string> GetEmailAsync(TUser user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> GetEmailConfirmedAsync(TUser user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SetEmailAsync(TUser user, string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SetEmailConfirmedAsync(TUser user, bool confirmed)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }

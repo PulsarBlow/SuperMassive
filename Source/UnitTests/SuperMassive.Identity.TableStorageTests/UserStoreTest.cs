@@ -13,6 +13,8 @@ namespace SuperMassive.Identity.TableStorageTests
     [TestClass]
     public class UserStoreTest
     {
+        const string CloudStorageConnectionString = "UseDevelopmentStorage=true";
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public async Task CreateAsync_WithNullUser_ShouldFail()
@@ -221,17 +223,13 @@ namespace SuperMassive.Identity.TableStorageTests
 
         }
         #region Utilities
-        static CloudStorageAccount GetStorageAccount()
-        {
-            return CloudStorageAccount.DevelopmentStorageAccount;
-        }
         static UserPartitionKeyResolver GetPartitionKeyResolver()
         {
             return new UserPartitionKeyResolver(Guid.Empty.ToString());
         }
         static UserStore<IdentityUser> GetUserStore()
         {
-            return new UserStore<IdentityUser>(GetStorageAccount(), GetPartitionKeyResolver());
+            return new UserStore<IdentityUser>(CloudStorageConnectionString, GetPartitionKeyResolver());
         }
         static IdentityUser CreateRandomUser()
         {
