@@ -1,3 +1,5 @@
+[![GitHub version](https://badge.fury.io/gh/PulsarBlow%2Fsupermassive.svg)](http://badge.fury.io/gh/PulsarBlow%2Fsupermassive) [![NuGet version](https://badge.fury.io/nu/supermassive.svg)](http://badge.fury.io/nu/supermassive)
+
 # SuperMassive
 
 SuperMassive is a small condensed framework of reusable .NET components and utility classes.
@@ -19,8 +21,8 @@ Current : 1.1.0-alpha
 Pick the features you want by installing the corresponding NuGet package :
 
 
-```Ìnstall-Package SuperMassive -Pre```
-```Ìnstall-Package SuperMassive.Fakers -Pre```
+```ÃŒnstall-Package SuperMassive -Pre```
+```ÃŒnstall-Package SuperMassive.Fakers -Pre```
 etc..
 
 If you want the prerelease nugets, dont forget to select *Include prerelease* in the nuget manager window or add ```-Pre``` to your Install Package command.
