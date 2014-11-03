@@ -50,10 +50,36 @@ namespace SuperMassive.Tests
         }
 
         [TestMethod]
-        public void CapitalizeFirstLetterTest()
+        public void CapitalizeTest()
         {
             string value = "éxécution d'un processus simple";
-            Assert.AreEqual("Éxécution d'un processus simple", StringHelper.CapitalizeFirstLetter(value));
+            Assert.AreEqual("Éxécution d'un processus simple", StringHelper.Capitalize(value));
+        }
+
+        [TestMethod]
+        public void DasherizeTest()
+        {
+            Assert.IsNull(StringHelper.Dasherize(null));
+            Assert.AreEqual("", StringHelper.Dasherize(""));
+            Assert.AreEqual(" ", StringHelper.Dasherize(" "));
+            Assert.AreEqual("data-rate", StringHelper.Dasherize("dataRate"));
+            Assert.AreEqual("-car-speed", StringHelper.Dasherize("CarSpeed"));
+            Assert.AreEqual("yes-we-can", StringHelper.Dasherize("yesWeCan"));
+            Assert.AreEqual("-élite-éclat", StringHelper.Dasherize("ÉliteÉclat"));
+        }
+
+        [TestMethod]
+        public void CamelizeTest()
+        {
+            Assert.IsNull(StringHelper.Camelize(null));
+            Assert.AreEqual("", StringHelper.Camelize(""));
+            Assert.AreEqual(" ", StringHelper.Camelize(" "));
+            Assert.AreEqual("dataRate", StringHelper.Camelize("data_rate"));
+            Assert.AreEqual("dataRate", StringHelper.Camelize("data__rate"));
+            Assert.AreEqual("dataRate", StringHelper.Camelize("data_-rate"));
+            Assert.AreEqual("CarSpeed", StringHelper.Camelize("-car-speed"));
+            Assert.AreEqual("yesWeCan", StringHelper.Camelize("yes-we-can"));
+            Assert.AreEqual("ÉliteÉclat", StringHelper.Camelize("-élite-éclat"));
         }
     }
 }

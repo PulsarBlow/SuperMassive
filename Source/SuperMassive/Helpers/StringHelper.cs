@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SuperMassive
 {
@@ -29,6 +30,7 @@ namespace SuperMassive
             }
             return (sb.ToString().Normalize(NormalizationForm.FormC));
         }
+
         /// <summary>
         /// Encode a string in Base64 (UTF8)
         /// </summary>
@@ -40,6 +42,7 @@ namespace SuperMassive
             encData_byte = System.Text.Encoding.UTF8.GetBytes(decodedValue);
             return Convert.ToBase64String(encData_byte);
         }
+
         /// <summary>
         /// Decode a base64 string (UTF8)
         /// </summary>
@@ -68,16 +71,49 @@ namespace SuperMassive
             utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
             return new String(decoded_char);
         }
+
         /// <summary>
         /// Capitalize the first letter of a string
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static string CapitalizeFirstLetter(string value)
+        public static string Capitalize(string value)
         {
             if (String.IsNullOrWhiteSpace(value))
                 return value;
             return String.Format(CultureInfo.CurrentCulture, "{0}{1}", value[0].ToString().ToUpper(CultureInfo.CurrentCulture), value.Substring(1, value.Length - 1));
+        }
+
+        /// <summary>
+        /// Returns a converted camel cased string into a string delimited by dashes.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <example>StringHelper.Dasherize('dataRate'); //'data-rate'</example>
+        /// <example>StringHelper.Dasherize('CarSpeed'); //'-car-speed'</example>
+        /// <example>StringHelper.Dasherize('YesWeCan'); //'yes-we-can'</example>
+        // Inspired by http://stringjs.com/#methods/dasherize
+        public static string Dasherize(string value)
+        {
+            if (String.IsNullOrWhiteSpace(value)) { return value; }
+            return Regex.Replace(value, @"\p{Lu}", m => "-" + m.ToString().ToLower(CultureInfo.CurrentCulture));
+        }
+
+        /// <summary>
+        /// Remove any underscores or dashes and convert a string into camel casing.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <example>StringHelper.Camelize('data_rate'); //'dataRate'</example>
+        /// <example>StringHelper.Camelize('background-color'); //'backgroundColor'</example>
+        /// <example>StringHelper.Camelize('-webkit-something'); //'WebkitSomething'</example>
+        /// <example>StringHelper.Camelize('_car_speed'); //'CarSpeed'</example>
+        /// <example>StringHelper.Camelize('yes_we_can'); //'yesWeCan'</example>
+        // Inspired by http://stringjs.com/#methods/camelize
+        public static string Camelize(string value)
+        {
+            if (String.IsNullOrWhiteSpace(value)) { return value; }
+            return Regex.Replace(value, @"[-_]\p{L}", m => m.ToString().ToUpper(CultureInfo.CurrentCulture)).Replace("-", "").Replace("_", "");
         }
         #endregion
     }

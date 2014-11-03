@@ -16,7 +16,7 @@ namespace SuperMassive.Fakers
         public static string Sentence(int minWords = 4)
         {
             var result = Words(minWords + RandomNumberGenerator.Int(6)).Join(" ");
-            return StringHelper.CapitalizeFirstLetter(result) + ".";
+            return StringHelper.Capitalize(result) + ".";
         }
         public static IEnumerable<string> Sentences(int sentenceCount = 3)
         {
