@@ -173,5 +173,5 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
-# NuGet pub
-NuGet-Pub/
+# NuGet packages
+[Nn]u[Gg]et-[Pp]ub/*/*.nupkg

@@ -1,10 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SuperMassive;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SuperMassiveTests
+namespace SuperMassive.Tests
 {
     /// <summary>
     ///This is a test class for BinarySerializationHelperTest and is intended

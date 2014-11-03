@@ -45,10 +45,22 @@
     <Compile Include="..\..\GlobalAssemblyInfos.cs">
       <Link>GlobalAssemblyInfos.cs</Link>
     </Compile>
+    <Compile Include="Attributes\GuidStringAttribute.cs" />
+    <Compile Include="Extensions\ICollectionExtensions.cs" />
+    <Compile Include="Extensions\IPAddressExtensions.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\RandomExtensions.cs" />
+    <Compile Include="Helpers\AssemblyHelper.cs" />
+    <Compile Include="Inflector.cs" />
+    <Compile Include="Types\AscendingSortedGuid.cs" />
+    <Compile Include="Types\DescendingSortedGuid.cs" />
+    <Compile Include="Types\PagedCollection.cs" />
+    <Compile Include="Types\PagedCollectionFilterOptions.cs" />
     <Compile Include="BitwiseMask.cs" />
-    <Compile Include="Contracts\IModelQuery.cs" />
+    <Compile Include="Contracts\ITransient.cs" />
     <Compile Include="Cryptography\ScrambledEncryption.cs" />
-    <Compile Include="ExpressionComposer.cs" />
+    <Compile Include="Exceptions\ValidationFailedException.cs" />
+    <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\EnumerationExtensions.cs" />
@@ -66,6 +78,7 @@
     <Compile Include="Maths\IntervalTypes.cs" />
     <Compile Include="Maths\Range.cs" />
     <Compile Include="Maths\RealInterval.cs" />
+    <Compile Include="Converters\IPAddressConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -74,6 +87,7 @@
     </Compile>
     <Compile Include="Randomizer.cs" />
     <Compile Include="RandomNumberGenerator.cs" />
+    <Compile Include="Types\ValidationResultCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

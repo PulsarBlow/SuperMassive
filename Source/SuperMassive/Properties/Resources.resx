@@ -132,4 +132,7 @@
   <data name="UnknownType" xml:space="preserve">
     <value>&lt;unknown&gt;</value>
   </data>
+  <data name="Validation_NotValidGuidString" xml:space="preserve">
+    <value>{0} does not contain a valid Guid</value>
+  </data>
 </root>

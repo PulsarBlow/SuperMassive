@@ -1,8 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SuperMassive;
 using System;
 
-namespace SuperMassiveTests
+namespace SuperMassive.Tests
 {
     /// <summary>
     ///This is a test class for EnumerationExtensionsTest and is intended

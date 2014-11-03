@@ -32,6 +32,7 @@ namespace SuperMassive.Fakers
         {
             return String.Format(CultureInfo.InvariantCulture, "{0} {1}", FirstName(), LastName());
         }
+
         /// <summary>
         /// Taxonomy name is based on product taxonomy. Can be used for categories or labels
         /// </summary>
@@ -41,14 +42,7 @@ namespace SuperMassive.Fakers
         {
             return DataStore.Taxonomies.RangeRandPick(words).Join(" ");
         }
-        /// <summary>
-        /// A random reward name.
-        /// </summary>
-        /// <returns></returns>
-        public static string RewardName()
-        {
-            return Lorem.Words(3).Join(" ");
-        }
+
         /// <summary>
         /// A random name based on action verbs.
         /// </summary>

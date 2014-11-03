@@ -59,6 +59,7 @@
     <Compile Include="Lorem.cs" />
     <Compile Include="MarkovNameGenerator.cs" />
     <Compile Include="Name.cs" />
+    <Compile Include="Path.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

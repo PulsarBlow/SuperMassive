@@ -2,7 +2,7 @@
 using SuperMassive.Maths;
 using System;
 
-namespace SuperMassiveTests.Maths
+namespace SuperMassive.Tests.Maths
 {
     /// <summary>
     ///This is a test class for IntervalTest and is intended

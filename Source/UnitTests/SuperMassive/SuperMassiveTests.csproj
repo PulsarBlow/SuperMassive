@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -54,6 +55,7 @@
       <Link>GlobalAssemblyInfos.cs</Link>
     </Compile>
     <Compile Include="BitwiseMaskTest.cs" />
+    <Compile Include="Converters\IPAddressConverterTest.cs" />
     <Compile Include="Cryptography\ScrambledEncryptionTest.cs" />
     <Compile Include="Extensions\DateTimeExtensionsTest.cs" />
     <Compile Include="Extensions\EnumerationExtensionsTest.cs" />
@@ -61,17 +63,28 @@
     <Compile Include="Helpers\BinarySerializationHelper.cs" />
     <Compile Include="Helpers\ColorHelperTest.cs" />
     <Compile Include="Helpers\CryptographyHelperTest.cs" />
+    <Compile Include="Helpers\DateHelperTest.cs" />
     <Compile Include="Helpers\RegexHelperTest.cs" />
     <Compile Include="Helpers\StringHelperTest.cs" />
     <Compile Include="Maths\RealIntervalTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomizerTest.cs" />
+    <Compile Include="RandomNumberGeneratorTest.cs" />
+    <Compile Include="Types\AscendingSortedGuidTest.cs" />
+    <Compile Include="Types\DescendingSortedGuidTest.cs" />
+    <Compile Include="Types\ValidationResultCollectionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SuperMassive\SuperMassive.csproj">
       <Project>{0671eeaf-72c5-4164-b728-5c6c516c8fc9}</Project>
       <Name>SuperMassive</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SuperMassive.UnitTestHelpers\SuperMassive.UnitTestHelpers.csproj">
+      <Project>{f0f08971-7626-4174-858f-d5106763fe59}</Project>
+      <Name>SuperMassive.UnitTestHelpers</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

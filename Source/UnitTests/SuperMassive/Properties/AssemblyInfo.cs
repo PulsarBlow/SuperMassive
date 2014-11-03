@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("SuperMassiveTests")]
+[assembly: AssemblyTitle("SuperMassive.Tests")]
 [assembly: AssemblyDescription("UnitTest Suit for SuperMassive assembly")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]

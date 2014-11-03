@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SuperMassive;
 
-namespace SuperMassiveTests
+namespace SuperMassive.Tests
 {
     [TestClass]
     public class ColorHelperTest

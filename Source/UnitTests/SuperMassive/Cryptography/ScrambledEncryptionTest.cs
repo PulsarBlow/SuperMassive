@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SuperMassive.Cryptography;
 
-namespace SuperMassiveTests.Cryptography
+namespace SuperMassive.Tests
 {
     [TestClass]
     public class ScrambledEncryptionTest
