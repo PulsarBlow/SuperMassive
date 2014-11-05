@@ -89,9 +89,9 @@ namespace SuperMassive
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        /// <example>StringHelper.Dasherize('dataRate'); //'data-rate'</example>
-        /// <example>StringHelper.Dasherize('CarSpeed'); //'-car-speed'</example>
-        /// <example>StringHelper.Dasherize('YesWeCan'); //'yes-we-can'</example>
+        /// <example>StringHelper.Dasherize("dataRate"); //"data-rate"</example>
+        /// <example>StringHelper.Dasherize("CarSpeed"); //"-car-speed"</example>
+        /// <example>StringHelper.Dasherize("YesWeCan"); //"yes-we-can"</example>
         // Inspired by http://stringjs.com/#methods/dasherize
         public static string Dasherize(string value)
         {
@@ -104,16 +104,34 @@ namespace SuperMassive
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        /// <example>StringHelper.Camelize('data_rate'); //'dataRate'</example>
-        /// <example>StringHelper.Camelize('background-color'); //'backgroundColor'</example>
-        /// <example>StringHelper.Camelize('-webkit-something'); //'WebkitSomething'</example>
-        /// <example>StringHelper.Camelize('_car_speed'); //'CarSpeed'</example>
-        /// <example>StringHelper.Camelize('yes_we_can'); //'yesWeCan'</example>
+        /// <example>StringHelper.Camelize("data_rate"); //"dataRate"</example>
+        /// <example>StringHelper.Camelize("background-color"); //"backgroundColor"</example>
+        /// <example>StringHelper.Camelize("-webkit-something"); //"WebkitSomething"</example>
+        /// <example>StringHelper.Camelize("_car_speed"); //"CarSpeed"</example>
+        /// <example>StringHelper.Camelize("yes_we_can"); //"yesWeCan"</example>
         // Inspired by http://stringjs.com/#methods/camelize
         public static string Camelize(string value)
         {
             if (String.IsNullOrWhiteSpace(value)) { return value; }
             return Regex.Replace(value, @"[-_]\p{L}", m => m.ToString().ToUpper(CultureInfo.CurrentCulture)).Replace("-", "").Replace("_", "");
+        }
+
+        /// <summary>
+        /// Remove extra white space
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <example>StringHelper.CollapseWhiteSpaces("String value"); // "String value"</example>
+        /// <example>StringHelper.CollapseWhiteSpaces(" String value "); // " String value "</example>
+        /// <example>StringHelper.CollapseWhiteSpaces("String   value"); // "String value"</example>
+        /// <example>StringHelper.CollapseWhiteSpaces("  String  value  "); // " String value "</example>
+        /// <example>StringHelper.CollapseWhiteSpaces("String value  "); // "String value "</example>
+        /// <example>StringHelper.CollapseWhiteSpaces("  String value"); // " String value"</example>
+        public static string CollapseWhiteSpaces(string value)
+        {
+            if (String.IsNullOrEmpty(value)) { return value; }
+            Regex reg = new Regex(@" {2,}", RegexOptions.Compiled);
+            return reg.Replace(value, " ");
         }
         #endregion
     }

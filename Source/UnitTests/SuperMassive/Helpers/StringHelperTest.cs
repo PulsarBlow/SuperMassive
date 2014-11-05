@@ -81,5 +81,18 @@ namespace SuperMassive.Tests
             Assert.AreEqual("yesWeCan", StringHelper.Camelize("yes-we-can"));
             Assert.AreEqual("ÉliteÉclat", StringHelper.Camelize("-élite-éclat"));
         }
+
+        [TestMethod]
+        public void CollapseWhiteSpaces()
+        {
+            Assert.AreEqual(null, StringHelper.CollapseWhiteSpaces(null));
+            Assert.AreEqual("", StringHelper.CollapseWhiteSpaces(""));
+            Assert.AreEqual(" String value ", StringHelper.CollapseWhiteSpaces(" String value "));
+            Assert.AreEqual(" String value", StringHelper.CollapseWhiteSpaces("  String value"));
+            Assert.AreEqual("String value ", StringHelper.CollapseWhiteSpaces("String value  "));
+            Assert.AreEqual("String value", StringHelper.CollapseWhiteSpaces("String  value"));
+            Assert.AreEqual(" String value ", StringHelper.CollapseWhiteSpaces("  String  value  "));
+            Assert.AreEqual(" String value ", StringHelper.CollapseWhiteSpaces("     String      value     "));
+        }
     }
 }
