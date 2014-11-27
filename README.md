@@ -1,4 +1,4 @@
-[![GitHub version](https://badge.fury.io/gh/PulsarBlow%2Fsupermassive.svg)](http://badge.fury.io/gh/PulsarBlow%2Fsupermassive) [![NuGet Downloads](https://img.shields.io/nuget/dt/SuperMassive.svg)](https://www.nuget.org/packages/supermassive)
+[![GitHub version](https://badge.fury.io/gh/PulsarBlow%2Fsupermassive.svg)](https://github.com/PulsarBlow/SuperMassive/releases/latest) [![NuGet Downloads](https://img.shields.io/nuget/dt/SuperMassive.svg)](https://www.nuget.org/packages/supermassive)
 
 # SuperMassive
 
