@@ -19,7 +19,7 @@ Pick the features you want by installing the corresponding NuGet package :
 
 
 ```Ìnstall-Package SuperMassive```  
-```Ìnstall-Package SuperMassive.Fakers```
+```Ìnstall-Package SuperMassive.Fakers```  
 etc..
 
 If you want the prerelease nugets, dont forget to select *Include prerelease* in the nuget manager window or add ```-Pre``` to your Install Package command.
