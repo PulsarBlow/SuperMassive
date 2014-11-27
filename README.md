@@ -18,7 +18,7 @@ Current : 1.2.0
 Pick the features you want by installing the corresponding NuGet package :
 
 
-```Ìnstall-Package SuperMassive```
+```Ìnstall-Package SuperMassive```  
 ```Ìnstall-Package SuperMassive.Fakers```
 etc..
 
