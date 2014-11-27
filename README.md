@@ -1,4 +1,4 @@
-[![GitHub version](https://badge.fury.io/gh/PulsarBlow%2Fsupermassive.svg)](http://badge.fury.io/gh/PulsarBlow%2Fsupermassive) [![NuGet version](https://badge.fury.io/nu/supermassive.svg)](http://badge.fury.io/nu/supermassive)
+[![GitHub version](https://badge.fury.io/gh/PulsarBlow%2Fsupermassive.svg)](http://badge.fury.io/gh/PulsarBlow%2Fsupermassive) [![NuGet Downloads](https://img.shields.io/nuget/dt/SuperMassive.svg)](https://www.nuget.org/packages/supermassive)
 
 # SuperMassive
 
@@ -6,7 +6,7 @@ SuperMassive is a small condensed framework of reusable .NET components and util
 
 ### Version
 
-Current : 1.0.0
+Current : 1.2.0
 
 ### Projects descriptions
 
