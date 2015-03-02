@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0671EEAF-72C5-4164-B728-5C6C516C8FC9}</ProjectGuid>
+    <ProjectGuid>{F4E601D8-6A83-4AE9-8D2B-220059A5CA46}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperMassive</RootNamespace>
-    <AssemblyName>SuperMassive</AssemblyName>
+    <RootNamespace>SuperMassive.Logging</RootNamespace>
+    <AssemblyName>SuperMassive.Logging</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,9 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,50 +43,24 @@
     <Compile Include="..\..\GlobalAssemblyInfos.cs">
       <Link>GlobalAssemblyInfos.cs</Link>
     </Compile>
-    <Compile Include="Attributes\GuidStringAttribute.cs" />
-    <Compile Include="Extensions\ICollectionExtensions.cs" />
-    <Compile Include="Extensions\IPAddressExtensions.cs" />
-    <Compile Include="Extensions\ListExtensions.cs" />
-    <Compile Include="Extensions\RandomExtensions.cs" />
-    <Compile Include="Helpers\AssemblyHelper.cs" />
-    <Compile Include="Inflector.cs" />
-    <Compile Include="SortOrder.cs" />
-    <Compile Include="Types\AscendingSortedGuid.cs" />
-    <Compile Include="Types\DescendingSortedGuid.cs" />
-    <Compile Include="Types\PagedCollection.cs" />
-    <Compile Include="Types\PagedCollectionFilterOptions.cs" />
-    <Compile Include="BitwiseMask.cs" />
-    <Compile Include="Contracts\ITransient.cs" />
-    <Compile Include="Cryptography\ScrambledEncryption.cs" />
-    <Compile Include="Exceptions\ValidationFailedException.cs" />
-    <Compile Include="Extensions\ExpressionExtensions.cs" />
-    <Compile Include="Extensions\DateTimeExtensions.cs" />
-    <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\EnumerationExtensions.cs" />
-    <Compile Include="Extensions\IntegerExtensions.cs" />
-    <Compile Include="Extensions\DataAnnotationExtensions.cs" />
-    <Compile Include="Guard.cs" />
-    <Compile Include="Helpers\BinarySerializationHelper.cs" />
-    <Compile Include="Helpers\ColorHelper.cs" />
-    <Compile Include="Helpers\CryptographyHelper.cs" />
-    <Compile Include="Helpers\DateHelper.cs" />
-    <Compile Include="Helpers\RegexHelper.cs" />
-    <Compile Include="Helpers\StringHelper.cs" />
-    <Compile Include="Helpers\XmlHelper.cs" />
-    <Compile Include="Contracts\IResolver.cs" />
-    <Compile Include="Maths\IntervalTypes.cs" />
-    <Compile Include="Maths\Range.cs" />
-    <Compile Include="Maths\RealInterval.cs" />
-    <Compile Include="Converters\IPAddressConverter.cs" />
+    <Compile Include="Formatters\GenericTextFormatter.cs" />
+    <Compile Include="Formatters\ILogFormatter.cs" />
+    <Compile Include="Formatters\LogFormatter.cs" />
+    <Compile Include="Formatters\TextFormatter.cs" />
+    <Compile Include="ILogWriter.cs" />
+    <Compile Include="LogEntry.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="LogWriter.cs" />
+    <Compile Include="PInvokes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Randomizer.cs" />
-    <Compile Include="RandomNumberGenerator.cs" />
-    <Compile Include="Types\ValidationResultCollection.cs" />
+    <Compile Include="TraceListeners\FormattedTextWriterTraceListener.cs" />
+    <Compile Include="TraceListeners\FormattedTraceListenerBase.cs" />
+    <Compile Include="TraceListeners\FormattedTraceListenerWrapperBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -97,7 +69,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SuperMassive.nuspec" />
+    <ProjectReference Include="..\SuperMassive\SuperMassive.csproj">
+      <Project>{0671eeaf-72c5-4164-b728-5c6c516c8fc9}</Project>
+      <Name>SuperMassive</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

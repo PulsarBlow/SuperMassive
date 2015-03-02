@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C5BD50D1-7BEA-4228-91F1-B43BD9741618}"
 EndProject
@@ -31,6 +31,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{5AA919
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.UnitTestHelpers", "Source\UnitTests\SuperMassive.UnitTestHelpers\SuperMassive.UnitTestHelpers.csproj", "{F0F08971-7626-4174-858F-D5106763FE59}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.Logging", "Source\SuperMassive.Logging\SuperMassive.Logging.csproj", "{F4E601D8-6A83-4AE9-8D2B-220059A5CA46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.Logging.AzureTable", "Source\SuperMassive.Logging.AzureTable\SuperMassive.Logging.AzureTable.csproj", "{6E414529-342A-46D2-80FE-90CC23498DF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.Logging.Tests", "Source\UnitTests\SuperMassive.Logging.Tests\SuperMassive.Logging.Tests.csproj", "{57E99EBC-F092-4B24-B8DA-7C5555C14FD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.Logging.AzureTable.Tests", "Source\UnitTests\SuperMassive.Logging.AzureTable.Tests\SuperMassive.Logging.AzureTable.Tests.csproj", "{312D71E7-A124-464B-9C83-6B812599F6B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +65,22 @@ Global
 		{F0F08971-7626-4174-858F-D5106763FE59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0F08971-7626-4174-858F-D5106763FE59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0F08971-7626-4174-858F-D5106763FE59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4E601D8-6A83-4AE9-8D2B-220059A5CA46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4E601D8-6A83-4AE9-8D2B-220059A5CA46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4E601D8-6A83-4AE9-8D2B-220059A5CA46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4E601D8-6A83-4AE9-8D2B-220059A5CA46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E414529-342A-46D2-80FE-90CC23498DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E414529-342A-46D2-80FE-90CC23498DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E414529-342A-46D2-80FE-90CC23498DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E414529-342A-46D2-80FE-90CC23498DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57E99EBC-F092-4B24-B8DA-7C5555C14FD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E99EBC-F092-4B24-B8DA-7C5555C14FD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E99EBC-F092-4B24-B8DA-7C5555C14FD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E99EBC-F092-4B24-B8DA-7C5555C14FD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{312D71E7-A124-464B-9C83-6B812599F6B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{312D71E7-A124-464B-9C83-6B812599F6B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{312D71E7-A124-464B-9C83-6B812599F6B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{312D71E7-A124-464B-9C83-6B812599F6B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,5 +91,9 @@ Global
 		{FF03956A-7B31-4054-AE65-3C1853BF4706} = {5AA919F6-161A-4B73-BED4-F3479A337A96}
 		{84258898-63C4-498A-A7C7-FF3CBDFFD8B5} = {C5BD50D1-7BEA-4228-91F1-B43BD9741618}
 		{F0F08971-7626-4174-858F-D5106763FE59} = {C5BD50D1-7BEA-4228-91F1-B43BD9741618}
+		{F4E601D8-6A83-4AE9-8D2B-220059A5CA46} = {5AA919F6-161A-4B73-BED4-F3479A337A96}
+		{6E414529-342A-46D2-80FE-90CC23498DF4} = {5AA919F6-161A-4B73-BED4-F3479A337A96}
+		{57E99EBC-F092-4B24-B8DA-7C5555C14FD7} = {C5BD50D1-7BEA-4228-91F1-B43BD9741618}
+		{312D71E7-A124-464B-9C83-6B812599F6B8} = {C5BD50D1-7BEA-4228-91F1-B43BD9741618}
 	EndGlobalSection
 EndGlobal
