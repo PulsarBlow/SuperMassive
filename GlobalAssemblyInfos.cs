@@ -2,7 +2,7 @@ using System.Reflection;
 
 [assembly: AssemblyProduct("SuperMassive")]
 [assembly: AssemblyCompany("PulsarBlow")]
-[assembly: AssemblyCopyright("Copyright © PulsarBlow 2014")]
+[assembly: AssemblyCopyright("Copyright © PulsarBlow 2015")]
 [assembly: AssemblyTrademark("SuperMassive")]
 
 #if DEBUG
@@ -11,6 +11,6 @@ using System.Reflection;
 [assembly: AssemblyConfiguration("Release")]
 #endif
 
-[assembly: AssemblyVersion("1.2.0.0")]
-[assembly: AssemblyFileVersion("1.2.0.0")]
-[assembly: AssemblyInformationalVersion("1.2.0")]
+[assembly: AssemblyVersion("1.3.0.0")]
+[assembly: AssemblyFileVersion("1.3.0.0")]
+[assembly: AssemblyInformationalVersion("1.3.0")]

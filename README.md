@@ -6,12 +6,15 @@ SuperMassive is a small condensed framework of reusable .NET components and util
 
 ### Version
 
-Current : 1.2.0
+Current : 1.3.0
 
 ### Projects descriptions
 
 * **SuperMassive** : Core features - SuperMassive swiss army knife!
 * **SuperMassive.Fakers** : A suit of data fakers to feed your hungry unit tests with "almost" real data.
+* **SuperMassive.Logging** : A set of abstract and base logging components
+* **SuperMassive.Logging.AzureTable** : A concrete implementation of the logging facade for Azure Table
+
 
 ### Installation
 
@@ -20,6 +23,8 @@ Pick the features you want by installing the corresponding NuGet package :
 
 ```Ìnstall-Package SuperMassive```  
 ```Ìnstall-Package SuperMassive.Fakers```  
+```Ìnstall-Package SuperMassive.Logging``` 
+```Ìnstall-Package SuperMassive.Logging.AzureTable``` 
 etc..
 
 If you want the prerelease nugets, dont forget to select *Include prerelease* in the nuget manager window or add ```-Pre``` to your Install Package command.
