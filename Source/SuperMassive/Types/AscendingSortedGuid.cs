@@ -15,12 +15,7 @@ namespace SuperMassive
         /// <summary>
         /// A read-only instance of the AscendingSortedGuid structure whose value is all zeros.
         /// </summary>
-        public static readonly AscendingSortedGuid Empty;
-
-        static AscendingSortedGuid()
-        {
-            AscendingSortedGuid.Empty = new AscendingSortedGuid();
-        }
+        public static readonly AscendingSortedGuid Empty = new AscendingSortedGuid();
 
         /// <summary>
         /// TimeStamp

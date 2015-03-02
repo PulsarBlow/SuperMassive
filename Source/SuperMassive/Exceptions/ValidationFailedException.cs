@@ -8,7 +8,7 @@ namespace SuperMassive
     /// <summary>
     /// Define an exception which occurs when any data validation process fails
     /// </summary>
-    [Serializable]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2240:ImplementISerializableCorrectly"), Serializable]
     public class ValidationFailedException : Exception
     {
         /// <summary>
