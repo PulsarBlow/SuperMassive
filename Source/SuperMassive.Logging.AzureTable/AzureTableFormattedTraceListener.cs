@@ -3,10 +3,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 using SuperMassive.Logging.Formatters;
 using SuperMassive.Logging.TraceListeners;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SuperMassive.Logging.AzureTable
@@ -15,7 +12,7 @@ namespace SuperMassive.Logging.AzureTable
     /// A <see cref="System.Diagnostics.TraceListener"/> that writes to a Cloud Storage,
     /// formatting the output with an <see cref="ILogFormatter"/>.
     /// </summary>
-    public class FormattedAzureTableTraceListener : FormattedTraceListenerBase
+    public class AzureTableFormattedTraceListener : FormattedTraceListenerBase
     {
         /// <summary>
         /// The name of the Azure Table where the log will be saved
@@ -33,35 +30,35 @@ namespace SuperMassive.Logging.AzureTable
         protected string _azureTableName;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="FormattedAzureTableTraceListener"/>
+        /// Creates a new instance of the <see cref="AzureTableFormattedTraceListener"/>
         /// </summary>
         /// <param name="cloudStorageConnectionString"></param>
-        public FormattedAzureTableTraceListener(string cloudStorageConnectionString)
+        public AzureTableFormattedTraceListener(string cloudStorageConnectionString)
             : this(cloudStorageConnectionString, DefaultAzureTableName, null)
         { }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="FormattedAzureTableTraceListener"/>
+        /// Creates a new instance of the <see cref="AzureTableFormattedTraceListener"/>
         /// </summary>
         /// <param name="cloudStorageConnectionString"></param>
         /// <param name="azureTableName"></param>
-        public FormattedAzureTableTraceListener(string cloudStorageConnectionString, string azureTableName)
+        public AzureTableFormattedTraceListener(string cloudStorageConnectionString, string azureTableName)
             : this(cloudStorageConnectionString, azureTableName, null)
         { }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="FormattedAzureTableTraceListener"/>
+        /// Creates a new instance of the <see cref="AzureTableFormattedTraceListener"/>
         /// </summary>
         /// <param name="cloudStorageConnectionString"></param>
-        /// <param name="azureTaleName"></param>
+        /// <param name="azureTableName"></param>
         /// <param name="formatter"></param>
-        public FormattedAzureTableTraceListener(string cloudStorageConnectionString, string azureTaleName, ILogFormatter formatter)
+        public AzureTableFormattedTraceListener(string cloudStorageConnectionString, string azureTableName, ILogFormatter formatter)
             : base(formatter)
         {
             Guard.ArgumentNotNullOrWhiteSpace(cloudStorageConnectionString, "cloudStorageConnectionString");
-            Guard.ArgumentNotNullOrWhiteSpace(azureTaleName, "azureTableName");
             _cloudStorageConnectionString = cloudStorageConnectionString;
-            _azureTableName = azureTaleName;
+            Guard.ArgumentNotNullOrWhiteSpace(azureTableName, "azureTableName");
+            _azureTableName = azureTableName;
         }
 
         /// <summary>
@@ -185,7 +182,7 @@ namespace SuperMassive.Logging.AzureTable
         {
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_cloudStorageConnectionString);
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-            return tableClient.GetTableReference(DefaultAzureTableName);
+            return tableClient.GetTableReference(_azureTableName);
         }
     }
 }

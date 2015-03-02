@@ -2,15 +2,19 @@
 
 # SuperMassive
 
+![SuperMassive Logo](https://github.com/PulsarBlow/SuperMassive/blob/master/supermassive.png)
+
 SuperMassive is a small condensed framework of reusable .NET components and utility classes.
 
 ### Version
 
-Current : 1.3.0
+Current : 1.4.2
 
 ### Projects descriptions
 
 * **SuperMassive** : Core features - SuperMassive swiss army knife!
+* **SuperMassive.ExceptionHandling** : Exception handling as it should be. 
+* **SuperMassive.ExceptionHandling.Logging** : Exception handling with logging features.
 * **SuperMassive.Fakers** : A suit of data fakers to feed your hungry unit tests with "almost" real data.
 * **SuperMassive.Logging** : A set of abstract and base logging components
 * **SuperMassive.Logging.AzureTable** : A concrete implementation of the logging facade for Azure Table
@@ -22,6 +26,8 @@ Pick the features you want by installing the corresponding NuGet package :
 
 
 ```Ìnstall-Package SuperMassive```  
+```Ìnstall-Package SuperMassive.ExceptionHandling```
+```Ìnstall-Package SuperMassive.ExceptionHandling.Logging```
 ```Ìnstall-Package SuperMassive.Fakers```  
 ```Ìnstall-Package SuperMassive.Logging``` 
 ```Ìnstall-Package SuperMassive.Logging.AzureTable``` 

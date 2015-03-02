@@ -39,6 +39,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.Logging.Tests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.Logging.AzureTable.Tests", "Source\UnitTests\SuperMassive.Logging.AzureTable.Tests\SuperMassive.Logging.AzureTable.Tests.csproj", "{312D71E7-A124-464B-9C83-6B812599F6B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.ExceptionHandling", "Source\SuperMassive.ExceptionHandling\SuperMassive.ExceptionHandling.csproj", "{320C2290-3B8B-4C76-A2DA-B73A890A95AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.ExceptionHandling.Logging", "Source\SuperMassive.ExceptionHandling.Logging\SuperMassive.ExceptionHandling.Logging.csproj", "{0F55959E-D2EA-4A2B-89A8-2E62FDF78A05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +85,14 @@ Global
 		{312D71E7-A124-464B-9C83-6B812599F6B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{312D71E7-A124-464B-9C83-6B812599F6B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{312D71E7-A124-464B-9C83-6B812599F6B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{320C2290-3B8B-4C76-A2DA-B73A890A95AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{320C2290-3B8B-4C76-A2DA-B73A890A95AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{320C2290-3B8B-4C76-A2DA-B73A890A95AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{320C2290-3B8B-4C76-A2DA-B73A890A95AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F55959E-D2EA-4A2B-89A8-2E62FDF78A05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F55959E-D2EA-4A2B-89A8-2E62FDF78A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F55959E-D2EA-4A2B-89A8-2E62FDF78A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F55959E-D2EA-4A2B-89A8-2E62FDF78A05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,5 +107,7 @@ Global
 		{6E414529-342A-46D2-80FE-90CC23498DF4} = {5AA919F6-161A-4B73-BED4-F3479A337A96}
 		{57E99EBC-F092-4B24-B8DA-7C5555C14FD7} = {C5BD50D1-7BEA-4228-91F1-B43BD9741618}
 		{312D71E7-A124-464B-9C83-6B812599F6B8} = {C5BD50D1-7BEA-4228-91F1-B43BD9741618}
+		{320C2290-3B8B-4C76-A2DA-B73A890A95AC} = {5AA919F6-161A-4B73-BED4-F3479A337A96}
+		{0F55959E-D2EA-4A2B-89A8-2E62FDF78A05} = {5AA919F6-161A-4B73-BED4-F3479A337A96}
 	EndGlobalSection
 EndGlobal
