@@ -46,12 +46,25 @@ namespace SuperMassive.Fakers
         /// <summary>
         /// A random name based on action verbs.
         /// </summary>
-        /// <param name="minActionVerbs"></param>
-        /// <param name="maxActionVerbs"></param>
-        /// <returns></returns>
-        public static string VerbBasedName(int minActionVerbs = 1, int maxActionVerbs = 3)
+        /// <param name="minActionVerbs">Minimum number of verbs to include in the result</param>
+        /// <param name="maxActionVerbs">Maximum number of verbs to include in the result</param>
+        /// <param name="separator">String separator used between 2 verbs - Default is space " "</param>
+        /// <returns>A random name based on predefined action verbs</returns>
+        public static string VerbBasedName(int minActionVerbs = 1, int maxActionVerbs = 3, string separator = " ")
         {
             return DataStore.ActionVerbs.RangeRandPick(RandomNumberGenerator.Int(minActionVerbs, maxActionVerbs)).Join(" ");
+        }
+
+        /// <summary>
+        /// A random name based on star names
+        /// </summary>
+        /// <param name="minNames">Minimum number of names to include in the result</param>
+        /// <param name="maxNames">Maximum number of names to include in the result</param>
+        /// <param name="separator">String separator used between 2 names - Default is space " "</param>
+        /// <returns></returns>
+        public static string StarName(int minNames = 1, int maxNames = 1, string separator = " ")
+        {
+            return DataStore.StarNames.RangeRandPick(minNames == maxNames ? minNames : RandomNumberGenerator.Int(minNames, maxNames)).Join(separator);
         }
     }
 }

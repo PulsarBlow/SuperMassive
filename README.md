@@ -6,10 +6,6 @@
 
 SuperMassive is a small condensed framework of reusable .NET components and utility classes.
 
-### Version
-
-Current : 1.4.2
-
 ### Projects descriptions
 
 * **SuperMassive** : Core features - SuperMassive swiss army knife!

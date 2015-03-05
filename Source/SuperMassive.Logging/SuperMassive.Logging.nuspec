@@ -7,13 +7,13 @@
     <authors>$author$</authors>
     <owners>$author$</owners>
     <copyright>$copyright$</copyright>
-    <description>SuperMassive is a small condensed framework of reusable .NET components and utility classes. It's your supermassive swiss army knife.</description>    
+    <description>SuperMassive is a small condensed framework of reusable .NET components and utility classes. It's your supermassive swiss army knife.</description>
     <licenseUrl>https://raw.github.com/PulsarBlow/SuperMassive/master/LICENCE</licenseUrl>
     <projectUrl>http://github.com/PulsarBlow/SuperMassive</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/PulsarBlow/SuperMassive/master/supermassive.png</iconUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>    
-    <tags>SuperMassive Helpers Extensions Converters Crypto</tags>
-    <summary>SuperMassive Core features. Stripped to their bare minimum.</summary>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <tags>SuperMassive Logging Abstraction TraceListener Formatter</tags>
+    <summary>SuperMassive logging abstractions. A solid foundation on which to build your logging infrastructure.</summary>
     <releaseNotes></releaseNotes>
   </metadata>
 </package>
