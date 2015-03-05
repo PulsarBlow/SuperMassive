@@ -6,7 +6,7 @@
 
 SuperMassive is a small condensed framework of reusable .NET components and utility classes.
 
-+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/PulsarBlow/SuperMassive?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/PulsarBlow/SuperMassive?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ### Projects descriptions
 
