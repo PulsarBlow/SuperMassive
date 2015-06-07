@@ -1,6 +1,6 @@
-﻿using SuperMassive.Properties;
-using System;
+﻿using System;
 using System.Globalization;
+using SuperMassive.Properties;
 
 namespace SuperMassive
 {
@@ -41,6 +41,24 @@ namespace SuperMassive
                     "Argument " + argumentName + " is null.",
                     new ArgumentNullException(argumentName)) as TWrapException;
                 throw exception;
+            }
+        }
+
+        /// <summary>
+        /// Throws an <see cref="ArgumentException"/> if the given precondition is not fulfilled
+        /// </summary>
+        /// <param name="precondition">A delegated operation which returns a boolean</param>
+        /// <param name="preconditionName">The name of the precondition. Will be use to format the exception message</param>
+        /// <param name="argumentName">Arugment name which must fulfill the precondition</param>
+        /// <param name="message"></param>
+        public static void Requires(Func<bool> precondition, string preconditionName = null, string argumentName = null)
+        {
+            if (!precondition.Invoke())
+            {
+                throw new ArgumentException(String.Format("Precondition{0} for argument{1} failed.",
+                    String.IsNullOrWhiteSpace(preconditionName) ? "" : " " + preconditionName,
+                    String.IsNullOrWhiteSpace(argumentName) ? "" : " " + argumentName
+                ), argumentName);
             }
         }
         /// <summary>
