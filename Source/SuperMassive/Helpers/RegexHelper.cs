@@ -57,6 +57,12 @@ namespace SuperMassive
         public const string SortedGuidPattern = @"^[0-9]{19}_[A-F0-9]{32}$";
 
         /// <summary>
+        /// Valid pattern for a Semantic Versioning 2.0.0 value
+        /// http://semver.org/
+        /// </summary>
+        public const string SemverPattern = @"^(?'MAJOR'(?:0|(?:[1-9]\d*)))\.(?'MINOR'(?:0|(?:[1-9]\d*)))\.(?'PATCH'(?:0|(?:[1-9]\d*)))(?:-(?'prerelease'[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*))?(?:\+(?'build'[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*))?$";
+
+        /// <summary>
         /// Returns true if the given value is an SHA-256 hash
         /// </summary>
         /// <param name="value"></param>
@@ -155,6 +161,16 @@ namespace SuperMassive
         public static bool IsSortedGuid(string value)
         {
             return IsPatternMatch(value, SortedGuidPattern);
+        }
+
+        /// <summary>
+        /// Returns true if the given value is a valid Semantic Versioning 2.0.0 value
+        /// </summary>
+        /// <param name="value">The value to be tested</param>
+        /// <returns>Returns true if the value is a valid Semver 2.0.0 value</returns>
+        public static bool IsSemver(string value)
+        {
+            return IsPatternMatch(value, SemverPattern, RegexOptions.Compiled);
         }
 
         #endregion

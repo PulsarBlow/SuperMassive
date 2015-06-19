@@ -44,6 +44,7 @@
       <Link>GlobalAssemblyInfos.cs</Link>
     </Compile>
     <Compile Include="CommonComparers.cs" />
+    <Compile Include="ExtendedAssert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

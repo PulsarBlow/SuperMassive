@@ -54,6 +54,8 @@
     <Compile Include="..\..\..\GlobalAssemblyInfos.cs">
       <Link>GlobalAssemblyInfos.cs</Link>
     </Compile>
+    <Compile Include="Attributes\GuidStringAttributeTest.cs" />
+    <Compile Include="Attributes\SemverStringAttributeTest.cs" />
     <Compile Include="BitwiseMaskTest.cs" />
     <Compile Include="Converters\IPAddressConverterTest.cs" />
     <Compile Include="Cryptography\ScrambledEncryptionTest.cs" />

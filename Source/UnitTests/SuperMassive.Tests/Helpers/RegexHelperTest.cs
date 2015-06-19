@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SuperMassive.UnitTestHelpers;
 using System;
+using System.Globalization;
 
 namespace SuperMassive.Tests
 {
@@ -124,6 +126,35 @@ namespace SuperMassive.Tests
             Assert.IsFalse(RegexHelper.IsSortedGuid("635318522499400050_000000000-0000-0000-0000-00000000000"));
             Assert.IsFalse(RegexHelper.IsSortedGuid("635318522499400050_000000000-0000-0000-000-000000000000"));
             Assert.IsFalse(RegexHelper.IsSortedGuid("635318522499400050_00000000000000000000000000000000G"));
+        }
+
+        [TestMethod]
+        public void IsSemver()
+        {
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "1.0.0-alpha-a.b-c-somethinglong+build.1-aef.1-its-okay");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "1.0.0+0.build.1-rc.10000aaa-kk-0.1");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "1.0.0-rc.1+build.1");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "2.0.0-rc.1+build.123");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "0.0.4");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "1.2.3");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "10.20.30");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "1.2.3-beta");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "10.2.3-DEV-SNAPSHOT");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "1.2.3-SNAPSHOT-123");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "1.0.0");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "2.0.0");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "1.1.7");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "2.0.0+build.1848");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "2.0.1-alpha.1227");
+            ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "1.2.3----RC-SNAPSHOT.12.9.1--.12+788");
+
+            ExtendedAssert.IsFalseWithMessage(RegexHelper.IsSemver, "01.1.1");
+            ExtendedAssert.IsFalseWithMessage(RegexHelper.IsSemver, "1.2");
+            ExtendedAssert.IsFalseWithMessage(RegexHelper.IsSemver, "1.2.3.DEV");
+            ExtendedAssert.IsFalseWithMessage(RegexHelper.IsSemver, "1.2-SNAPSHOT");
+            ExtendedAssert.IsFalseWithMessage(RegexHelper.IsSemver, "1.2.3----RC-SNAPSHOT.12.09.1--..12+788");
+            ExtendedAssert.IsFalseWithMessage(RegexHelper.IsSemver, "1.2-RC-SNAPSHOT");
+            ExtendedAssert.IsFalseWithMessage(RegexHelper.IsSemver, "-1.0.3-gamma+b7718");
         }
     }
 }

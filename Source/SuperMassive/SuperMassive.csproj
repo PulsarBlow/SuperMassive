@@ -47,6 +47,7 @@
       <Link>GlobalAssemblyInfos.cs</Link>
     </Compile>
     <Compile Include="Attributes\GuidStringAttribute.cs" />
+    <Compile Include="Attributes\SemverStringAttribute.cs" />
     <Compile Include="Extensions\ICollectionExtensions.cs" />
     <Compile Include="Extensions\IPAddressExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />

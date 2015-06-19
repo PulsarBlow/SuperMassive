@@ -9,7 +9,7 @@ namespace SuperMassive
     /// </summary>
     public class GuidStringAttribute : ValidationAttribute
     {
-        private bool allowEmpty = false;
+        private bool _allowEmpty = false;
 
         /// <summary>
         /// Creates a new instance of the <see cref="GuidStringAttribute"/>
@@ -24,7 +24,9 @@ namespace SuperMassive
         /// <param name="allowEmpty">True if Guid.Empty is not a valid value</param>
         public GuidStringAttribute(bool allowEmpty)
             : base(Properties.Resources.Validation_NotValidGuidString)
-        { }
+        {
+            _allowEmpty = allowEmpty;
+        }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -33,11 +35,17 @@ namespace SuperMassive
             Guid result;
             if (!Guid.TryParse(input, out result))
             {
-                return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
+                return new ValidationResult(
+                    validationContext != null ?
+                        FormatErrorMessage(validationContext.DisplayName) :
+                        ErrorMessage);
             }
-            if (result == Guid.Empty && !allowEmpty)
+            if (result == Guid.Empty && !_allowEmpty)
             {
-                return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
+                return new ValidationResult(
+                    validationContext != null ?
+                        FormatErrorMessage(validationContext.DisplayName) :
+                        ErrorMessage);
             }
 
             return null;

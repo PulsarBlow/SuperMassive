@@ -135,4 +135,7 @@
   <data name="Validation_NotValidGuidString" xml:space="preserve">
     <value>{0} does not contain a valid Guid</value>
   </data>
+  <data name="Validation_NotValidSemverString" xml:space="preserve">
+    <value>0} does not contain a valid Semantic Versioning value</value>
+  </data>
 </root>
