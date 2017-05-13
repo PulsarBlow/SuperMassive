@@ -1,31 +1,30 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-
-namespace SuperMassive.Fakers.Tests
+﻿namespace SuperMassive.Fakers.Tests
 {
-    [TestClass]
+    using System;
+    using NUnit.Framework;
+
     public class NameTest
     {
-        [TestMethod]
+        [Test]
         public void TaxonomyNameTest()
         {
             for (int i = 0; i < 500; i++)
             {
                 string result = Name.TaxonomyName();
-                Assert.IsFalse(String.IsNullOrWhiteSpace(result));
+                Assert.False(String.IsNullOrWhiteSpace(result));
             }
         }
 
-        [TestMethod]
+        [Test]
         public void StarNameTest()
         {
             string separator = ",";
             string name = Name.StarName(separator: separator);
-            Assert.IsTrue(!String.IsNullOrWhiteSpace(name));
+            Assert.True(!String.IsNullOrWhiteSpace(name));
 
             name = Name.StarName(2, 2, separator);
-            Assert.IsTrue(!String.IsNullOrWhiteSpace(name));
-            Assert.IsTrue(name.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries).Length == 2);
+            Assert.True(!String.IsNullOrWhiteSpace(name));
+            Assert.True(name.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries).Length == 2);
         }
     }
 }

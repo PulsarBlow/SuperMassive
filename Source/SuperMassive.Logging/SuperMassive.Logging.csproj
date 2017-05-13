@@ -1,89 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F4E601D8-6A83-4AE9-8D2B-220059A5CA46}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperMassive.Logging</RootNamespace>
-    <AssemblyName>SuperMassive.Logging</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\SuperMassive.Logging.XML</DocumentationFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\GlobalAssemblyInfos.cs">
-      <Link>GlobalAssemblyInfos.cs</Link>
-    </Compile>
-    <Compile Include="Formatters\GenericTextFormatter.cs" />
-    <Compile Include="Formatters\ILogFormatter.cs" />
-    <Compile Include="Formatters\LogFormatter.cs" />
-    <Compile Include="Formatters\TextFormatter.cs" />
-    <Compile Include="ILogWriter.cs" />
-    <Compile Include="LogEntry.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="LogWriter.cs" />
-    <Compile Include="PInvokes.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="TraceListeners\FormattedTextWriterTraceListener.cs" />
-    <Compile Include="TraceListeners\FormattedTraceListenerBase.cs" />
-    <Compile Include="TraceListeners\FormattedTraceListenerWrapperBase.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SuperMassive\SuperMassive.csproj">
-      <Project>{0671eeaf-72c5-4164-b728-5c6c516c8fc9}</Project>
-      <Name>SuperMassive</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="SuperMassive.Logging.nuspec" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+    <PropertyGroup>
+        <TargetFramework>net46</TargetFramework>
+    </PropertyGroup>
+    <PropertyGroup>
+        <DebugType Condition="'$(TargetFramework)' != '' AND '$(TargetFramework)' != 'netcoreapp1.0'">Full</DebugType>
+    </PropertyGroup>
+    <PropertyGroup>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\SuperMassive\SuperMassive.csproj" />
+    </ItemGroup>
 </Project>

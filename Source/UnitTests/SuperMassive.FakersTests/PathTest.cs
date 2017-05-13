@@ -1,21 +1,20 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-
-namespace SuperMassive.Fakers.Tests
+﻿namespace SuperMassive.Fakers.Tests
 {
-    [TestClass]
+    using System;
+    using NUnit.Framework;
+
     public class PathTest
     {
-        [TestMethod]
+        [Test]
         public void GenerateRandomFileName_WithSuccess()
         {
             string result = Path.FileName();
-            Assert.IsFalse(String.IsNullOrWhiteSpace(result));
-            Assert.IsTrue(result.IndexOf(".") > 0); // Has a default random extension
+            Assert.False(String.IsNullOrWhiteSpace(result));
+            Assert.True(result.IndexOf(".") > 0); // Has a default random extension
 
             result = Path.FileName(".txt");
-            Assert.IsFalse(String.IsNullOrWhiteSpace(result));
-            Assert.IsTrue(result.EndsWith(".txt"));
+            Assert.False(String.IsNullOrWhiteSpace(result));
+            Assert.True(result.EndsWith(".txt"));
         }
     }
 }

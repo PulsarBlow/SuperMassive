@@ -1,31 +1,24 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SuperMassive.Logging.AzureTable.Tests
+﻿namespace SuperMassive.Logging.AzureTable.Tests
 {
-    [TestClass]
+    using System;
+    using System.Globalization;
+    using NUnit.Framework;
+
     public class ApplicationLogEntityManagerTest
     {
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Test]
         public void CreatePartitionKeyGuardTest_NullArgument()
         {
-            ApplicationLogEntityManager.CreatePartitionKey(null, DateTimeOffset.MinValue);
+            Assert.Throws<ArgumentNullException>(() => ApplicationLogEntityManager.CreatePartitionKey(null, DateTimeOffset.MinValue));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Test]
         public void CreatePartitionKeyGuardTest_EmptyArgument()
         {
-            ApplicationLogEntityManager.CreatePartitionKey("", DateTimeOffset.MinValue);
+            Assert.Throws<ArgumentException>(() => ApplicationLogEntityManager.CreatePartitionKey("", DateTimeOffset.MinValue));
         }
 
-        [TestMethod]
+        [Test]
         public void CreatePartitionKeyTest()
         {
             string expected = "myApplication_201503";
@@ -34,7 +27,7 @@ namespace SuperMassive.Logging.AzureTable.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void CreateFromLogEntryTest()
         {
             ApplicationLogEntity entity = ApplicationLogEntityManager.CreateFromLogEntry(new LogEntry
@@ -49,7 +42,7 @@ namespace SuperMassive.Logging.AzureTable.Tests
             Assert.AreEqual("This is a log message", entity.Message);
         }
 
-        [TestMethod]
+        [Test]
         public void CreateRowKey_Ascending_WithSuccess()
         {
             DateTime date = new DateTime(DateTime.MinValue.Ticks, DateTimeKind.Utc);
@@ -61,7 +54,7 @@ namespace SuperMassive.Logging.AzureTable.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void CreateRowKey_Descending_WithSuccess()
         {
             DateTime date = new DateTime(DateTime.MaxValue.Ticks, DateTimeKind.Utc);

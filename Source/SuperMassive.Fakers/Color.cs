@@ -1,5 +1,4 @@
-﻿
-namespace SuperMassive.Fakers
+﻿namespace SuperMassive.Fakers
 {
     /// <summary>
     /// Color Faker

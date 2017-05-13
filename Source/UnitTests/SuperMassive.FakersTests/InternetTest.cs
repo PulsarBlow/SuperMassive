@@ -1,102 +1,90 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-
-namespace SuperMassive.Fakers.Tests
+﻿namespace SuperMassive.Fakers.Tests
 {
-    [TestClass]
+    using System;
+    using NUnit.Framework;
+
     public class InternetTest
     {
-        [TestMethod]
-        public void StaticFieldsInitialization()
-        {
-            var privateInternet = new PrivateType(typeof(Internet));
-            Assert.IsNotNull(privateInternet.GetStaticField("BYTE"));
-            Assert.IsNotNull(privateInternet.GetStaticField("HOSTS"));
-            Assert.IsNotNull(privateInternet.GetStaticField("DISPOSABLE_HOSTS"));
-            Assert.IsNotNull(privateInternet.GetStaticField("DOMAIN_SUFFIXES"));
-            Assert.IsNotNull(privateInternet.GetStaticField("IMAGE_SUFFIXES"));
-        }
-
-        [TestMethod]
+        [Test]
         public void EmailTest_Without_Args()
         {
             string result = Internet.Email();
-            Assert.IsFalse(String.IsNullOrEmpty(result));
-            Assert.IsFalse(String.IsNullOrWhiteSpace(result));
-            Assert.IsTrue(result.Contains("@"));
+            Assert.False(String.IsNullOrEmpty(result));
+            Assert.False(String.IsNullOrWhiteSpace(result));
+            Assert.True(result.Contains("@"));
         }
-        [TestMethod]
+        [Test]
         public void EmailTest_With_Args()
         {
             string arg = Lorem.Word();
             string result = Internet.Email(arg);
-            Assert.IsFalse(String.IsNullOrEmpty(result));
-            Assert.IsFalse(String.IsNullOrWhiteSpace(result));
-            Assert.IsTrue(result.Contains("@"));
-            Assert.IsTrue(result.Contains(arg));
+            Assert.False(String.IsNullOrEmpty(result));
+            Assert.False(String.IsNullOrWhiteSpace(result));
+            Assert.True(result.Contains("@"));
+            Assert.True(result.Contains(arg));
         }
-        [TestMethod]
+        [Test]
         public void UserNameTest_Without_Args()
         {
             string result = Internet.UserName();
-            Assert.IsFalse(String.IsNullOrEmpty(result));
-            Assert.IsFalse(String.IsNullOrWhiteSpace(result));
+            Assert.False(String.IsNullOrEmpty(result));
+            Assert.False(String.IsNullOrWhiteSpace(result));
         }
-        [TestMethod]
+        [Test]
         public void UserNameTest_With_Args()
         {
             string arg = Lorem.Word();
             string result = Internet.UserName(arg);
-            Assert.IsFalse(String.IsNullOrEmpty(result));
-            Assert.IsFalse(String.IsNullOrWhiteSpace(result));
-            Assert.IsTrue(result.Contains(arg));
+            Assert.False(String.IsNullOrEmpty(result));
+            Assert.False(String.IsNullOrWhiteSpace(result));
+            Assert.True(result.Contains(arg));
         }
 
-        [TestMethod]
+        [Test]
         public void DomainNameTest()
         {
             string result = Internet.DomainName();
-            Assert.IsFalse(String.IsNullOrEmpty(result));
-            Assert.IsFalse(String.IsNullOrWhiteSpace(result));
-            Assert.IsTrue(result.Contains("."));
+            Assert.False(String.IsNullOrEmpty(result));
+            Assert.False(String.IsNullOrWhiteSpace(result));
+            Assert.True(result.Contains("."));
         }
-        [TestMethod]
+        [Test]
         public void DomainWordTest()
         {
             string result = Internet.DomainWord();
-            Assert.IsFalse(String.IsNullOrEmpty(result));
-            Assert.IsFalse(String.IsNullOrWhiteSpace(result));
+            Assert.False(String.IsNullOrEmpty(result));
+            Assert.False(String.IsNullOrWhiteSpace(result));
         }
-        [TestMethod]
+        [Test]
         public void DomainSuffixTest()
         {
             string result = Internet.DomainSuffix();
-            Assert.IsFalse(String.IsNullOrEmpty(result));
-            Assert.IsFalse(String.IsNullOrWhiteSpace(result));
+            Assert.False(String.IsNullOrEmpty(result));
+            Assert.False(String.IsNullOrWhiteSpace(result));
         }
-        [TestMethod]
+        [Test]
         public void UriTest_With_Args()
         {
             string arg = Lorem.Word();
             string result = Internet.Uri(arg);
-            Assert.IsFalse(String.IsNullOrEmpty(result));
-            Assert.IsFalse(String.IsNullOrWhiteSpace(result));
-            Assert.IsTrue(result.Contains(arg));
-            Assert.IsTrue(result.Contains("://"));
+            Assert.False(String.IsNullOrEmpty(result));
+            Assert.False(String.IsNullOrWhiteSpace(result));
+            Assert.True(result.Contains(arg));
+            Assert.True(result.Contains("://"));
         }
-        [TestMethod]
+        [Test]
         public void ImageUrlTest()
         {
             string result = Internet.ImageUrl();
-            Assert.IsFalse(String.IsNullOrEmpty(result));
-            Assert.IsFalse(String.IsNullOrWhiteSpace(result));
+            Assert.False(String.IsNullOrEmpty(result));
+            Assert.False(String.IsNullOrWhiteSpace(result));
         }
-        [TestMethod]
+        [Test]
         public void IP_V4_AddressTest()
         {
             string result = Internet.IP_V4_Address();
-            Assert.IsFalse(String.IsNullOrEmpty(result));
-            Assert.IsFalse(String.IsNullOrWhiteSpace(result));
+            Assert.False(String.IsNullOrEmpty(result));
+            Assert.False(String.IsNullOrWhiteSpace(result));
         }
     }
 }

@@ -1,20 +1,19 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Diagnostics;
-
-namespace SuperMassive.Logging.Tests
+﻿namespace SuperMassive.Logging.Tests
 {
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using Xunit;
+
     /// <summary>
     ///This is a test class for LogWriterTest and is intended
     ///to contain all LogWriterTest Unit Tests
     ///</summary>
-    [TestClass()]
     public class LogWriterTest
     {
         /// <summary>
         ///A test for Write
         ///</summary>
-        [TestMethod()]
+        [Fact]
         public void WriteTest()
         {
             IList<TraceListener> traceListeners = new TraceListener[] { new TextWriterTraceListener("output.txt") };
