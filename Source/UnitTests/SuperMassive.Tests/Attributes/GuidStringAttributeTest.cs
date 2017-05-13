@@ -1,13 +1,12 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SuperMassive;
 
 namespace SuperMassiveTests
 {
-    [TestClass]
     public class GuidStringAttributeTest
     {
-        [TestMethod]
+        [Test]
         public void Should_Succeeded()
         {
             GuidStringAttribute attribute = new GuidStringAttribute(true);
@@ -18,7 +17,7 @@ namespace SuperMassiveTests
 
         }
 
-        [TestMethod]
+        [Test]
         public void Should_Fail()
         {
             GuidStringAttribute attribute = new GuidStringAttribute(false);

@@ -1,13 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using NUnit.Framework;
 using SuperMassive.UnitTestHelpers;
-using System;
 
 namespace SuperMassive.Tests
 {
-    [TestClass]
     public class DateHelperTest
     {
-        [TestMethod]
+        [Test]
         public void ToUnixTimeTest()
         {
             DateTime expected = DateTime.Now;

@@ -1,14 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using SuperMassive.Cryptography;
 
 namespace SuperMassive.Tests
 {
-    [TestClass]
     public class ScrambledEncryptionTest
     {
         string _key = "779DGDO49DKDJS898300DKDKKD93JD";
 
-        [TestMethod]
+        [Test]
         public void EncryptTest()
         {
             ScrambledEncryption crypt = new ScrambledEncryption(_key);

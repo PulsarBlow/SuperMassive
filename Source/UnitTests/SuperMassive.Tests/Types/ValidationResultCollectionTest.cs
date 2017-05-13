@@ -1,12 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using NUnit.Framework;
 
 namespace SuperMassive.Tests
 {
-    [TestClass]
     public class ValidationResultCollectionTest
     {
-        [TestMethod]
+        [Test]
         public void ValidationResult_ToString_WithCorrectFormat()
         {
             ValidationResultCollection collection = new ValidationResultCollection();

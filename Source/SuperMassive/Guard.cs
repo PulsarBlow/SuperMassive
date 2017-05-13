@@ -11,13 +11,12 @@ namespace SuperMassive
     /// </summary>
     public static class Guard
     {
-        #region Public Methods
         /// <summary>
         /// Throws an <see cref="ArgumentNullException"/> if the given argument is null.
         /// </summary>
         /// <param name="argumentValue">Argument value to test.</param>
         /// <param name="argumentName">Name of the argument being tested.</param>
-        /// <exception cref="ArgumentNullException">if tested value is null</exception>
+        /// <exception cref="ArgumentNullException">If argument value is null</exception>
         public static void ArgumentNotNull(object argumentValue, string argumentName)
         {
             if (argumentValue == null)
@@ -25,42 +24,23 @@ namespace SuperMassive
                 throw new ArgumentNullException(argumentName);
             }
         }
+
         /// <summary>
         /// Throws an <see cref="ArgumentNullException"/> wrapped in another exception if the given argument is null
         /// </summary>
         /// <typeparam name="TWrapException">Exception type to wrap the <see cref="ArgumentNullException"/> type with</typeparam>
-        /// <param name="argumentValue"></param>
-        /// <param name="argumentName"></param>
+        /// <param name="argumentValue">The argument value</param>
+        /// <param name="argumentName">The argument name</param>
         public static void ArgumentNotNull<TWrapException>(object argumentValue, string argumentName)
             where TWrapException : Exception, new()
         {
-            if (argumentValue == null)
-            {
-                TWrapException exception = Activator.CreateInstance(
-                    typeof(TWrapException),
-                    "Argument " + argumentName + " is null.",
-                    new ArgumentNullException(argumentName)) as TWrapException;
-                throw exception;
-            }
+            if (argumentValue != null)
+                return;
+            WrapAndThrow<TWrapException, ArgumentNullException>(
+                string.Format(CultureInfo.CurrentCulture, Resources.GENERIC_GUARD_FAILURE_ARGUMENT_ISNULL_WITHFORMAT, argumentName),
+                () => { return new ArgumentNullException(argumentName); });
         }
 
-        /// <summary>
-        /// Throws an <see cref="ArgumentException"/> if the given precondition is not fulfilled
-        /// </summary>
-        /// <param name="precondition">A delegated operation which returns a boolean</param>
-        /// <param name="preconditionName">The name of the precondition. Will be use to format the exception message</param>
-        /// <param name="argumentName">Arugment name which must fulfill the precondition</param>
-        /// <param name="message"></param>
-        public static void Requires(Func<bool> precondition, string preconditionName = null, string argumentName = null)
-        {
-            if (!precondition.Invoke())
-            {
-                throw new ArgumentException(String.Format("Precondition{0} for argument{1} failed.",
-                    String.IsNullOrWhiteSpace(preconditionName) ? "" : " " + preconditionName,
-                    String.IsNullOrWhiteSpace(argumentName) ? "" : " " + argumentName
-                ), argumentName);
-            }
-        }
         /// <summary>
         /// Throws an exception if the tested string argument is null or the empty string.
         /// </summary>
@@ -70,15 +50,19 @@ namespace SuperMassive
         /// <exception cref="ArgumentException">Thrown if the string is empty.</exception>
         public static void ArgumentNotNullOrEmpty(string argumentValue, string argumentName)
         {
-            if (argumentValue == null)
-            {
-                throw new ArgumentNullException(argumentName);
-            }
+            ArgumentNotNull(argumentValue, argumentName);
+
             if (argumentValue.Length == 0)
             {
-                throw new ArgumentException(Resources.ArgumentMustNotBeEmpty, argumentName);
+                throw new ArgumentException(
+                    string.Format(
+                        CultureInfo.CurrentCulture,
+                        Resources.GENERIC_GUARD_FAILURE_ARGUMENT_ISEMPTY_WITHFORMAT,
+                        argumentName),
+                    argumentName);
             }
         }
+
         /// <summary>
         /// Throws an exception if the tested string argument is null or the empty string.
         /// </summary>
@@ -88,38 +72,39 @@ namespace SuperMassive
         public static void ArgumentNotNullOrEmpty<TWrapException>(string argumentValue, string argumentName)
             where TWrapException : Exception, new()
         {
-            if (argumentValue == null)
-            {
-                TWrapException exception = Activator.CreateInstance(
-                    typeof(TWrapException),
-                    "Argument " + argumentName + " is null.",
-                    new ArgumentNullException(argumentName)) as TWrapException;
-                throw exception;
-            }
+            ArgumentNotNull<TWrapException>(argumentValue, argumentName);
+
             if (argumentValue.Length == 0)
             {
-                TWrapException exception = Activator.CreateInstance(
-                    typeof(TWrapException),
-                    "Argument " + argumentName + " must not be empty",
-                    new ArgumentException(Resources.ArgumentMustNotBeEmpty, argumentName)) as TWrapException;
-                throw exception;
+                WrapAndThrow<TWrapException>(string.Format(
+                    CultureInfo.CurrentCulture,
+                    Resources.GENERIC_GUARD_FAILURE_ARGUMENT_ISEMPTY_WITHFORMAT,
+                    argumentName));
             }
         }
+
         /// <summary>
         /// Throws an exception if the tested string argument is null, empty or only composed of white spaces.
         /// </summary>
         /// <param name="argumentValue">Argument value to check.</param>
         /// <param name="argumentName">Name of argument being checked.</param>
-        /// <exception cref="ArgumentNullException">Thrown if string value is null.</exception>
-        /// <exception cref="ArgumentException">Thrown if the string is empty or whitespaced.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the string is null</exception>
+        /// <exception cref="ArgumentException">Thrown if the string is empty or contains only whitespaces.</exception>
         public static void ArgumentNotNullOrWhiteSpace(string argumentValue, string argumentName)
         {
             ArgumentNotNullOrEmpty(argumentValue, argumentName);
-            if (String.IsNullOrEmpty(argumentValue.Trim(' ')))
+
+            if (argumentValue.Trim().Length == 0)
             {
-                throw new ArgumentException(Resources.ArgumentMustNotBeWhiteSpace, argumentName);
+                throw new ArgumentException(
+                    string.Format(
+                        CultureInfo.CurrentCulture,
+                        Resources.GENERIC_GUARD_FAILURE_ARGUMENT_MUSTNOTBE_WHITESPACE,
+                        argumentName),
+                    argumentName);
             }
         }
+
         /// <summary>
         /// Throws an exception if the tested string argument is null, empty or only composed of white spaces.
         /// </summary>
@@ -130,85 +115,196 @@ namespace SuperMassive
             where TWrapException : Exception, new()
         {
             ArgumentNotNullOrEmpty<TWrapException>(argumentValue, argumentName);
-            if (String.IsNullOrEmpty(argumentValue.Trim(' ')))
+
+            if (argumentValue.Trim().Length == 0)
             {
-                TWrapException exception = Activator.CreateInstance(
-                    typeof(TWrapException),
-                    "Argument " + argumentName + " must not be empty",
-                    new ArgumentException(Resources.ArgumentMustNotBeWhiteSpace, argumentName)) as TWrapException;
-                throw exception;
+                WrapAndThrow<TWrapException>(string.Format(
+                    CultureInfo.CurrentCulture,
+                    Resources.GENERIC_GUARD_FAILURE_ARGUMENT_ISEMPTY_WITHFORMAT,
+                    argumentName));
             }
         }
+
+        /// <summary>
+        /// Throws an <see cref="ArgumentException"/> if the given precondition is not fulfilled
+        /// </summary>
+        /// <param name="precondition">A delegated operation which returns a boolean</param>
+        /// <param name="preconditionName">The name of the precondition. Will be use to format the exception message</param>
+        /// <param name="argumentName">Argument name which must fulfill the precondition</param>
+        /// <exception cref="ArgumentException">Occurs when the precondition is not satisfied</exception>
+        public static void Requires(Func<bool> precondition, string preconditionName = null, string argumentName = null)
+        {
+            ArgumentNotNull(precondition, nameof(precondition));
+
+            if (!precondition.Invoke())
+            {
+                throw new ArgumentException(
+                    string.Format(
+                        CultureInfo.CurrentCulture,
+                        Resources.GENERIC_GUARD_FAILURE_PRECONDITION_WITHFORMAT,
+                        string.IsNullOrWhiteSpace(preconditionName) ? string.Empty : preconditionName,
+                        string.IsNullOrWhiteSpace(argumentName) ? string.Empty : argumentName),
+                    argumentName);
+            }
+        }
+
+        /// <summary>
+        /// Throws an <see cref="TWrapException"/> if the given precondition is not fulfilled
+        /// </summary>
+        /// <typeparam name="TWrapException">The exception type to wrap the thrown exception with</typeparam>
+        /// <param name="precondition">A delegated operation which returns a boolean</param>
+        /// <param name="preconditionName">The name of the precondition. Will be use to format the exception message</param>
+        /// <param name="argumentName">Argument name which must fulfill the precondition</param>
+        /// <exception cref="ArgumentNullException">Occurs when the precondition is null</exception>
+        /// <exception cref="ArgumentException">Occurs when the precondition is not satisfied</exception>
+        public static void Requires<TWrapException>(Func<bool> precondition, string preconditionName = null, string argumentName = null)
+            where TWrapException : Exception, new()
+        {
+            ArgumentNotNull<TWrapException>(precondition, nameof(precondition));
+
+            if (!precondition.Invoke())
+            {
+                WrapAndThrow<TWrapException>(string.Format(
+                    CultureInfo.CurrentCulture,
+                    Resources.GENERIC_GUARD_FAILURE_PRECONDITION_WITHFORMAT,
+                    string.IsNullOrWhiteSpace(preconditionName) ? string.Empty : preconditionName,
+                    string.IsNullOrWhiteSpace(argumentName) ? string.Empty : argumentName));
+            }
+        }
+
         /// <summary>
         /// Verifies that an argument instance is assignable from the provided type (meaning
         /// interfaces are implemented, or classes exist in the base class hierarchy,
         /// or instance can be assigned through a runtime wrapper, as is the case for
         /// COM Objects).
         /// </summary>
-        /// <param name="assignmentTargetType">The argument type that will be assigned to.</param>
-        /// <param name="assignmentInstance">The instance that will be assigned.</param>
+        /// <param name="targetType">The argument type that will be assigned to.</param>
+        /// <param name="instance">The instance that will be assigned.</param>
         /// <param name="argumentName">Argument name.</param>
         /// <exception cref="ArgumentNullException">if the tested type is null</exception>
         /// <exception cref="ArgumentNullException">if the tested object instance is null</exception>
         /// <exception cref="ArgumentException">if tested instance is not assignable</exception>
-        public static void InstanceIsAssignable(Type assignmentTargetType, object assignmentInstance, string argumentName)
+        public static void InstanceIsAssignable(Type targetType, object instance, string argumentName)
         {
-            if (assignmentTargetType == null)
+            ArgumentNotNull(targetType, nameof(targetType));
+            ArgumentNotNull(instance, nameof(instance));
+
+            if (!targetType.IsInstanceOfType(instance))
             {
-                throw new ArgumentNullException("assignmentTargetType");
-            }
-            if (assignmentInstance == null)
-            {
-                throw new ArgumentNullException("assignmentInstance");
-            }
-            if (!assignmentTargetType.IsInstanceOfType(assignmentInstance))
-            {
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.TypesAreNotAssignable, new object[] { assignmentTargetType, Guard.GetTypeName(assignmentInstance) }), argumentName);
+                throw new ArgumentException(
+                    string.Format(
+                        CultureInfo.CurrentCulture,
+                        Resources.GENERIC_GUARD_FAILURE_TYPE_ISNOTASSIGNABLE_WITHFORMAT,
+                        targetType,
+                        GetTypeName(instance)),
+                    argumentName);
             }
         }
+
+        /// <summary>
+        /// Verifies that an argument instance is assignable from the provided type (meaning
+        /// interfaces are implemented, or classes exist in the base class hierarchy,
+        /// or instance can be assigned through a runtime wrapper, as is the case for
+        /// COM Objects).
+        /// </summary>
+        /// <typeparam name="TWrapException">The exception type to wrap the thrown exception with</typeparam>
+        /// <param name="targetType">The argument type that will be assigned to.</param>
+        /// <param name="instance">The instance that will be assigned.</param>
+        /// <param name="argumentName">Argument name.</param>
+        /// <exception cref="ArgumentNullException">if the tested type is null</exception>
+        /// <exception cref="ArgumentNullException">if the tested object instance is null</exception>
+        /// <exception cref="ArgumentException">if tested instance is not assignable</exception>
+        public static void InstanceIsAssignable<TWrapException>(Type targetType, object instance, string argumentName)
+            where TWrapException : Exception, new()
+        {
+            ArgumentNotNull<TWrapException>(targetType, nameof(targetType));
+            ArgumentNotNull<TWrapException>(instance, nameof(instance));
+
+            if (!targetType.IsInstanceOfType(instance))
+            {
+                WrapAndThrow<TWrapException>(string.Format(
+                    CultureInfo.CurrentCulture,
+                    Resources.GENERIC_GUARD_FAILURE_TYPE_ISNOTASSIGNABLE_WITHFORMAT,
+                    targetType,
+                    GetTypeName(instance)));
+            }
+        }
+
         /// <summary>
         /// Verifies that an argument type is assignable from the provided type (meaning
         /// interfaces are implemented, or classes exist in the base class hierarchy).
         /// </summary>
-        /// <param name="assignmentTargetType">The argument type that will be assigned to.</param>
-        /// <param name="assignmentValueType">The type of the value being assigned.</param>
+        /// <param name="targetType">The argument type that will be assigned to.</param>
+        /// <param name="valueType">The type of the value being assigned.</param>
         /// <param name="argumentName">Argument name.</param>
-        public static void TypeIsAssignable(Type assignmentTargetType, Type assignmentValueType, string argumentName)
+        public static void TypeIsAssignable(Type targetType, Type valueType, string argumentName)
         {
-            if (assignmentTargetType == null)
+            ArgumentNotNull(targetType, nameof(targetType));
+            ArgumentNotNull(valueType, nameof(valueType));
+
+            if (!targetType.IsAssignableFrom(valueType))
             {
-                throw new ArgumentNullException("assignmentTargetType");
-            }
-            if (assignmentValueType == null)
-            {
-                throw new ArgumentNullException("assignmentValueType");
-            }
-            if (!assignmentTargetType.IsAssignableFrom(assignmentValueType))
-            {
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.TypesAreNotAssignable, new object[] { assignmentTargetType, assignmentValueType }), argumentName);
+                throw new ArgumentException(
+                    string.Format(
+                        CultureInfo.CurrentCulture,
+                        Resources.GENERIC_GUARD_FAILURE_TYPE_ISNOTASSIGNABLE_WITHFORMAT,
+                        targetType,
+                        valueType),
+                    argumentName);
             }
         }
+
+        /// <summary>
+        /// Verifies that an argument type is assignable from the provided type (meaning
+        /// interfaces are implemented, or classes exist in the base class hierarchy).
+        /// </summary>
+        /// <typeparam name="TWrapException">The exception type to wrap the thrown exception with</typeparam>
+        /// <param name="targetType">The argument type that will be assigned to.</param>
+        /// <param name="valueType">The type of the value being assigned.</param>
+        /// <param name="argumentName">Argument name.</param>
+        public static void TypeIsAssignable<TWrapException>(Type targetType, Type valueType, string argumentName)
+            where TWrapException : Exception, new()
+        {
+            ArgumentNotNull<TWrapException>(targetType, nameof(targetType));
+            ArgumentNotNull<TWrapException>(valueType, nameof(valueType));
+
+            if (!targetType.IsAssignableFrom(valueType))
+            {
+                WrapAndThrow<TWrapException>(string.Format(
+                    CultureInfo.CurrentCulture,
+                    Resources.GENERIC_GUARD_FAILURE_TYPE_ISNOTASSIGNABLE_WITHFORMAT,
+                    targetType,
+                    valueType));
+            }
+        }
+
         /// <summary>
         /// Verifies that an argument type is an expected type
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="value"></param>
-        /// <param name="argumentName"></param>
-        public static void IsInstanceOfType(Type type, object value, string argumentName)
+        /// <param name="type">The expected type</param>
+        /// <param name="argumentValue">The argument value</param>
+        /// <param name="argumentName">The argument name</param>
+        public static void IsInstanceOfType(Type type, object argumentValue, string argumentName)
         {
-            if (type == null)
-                throw new ArgumentNullException("type");
-            if (value == null)
-                throw new ArgumentNullException("value");
+            ArgumentNotNull(type, nameof(type));
+            ArgumentNotNull(argumentValue, nameof(argumentValue));
 
-            if (!type.IsInstanceOfType(value))
+            if (!type.IsInstanceOfType(argumentValue))
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.IsNotInstanceOfType, type), argumentName);
+                throw new ArgumentException(
+                    string.Format(
+                        CultureInfo.CurrentCulture,
+                        Resources.GENERIC_GUARD_FAILURE_INSTANCE_ISNOTOFTYPE_WITHFORMAT,
+                        type),
+                    argumentName);
             }
         }
-        #endregion
 
-        #region Private Methods
+        /// <summary>
+        /// Gets the type name of the given object instance
+        /// </summary>
+        /// <param name="assignmentInstance">The instance used to find the type name</param>
+        /// <returns>The type name as a string</returns>
         private static string GetTypeName(object assignmentInstance)
         {
             try
@@ -217,9 +313,24 @@ namespace SuperMassive
             }
             catch (Exception)
             {
-                return Resources.UnknownType;
+                return Resources.GENERIC_GUARD_FAILURE_UNKNOWNTYPE;
             }
         }
-        #endregion
+
+        private static void WrapAndThrow<TWrapException, TInnerException>(string message, Func<TInnerException> innerActivator)
+            where TWrapException : Exception, new()
+            where TInnerException : Exception, new()
+        {
+            throw Activator.CreateInstance(
+                   typeof(TWrapException),
+                   message,
+                   innerActivator.Invoke()) as TWrapException;
+        }
+
+        private static void WrapAndThrow<TWrapException>(string message)
+            where TWrapException : Exception, new()
+        {
+            throw Activator.CreateInstance(typeof(TWrapException), message, new ArgumentException(message)) as TWrapException;
+        }
     }
 }

@@ -1,16 +1,15 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SuperMassive.UnitTestHelpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using NUnit.Framework;
+using SuperMassive.UnitTestHelpers;
 
 namespace SuperMassive.Tests
 {
-    [TestClass]
     public class AscendingGuidTest
     {
-        [TestMethod]
+        [Test]
         public void CreateAscendingSortedGuid_WithSuccess()
         {
             AscendingSortedGuid idAsc = AscendingSortedGuid.NewSortedGuid();
@@ -24,7 +23,7 @@ namespace SuperMassive.Tests
             Console.WriteLine(idDesc.ToString());
         }
 
-        [TestMethod]
+        [Test]
         public void TryParseAscendingSortedGuid_WithSuccess()
         {
             AscendingSortedGuid guid;
@@ -32,7 +31,7 @@ namespace SuperMassive.Tests
             Assert.AreEqual("0635318522499400050_b77ad6f9624a4c2896e8545923e56502", guid.ToString());
         }
 
-        [TestMethod]
+        [Test]
         public void ParseAscendingSortedGuid_WithSuccess()
         {
             AscendingSortedGuid expected = AscendingSortedGuid.NewSortedGuid();
@@ -41,7 +40,7 @@ namespace SuperMassive.Tests
             AssertCompare(expected, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void AscendingSortedGuid_Order_WithSuccess()
         {
             List<Fake<AscendingSortedGuid>> expected = new List<Fake<AscendingSortedGuid>>();
@@ -67,7 +66,7 @@ namespace SuperMassive.Tests
         {
             Fake<AscendingSortedGuid> item = new Fake<AscendingSortedGuid>();
             item.Id = AscendingSortedGuid.NewSortedGuid();
-            item.Name = Randomizer.RandomString();
+            item.Name = Randomizer.GetRandomString();
             return item;
         }
 

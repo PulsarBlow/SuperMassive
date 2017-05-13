@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace SuperMassive.Tests
 {
-    [TestClass]
     public class IPAddressConverterTest
     {
-        [TestMethod]
+        [Test]
         public void ToInt64Test()
         {
             Assert.AreEqual(1474760558, IPAddressConverter.ToInt64("87.231.15.110"));

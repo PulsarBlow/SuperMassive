@@ -1,20 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SuperMassive.Maths;
-using System;
+﻿using System;
+using NUnit.Framework;
 
-namespace SuperMassive.Tests.Maths
+namespace SuperMassive.Maths.Tests
 {
-    /// <summary>
-    ///This is a test class for IntervalTest and is intended
-    ///to contain all IntervalTest Unit Tests
-    ///</summary>
-    [TestClass]
     public class RealIntervalTest
     {
-        /// <summary>
-        ///A test for IsValueInLimits
-        ///</summary>
-        [TestMethod]
+        [Test]
         public void IsValueInLimitsTest()
         {
             // [1; +inf[

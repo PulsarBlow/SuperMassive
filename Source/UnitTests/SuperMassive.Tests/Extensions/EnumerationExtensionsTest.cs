@@ -1,13 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
+using NUnit.Framework;
 
 namespace SuperMassive.Tests
 {
-    /// <summary>
-    ///This is a test class for EnumerationExtensionsTest and is intended
-    ///to contain all EnumerationExtensionsTest Unit Tests
-    ///</summary>
-    [TestClass]
     public class EnumerationExtensionsTest
     {
         [Flags]
@@ -21,7 +16,7 @@ namespace SuperMassive.Tests
             Value5 = 16
         }
 
-        [TestMethod]
+        [Test]
         public void AllMethodsTest()
         {
             DummyEnum dummy = DummyEnum.NotSet;

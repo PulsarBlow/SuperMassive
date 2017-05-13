@@ -1,16 +1,15 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SuperMassive.UnitTestHelpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using NUnit.Framework;
+using SuperMassive.UnitTestHelpers;
 
 namespace SuperMassive.Tests
 {
-    [TestClass]
     public class DescendingGuidTest
     {
-        [TestMethod]
+        [Test]
         public void CreateDescendingSortedGuid_WithSuccess()
         {
             DescendingSortedGuid idDesc = DescendingSortedGuid.NewSortedGuid();
@@ -19,7 +18,7 @@ namespace SuperMassive.Tests
             Console.WriteLine(idDesc.ToString());
         }
 
-        [TestMethod]
+        [Test]
         public void TryParseDescendingSortedGuid_WithSuccess()
         {
             AscendingSortedGuid guid;
@@ -27,7 +26,7 @@ namespace SuperMassive.Tests
             Assert.AreEqual("0635318522499400050_b77ad6f9624a4c2896e8545923e56502", guid.ToString());
         }
 
-        [TestMethod]
+        [Test]
         public void ParseDescendingSortedGuid_WithSuccess()
         {
             DescendingSortedGuid expected = DescendingSortedGuid.NewSortedGuid();
@@ -36,7 +35,7 @@ namespace SuperMassive.Tests
             AssertCompare(expected, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void DescendingSortedGuid_Order_WithSuccess()
         {
             List<Fake<DescendingSortedGuid>> expected = new List<Fake<DescendingSortedGuid>>();
@@ -57,7 +56,7 @@ namespace SuperMassive.Tests
             CommonComparers.AreCollectionEquals(expected, actual, AssertCompare);
         }
 
-        [TestMethod]
+        [Test]
         public void DescendingSortedGuid_CompareTo_WithSuccess()
         {
             DescendingSortedGuid expected = DescendingSortedGuid.Empty;
@@ -77,7 +76,7 @@ namespace SuperMassive.Tests
         {
             Fake<DescendingSortedGuid> item = new Fake<DescendingSortedGuid>();
             item.Id = DescendingSortedGuid.NewSortedGuid();
-            item.Name = Randomizer.RandomString();
+            item.Name = Randomizer.GetRandomString();
             return item;
         }
 

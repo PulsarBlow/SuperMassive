@@ -1,14 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using NUnit.Framework;
 using SuperMassive.UnitTestHelpers;
-using System;
-using System.Globalization;
 
 namespace SuperMassive.Tests
 {
-    [TestClass]
     public class RegexHelperTest
     {
-        [TestMethod]
+        [Test]
         public void IsSHA256Test()
         {
             Assert.IsTrue(RegexHelper.IsSHA256Hash(CryptographyHelper.ComputeSHA256Hash(Guid.Empty.ToString())));
@@ -16,7 +14,7 @@ namespace SuperMassive.Tests
             Assert.IsFalse(RegexHelper.IsSHA256Hash(CryptographyHelper.ComputeSHA256Hash(Guid.NewGuid().ToString()).Substring(0, 31)));
             Assert.IsFalse(RegexHelper.IsSHA256Hash(CryptographyHelper.ComputeSHA256Hash(Guid.NewGuid().ToString()).Substring(0, 63) + "@"));
         }
-        [TestMethod]
+        [Test]
         public void IsSecretKeyTest()
         {
             Assert.IsTrue(RegexHelper.IsSHA256Hash(CryptographyHelper.ComputeSHA256Hash(Guid.Empty.ToString())));
@@ -24,7 +22,7 @@ namespace SuperMassive.Tests
             Assert.IsFalse(RegexHelper.IsSHA256Hash(CryptographyHelper.ComputeSHA256Hash(Guid.NewGuid().ToString()).Substring(0, 12)));
             Assert.IsFalse(RegexHelper.IsSHA256Hash(CryptographyHelper.ComputeSHA256Hash(Guid.NewGuid().ToString()).Substring(0, 15) + "@"));
         }
-        [TestMethod]
+        [Test]
         public void IsEmailTest()
         {
             Assert.IsTrue(RegexHelper.IsEmail("b172f15bac94d30fde90@gmail.com"));
@@ -36,7 +34,7 @@ namespace SuperMassive.Tests
             Assert.IsFalse(RegexHelper.IsEmail("c94d30fde90@"));
         }
 
-        [TestMethod]
+        [Test]
         public void IsCRC32Test()
         {
             Assert.IsTrue(RegexHelper.IsCRC32Hash(CryptographyHelper.ComputeCRC32Hash(Guid.Empty.ToString())));
@@ -44,7 +42,7 @@ namespace SuperMassive.Tests
 
             Assert.IsFalse(RegexHelper.IsCRC32Hash("aaaaaaaaaa"));
         }
-        [TestMethod]
+        [Test]
         public void IsUrlTest()
         {
             Assert.IsTrue(RegexHelper.IsUrl("http://www.domain.com/page.html"));
@@ -61,7 +59,7 @@ namespace SuperMassive.Tests
             Assert.IsFalse(RegexHelper.IsUrl("http://localhost/")); // Should use 127.0.0.1
         }
 
-        [TestMethod]
+        [Test]
         public void IsValidTableContainerName()
         {
             Assert.IsFalse(RegexHelper.IsTableContainerNameValid(" 456"));
@@ -81,7 +79,7 @@ namespace SuperMassive.Tests
 
         }
 
-        [TestMethod]
+        [Test]
 
         public void IsValidBlobContainerName()
         {
@@ -101,7 +99,7 @@ namespace SuperMassive.Tests
             Assert.IsTrue(RegexHelper.IsBlobContainerNameValid("aname1321"));
         }
 
-        [TestMethod]
+        [Test]
         public void IsGuidTest()
         {
             Assert.IsFalse(RegexHelper.IsGuid("abc"));
@@ -112,7 +110,7 @@ namespace SuperMassive.Tests
             Assert.IsTrue(RegexHelper.IsGuid("00000000-0000-0000-0000-000000000000"));
         }
 
-        [TestMethod]
+        [Test]
         public void IsSortedGuid()
         {
             Assert.IsTrue(RegexHelper.IsSortedGuid("0000000000000000000_00000000000000000000000000000000"));
@@ -128,7 +126,7 @@ namespace SuperMassive.Tests
             Assert.IsFalse(RegexHelper.IsSortedGuid("635318522499400050_00000000000000000000000000000000G"));
         }
 
-        [TestMethod]
+        [Test]
         public void IsSemver()
         {
             ExtendedAssert.IsTrueWithMessage(RegexHelper.IsSemver, "1.0.0-alpha-a.b-c-somethinglong+build.1-aef.1-its-okay");

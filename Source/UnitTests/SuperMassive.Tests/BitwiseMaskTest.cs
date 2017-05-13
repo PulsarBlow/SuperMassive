@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace SuperMassive.Tests
 {
-    [TestClass]
     public class BitwiseMaskTest
     {
-        [TestMethod]
+        [Test]
         public void Has()
         {
             short valueAsShort = 4;

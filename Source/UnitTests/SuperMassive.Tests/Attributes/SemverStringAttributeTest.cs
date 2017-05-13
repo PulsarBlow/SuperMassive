@@ -1,13 +1,11 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using SuperMassive;
 
 namespace SuperMassiveTests
 {
-    [TestClass]
     public class SemverStringAttributeTest
     {
-        [TestMethod]
+        [Test]
         public void Should_Succeeded()
         {
             SemverStringAttribute attribute = new SemverStringAttribute();
@@ -17,7 +15,7 @@ namespace SuperMassiveTests
             Assert.IsTrue(attribute.IsValid("2.0.0-rc.1+build.123"));
         }
 
-        [TestMethod]
+        [Test]
         public void Should_Fail()
         {
             SemverStringAttribute attribute = new SemverStringAttribute();

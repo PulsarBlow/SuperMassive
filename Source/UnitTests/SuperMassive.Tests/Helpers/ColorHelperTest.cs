@@ -1,28 +1,27 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace SuperMassive.Tests
 {
-    [TestClass]
     public class ColorHelperTest
     {
         /// <summary>
         ///A test for HexToInt
         ///</summary>
-        [TestMethod()]
+        [Test()]
         public void HexToIntTest()
         {
-            Assert.AreEqual<int>(16777215, ColorHelper.HexToInt("FFFFFF"));
-            Assert.AreEqual<int>(16777215, ColorHelper.HexToInt("#FFFFFF"));
+            Assert.AreEqual(16777215, ColorHelper.HexToInt("FFFFFF"));
+            Assert.AreEqual(16777215, ColorHelper.HexToInt("#FFFFFF"));
 
         }
 
         /// <summary>
         ///A test for IntToHex
         ///</summary>
-        [TestMethod()]
+        [Test()]
         public void IntToHexTest()
         {
-            Assert.AreEqual<string>("FFFFFF", ColorHelper.IntToHex(16777215));
+            Assert.AreEqual("FFFFFF", ColorHelper.IntToHex(16777215));
         }
     }
 }

@@ -1,12 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
+﻿using System.Linq;
+using NUnit.Framework;
 
 namespace SuperMassive.Tests
 {
-    [TestClass]
     public class RandomNumberGeneratorTest
     {
-        [TestMethod]
+        [Test]
         public void IntSequenceTest()
         {
             Assert.IsTrue(RandomNumberGenerator.IntSequence(4).Count() == 4);

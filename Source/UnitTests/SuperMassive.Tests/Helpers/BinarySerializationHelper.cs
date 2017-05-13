@@ -1,23 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework;
 
 namespace SuperMassive.Tests
 {
-    /// <summary>
-    ///This is a test class for BinarySerializationHelperTest and is intended
-    ///to contain all BinarySerializationHelperTest Unit Tests
-    ///</summary>
-    [TestClass()]
     public class BinarySerializationHelperTest
     {
-
-
-        /// <summary>
-        ///A test for Serialize
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void SerializeTest()
         {
             TestObject myObject = new TestObject
@@ -30,10 +20,7 @@ namespace SuperMassive.Tests
             Assert.IsTrue(result.Length > 0);
         }
 
-        /// <summary>
-        ///A test for Deserialize
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void DeserializeTest()
         {
             TestObject myObject = new TestObject
@@ -48,19 +35,11 @@ namespace SuperMassive.Tests
             Assert.IsTrue(result.ListOfElements.Count() == myObject.ListOfElements.Count());
             CollectionAssert.AreEqual(myObject.ListOfElements as List<string>, new List<string>(result.ListOfElements));
         }
-        /// <summary>
-        /// A container object to store rules into the underlying storage
-        /// </summary>
+
         [Serializable]
         private class TestObject
         {
-            /// <summary>
-            /// Collection of rules
-            /// </summary>
             public IEnumerable<string> ListOfElements { get; set; }
-            /// <summary>
-            /// Completion type
-            /// </summary>
             public byte PeriphericalValue { get; set; }
         }
     }

@@ -123,6 +123,39 @@
   <data name="ArgumentMustNotBeWhiteSpace" xml:space="preserve">
     <value>The provided string argument contains only whitespace.</value>
   </data>
+  <data name="GENERIC_GUARD_FAILURE_ARGUMENT_ISEMPTY_WITHFORMAT" xml:space="preserve">
+    <value>Argument `{0}` is empty</value>
+  </data>
+  <data name="GENERIC_GUARD_FAILURE_ARGUMENT_ISNULL_WITHFORMAT" xml:space="preserve">
+    <value>Argument `{0}` is null</value>
+  </data>
+  <data name="GENERIC_GUARD_FAILURE_ARGUMENT_MUSTBE_GREATERTHAN_WITHFORMAT" xml:space="preserve">
+    <value>Argument `{0}` must be greater than argument `{1}`</value>
+  </data>
+  <data name="GENERIC_GUARD_FAILURE_ARGUMENT_MUSTNOTBE_NULLOREMPTY" xml:space="preserve">
+    <value>The provided string argument must not be null or empty</value>
+  </data>
+  <data name="GENERIC_GUARD_FAILURE_ARGUMENT_MUSTNOTBE_WHITESPACE" xml:space="preserve">
+    <value>The provided string argument must not be contain only whitespace</value>
+  </data>
+  <data name="GENERIC_GUARD_FAILURE_INSTANCE_ISNOTOFTYPE_WITHFORMAT" xml:space="preserve">
+    <value>The given parameter is not an instance of type `{0}`</value>
+  </data>
+  <data name="GENERIC_GUARD_FAILURE_PRECONDITION_WITHFORMAT" xml:space="preserve">
+    <value>Precondition `{0}` failed for argument `{1}`</value>
+  </data>
+  <data name="GENERIC_GUARD_FAILURE_TYPE_ISNOTASSIGNABLE_WITHFORMAT" xml:space="preserve">
+    <value>The type `{1}` cannot be assigned to variables of type `{0}`</value>
+  </data>
+  <data name="GENERIC_GUARD_FAILURE_UNKNOWNTYPE" xml:space="preserve">
+    <value>Unknown type</value>
+  </data>
+  <data name="GENERIC_GUARD_FAILURE_VALUEPOSITIVE" xml:space="preserve">
+    <value>The value must be positive</value>
+  </data>
+  <data name="GENERIC_GUARD_FAILURE_VALUESTRICTLYPOSITIVE" xml:space="preserve">
+    <value>The value must be strictly positive</value>
+  </data>
   <data name="IsNotInstanceOfType" xml:space="preserve">
     <value>The given parameter is not an instance of type {0}.</value>
   </data>

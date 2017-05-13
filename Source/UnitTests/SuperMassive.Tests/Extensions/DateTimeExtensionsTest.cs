@@ -1,12 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
+using NUnit.Framework;
 
 namespace SuperMassive.Tests
 {
-    [TestClass]
     public class DateTimeExtensionsTest
     {
-        [TestMethod]
+        [Test]
         public void TrimTest()
         {
             DateTime date = new DateTime(2013, 10, 25, 3, 2, 59, 354, DateTimeKind.Utc);
@@ -19,7 +18,7 @@ namespace SuperMassive.Tests
             date = new DateTime(2013, 10, 25, 3, 2, 59, 354, DateTimeKind.Local);
             Assert.AreEqual(new DateTime(2013, 10, 25, 0, 0, 0, 0, DateTimeKind.Local), date.Trim(TimeSpan.TicksPerDay));
         }
-        [TestMethod]
+        [Test]
         public void RoundTest()
         {
             DateTime date = new DateTime(2013, 10, 25, 3, 2, 59, 354, DateTimeKind.Utc);
@@ -35,7 +34,7 @@ namespace SuperMassive.Tests
             Assert.AreEqual(new DateTime(2013, 10, 25, 0, 0, 0, DateTimeKind.Utc), date.Round(new TimeSpan(1, 0, 0, 0, 0)));
         }
 
-        [TestMethod]
+        [Test]
         public void FloorTest()
         {
             DateTime date = new DateTime(2013, 10, 25, 3, 2, 59, 354, DateTimeKind.Utc);
@@ -51,7 +50,7 @@ namespace SuperMassive.Tests
             Assert.AreEqual(new DateTime(2013, 10, 25, 0, 0, 0, DateTimeKind.Utc), date.Floor(new TimeSpan(1, 0, 0, 0, 0)));
         }
 
-        [TestMethod]
+        [Test]
         public void CeilTest()
         {
             DateTime date = new DateTime(2013, 10, 25, 3, 2, 59, 354, DateTimeKind.Utc);
