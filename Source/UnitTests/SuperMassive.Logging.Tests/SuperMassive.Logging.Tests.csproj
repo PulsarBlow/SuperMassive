@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
     <PropertyGroup>
-        <TargetFramework>net46</TargetFramework>
+        <TargetFramework>net462</TargetFramework>
     </PropertyGroup>
     <PropertyGroup>
         <DebugType Condition="'$(TargetFramework)' != '' AND '$(TargetFramework)' != 'netcoreapp1.0'">Full</DebugType>
@@ -9,10 +9,15 @@
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="xunit" Version="2.2.0" />
-      <PackageReference Include="xunit.analyzers" Version="0.1.0" />
+      <Compile Include="..\..\..\GlobalAssemblyInfos.cs" Link="Properties\GlobalAssemblyInfos.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="NUnit" Version="3.6.1" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\..\SuperMassive.Logging\SuperMassive.Logging.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
     </ItemGroup>
 </Project>

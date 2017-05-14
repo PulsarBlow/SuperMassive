@@ -8,6 +8,10 @@ SuperMassive is a small condensed framework of reusable .NET components and util
 
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/PulsarBlow/SuperMassive?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+## SonarQube
+The repository code quality is monitored with SonarQube :  
+https://sonarqube.com/dashboard?id=SuperMassive
+
 ### Projects descriptions
 
 * **SuperMassive** : Core features - SuperMassive swiss army knife!

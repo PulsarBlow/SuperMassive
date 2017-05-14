@@ -6,6 +6,9 @@
    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\GlobalAssemblyInfos.cs" Link="Properties\GlobalAssemblyInfos.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="NUnit" Version="3.6.1" />
   </ItemGroup>
   <ItemGroup>

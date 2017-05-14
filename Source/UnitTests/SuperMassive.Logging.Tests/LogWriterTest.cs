@@ -2,18 +2,11 @@
 {
     using System.Collections.Generic;
     using System.Diagnostics;
-    using Xunit;
+    using NUnit.Framework;
 
-    /// <summary>
-    ///This is a test class for LogWriterTest and is intended
-    ///to contain all LogWriterTest Unit Tests
-    ///</summary>
     public class LogWriterTest
     {
-        /// <summary>
-        ///A test for Write
-        ///</summary>
-        [Fact]
+        [Test]
         public void WriteTest()
         {
             IList<TraceListener> traceListeners = new TraceListener[] { new TextWriterTraceListener("output.txt") };

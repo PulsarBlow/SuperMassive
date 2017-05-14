@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.Fakers", "Source\SuperMassive.Fakers\SuperMassive.Fakers.csproj", "{FF03956A-7B31-4054-AE65-3C1853BF4706}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.FakersTests", "Source\UnitTests\SuperMassive.FakersTests\SuperMassive.FakersTests.csproj", "{84258898-63C4-498A-A7C7-FF3CBDFFD8B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMassive.Fakers.Tests", "Source\UnitTests\SuperMassive.Fakers.Tests\SuperMassive.Fakers.Tests.csproj", "{84258898-63C4-498A-A7C7-FF3CBDFFD8B5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{5AA919F6-161A-4B73-BED4-F3479A337A96}"
 EndProject

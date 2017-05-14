@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
     <PropertyGroup>
-        <TargetFramework>net46</TargetFramework>
+        <TargetFramework>net462</TargetFramework>
     </PropertyGroup>
     <PropertyGroup>
         <DebugType Condition="'$(TargetFramework)' != '' AND '$(TargetFramework)' != 'netcoreapp1.0'">Full</DebugType>
@@ -8,6 +8,9 @@
     <PropertyGroup>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
+    <ItemGroup>
+      <Compile Include="..\..\GlobalAssemblyInfos.cs" Link="Properties\GlobalAssemblyInfos.cs" />
+    </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\SuperMassive\SuperMassive.csproj" />
     </ItemGroup>
