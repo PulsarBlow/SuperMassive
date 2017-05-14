@@ -13,6 +13,7 @@
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="NUnit" Version="3.6.1" />
+      <PackageReference Include="NUnit3TestAdapter" Version="3.7.0" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\..\SuperMassive.Logging\SuperMassive.Logging.csproj" />
