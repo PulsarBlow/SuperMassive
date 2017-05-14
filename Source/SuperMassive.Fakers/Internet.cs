@@ -1,9 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Text.RegularExpressions;
-
-namespace SuperMassive.Fakers
+﻿namespace SuperMassive.Fakers
 {
+    using System;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using SuperMassive.Extensions;
+
     public static class Internet
     {
         static readonly string[] BYTE = 0.To(255).Select(x => x.ToString()).ToArray();

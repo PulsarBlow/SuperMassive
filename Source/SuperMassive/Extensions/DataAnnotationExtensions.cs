@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿
 
-namespace SuperMassive
+namespace SuperMassive.Extensions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+
     /// <summary>
     /// Extension methods for data annotation types
     /// </summary>

@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Text;
-
-namespace SuperMassive
+﻿namespace SuperMassive
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Globalization;
+    using System.Text;
+    using SuperMassive.Extensions;
+
     /// <summary>
     /// A collection wrapper which is used by the <see cref="ValidationFailedException"/>.
     /// </summary>

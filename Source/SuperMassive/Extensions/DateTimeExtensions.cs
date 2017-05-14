@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace SuperMassive
+﻿namespace SuperMassive.Extensions
 {
+    using System;
+
     /// <summary>
     /// DateTime Extension methods
     /// </summary>

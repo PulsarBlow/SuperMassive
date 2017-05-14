@@ -1,8 +1,11 @@
-﻿using System;
-using NUnit.Framework;
+﻿
 
 namespace SuperMassive.Tests
 {
+    using System;
+    using NUnit.Framework;
+    using SuperMassive.Extensions;
+
     public class EnumerationExtensionsTest
     {
         [Flags]

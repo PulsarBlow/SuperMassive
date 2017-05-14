@@ -1,8 +1,9 @@
-﻿using System;
-using NUnit.Framework;
-
-namespace SuperMassive.Tests
+﻿namespace SuperMassive.Tests
 {
+    using System;
+    using NUnit.Framework;
+    using SuperMassive.Extensions;
+
     public class DateTimeExtensionsTest
     {
         [Test]

@@ -1,8 +1,10 @@
-﻿using System;
-using System.Globalization;
+﻿namespace SuperMassive.Fakers
 
-namespace SuperMassive.Fakers
 {
+    using System;
+    using System.Globalization;
+    using SuperMassive.Extensions;
+
     /// <summary>
     /// Name fakes
     /// </summary>

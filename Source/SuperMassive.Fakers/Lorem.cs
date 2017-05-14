@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace SuperMassive.Fakers
+﻿namespace SuperMassive.Fakers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using SuperMassive.Extensions;
+
     public static class Lorem
     {
         public static string Word()

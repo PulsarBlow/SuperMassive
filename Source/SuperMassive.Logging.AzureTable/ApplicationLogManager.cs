@@ -1,10 +1,13 @@
-﻿using SuperMassive.Logging.Formatters;
-using System;
-using System.Diagnostics;
-using System.Globalization;
+﻿
 
 namespace SuperMassive.Logging.AzureTable
 {
+    using System;
+    using System.Diagnostics;
+    using System.Globalization;
+    using SuperMassive.Extensions;
+    using SuperMassive.Logging.Formatters;
+
     /// <summary>
     /// This class is responsible for managing <see cref="ApplicationLogEntity"/> in the system.
     /// </summary>

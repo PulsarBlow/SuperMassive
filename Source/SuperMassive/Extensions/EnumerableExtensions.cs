@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace SuperMassive
+﻿namespace SuperMassive.Extensions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
     /// Provides extension methods for the generic IEnumerable interface
     /// </summary>

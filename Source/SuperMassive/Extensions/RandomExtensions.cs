@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace SuperMassive
+﻿namespace SuperMassive.Extensions
 {
+    using System;
+
     /// <summary>
     /// Provides extension methods for the <see cref="Random"/> class
     /// </summary>

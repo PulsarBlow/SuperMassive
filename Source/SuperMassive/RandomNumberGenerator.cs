@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SuperMassive
+﻿namespace SuperMassive
 {
+    using System;
+    using System.Collections.Generic;
+    using SuperMassive.Extensions;
+
     /// <summary>
     /// Random Number Generator
     /// </summary>

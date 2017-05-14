@@ -1,7 +1,7 @@
-﻿using System.Net;
-
-namespace SuperMassive
+﻿namespace SuperMassive.Extensions
 {
+    using System.Net;
+
     /// <summary>
     /// Provides extensions methods for the <see cref="IPAddress"/> class.
     /// </summary>

@@ -1,5 +1,7 @@
 ﻿namespace SuperMassive.Fakers
 {
+    using SuperMassive.Extensions;
+
     /// <summary>
     /// Color Faker
     /// </summary>
@@ -20,13 +22,14 @@
         /// <returns></returns>
         public static System.Drawing.Color SystemColor()
         {
-            System.Drawing.Color color = System.Drawing.Color.Empty;
+            System.Drawing.Color color;
             do
             {
                 string randomColorName = DataStore.ColorNames.RandPick();
                 color = System.Drawing.Color.FromName(randomColorName);
             }
             while (color.IsSystemColor);
+
             return color;
         }
 
@@ -36,7 +39,7 @@
         /// <returns>A random color as a ARGB integer value</returns>
         public static int ColorAsInteger()
         {
-            System.Drawing.Color color = System.Drawing.Color.Empty;
+            System.Drawing.Color color;
             do
             {
                 string randomColorName = DataStore.ColorNames.RandPick();

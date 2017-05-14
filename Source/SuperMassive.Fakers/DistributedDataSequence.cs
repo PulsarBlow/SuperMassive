@@ -1,7 +1,8 @@
-﻿using System;
-
-namespace SuperMassive.Fakers
+﻿namespace SuperMassive.Fakers
 {
+    using System;
+    using SuperMassive.Extensions;
+
     public class DistributedDateSequence
     {
         //private Random _rnd = new Random();

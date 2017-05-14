@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace SuperMassive
+﻿namespace SuperMassive.Extensions
 {
+    using System;
+
     /// <summary>
     /// Extension methods to make working with Enum values easier
     /// http://hugoware.net/blog/enumeration-extensions-2-0

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SuperMassive
+﻿namespace SuperMassive.Extensions
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Extension methods for integer types : <see cref="Int16"/>, <see cref="Int32"/>, see <see cref="Int64"/>
     /// </summary>

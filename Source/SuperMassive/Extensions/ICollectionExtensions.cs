@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿
 
-namespace SuperMassive
+namespace SuperMassive.Extensions
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Provides extension methods for the <see cref="ICollection"/> interface.
     /// </summary>

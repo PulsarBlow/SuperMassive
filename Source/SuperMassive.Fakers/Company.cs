@@ -1,7 +1,8 @@
-﻿using System;
-
-namespace SuperMassive.Fakers
+﻿namespace SuperMassive.Fakers
 {
+    using System;
+    using SuperMassive.Extensions;
+
     public static class Company
     {
         public static string Name()
