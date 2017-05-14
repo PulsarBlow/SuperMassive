@@ -17,21 +17,15 @@
         /// <param name="action"></param>
         public static void Each<T>(this IEnumerable<T> items, Action<T> action)
         {
-            if (items == null)
-            {
-                throw new ArgumentNullException("items");
-            }
-
-            if (action == null)
-            {
-                throw new ArgumentNullException("action");
-            }
+            Guard.ArgumentNotNull(items, nameof(items));
+            Guard.ArgumentNotNull(action, nameof(action));
 
             foreach (T local in items)
             {
                 action(local);
             }
         }
+
         /// <summary>
         /// Joins all items in the current collection by calling ToString() on each.
         /// </summary>
@@ -41,8 +35,11 @@
         /// <returns></returns>
         public static string Join<T>(this IEnumerable<T> items, string separator)
         {
+            Guard.ArgumentNotNull(items, nameof(items));
+
             return String.Join(separator, items);
         }
+
         /// <summary>
         /// Picks a random element from the current collection.
         /// </summary>
@@ -51,13 +48,12 @@
         /// <returns></returns>
         public static T RandPick<T>(this IEnumerable<T> collection)
         {
-            T[] items;
-            if (collection is T[])
-                items = (T[])collection;
-            else
-                items = collection.ToArray();
+            Guard.ArgumentNotNull(collection, nameof(collection));
+
+            var items = collection.ToArray();
             return items[RandomNumberGenerator.Int(items.Length)];
         }
+
         /// <summary>
         /// Picks a range of random elements from the current collection.
         /// </summary>
@@ -67,12 +63,9 @@
         /// <returns></returns>
         public static IEnumerable<T> RangeRandPick<T>(this IEnumerable<T> collection, int count)
         {
-            T[] items;
-            if (collection is T[])
-                items = (T[])collection;
-            else
-                items = collection.ToArray();
+            Guard.ArgumentNotNull(collection, nameof(collection));
 
+            T[] items = collection.ToArray();
             for (int i = 0; i < count; i++)
                 yield return items[RandomNumberGenerator.Int(items.Length)];
         }
