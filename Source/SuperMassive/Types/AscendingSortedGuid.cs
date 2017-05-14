@@ -1,7 +1,6 @@
 ﻿namespace SuperMassive
 {
     using System;
-    using System.Globalization;
 
     /// <summary>
     /// A composite identifier made of a Guid and a Timestamp which
@@ -10,8 +9,6 @@
     /// </summary>
     public struct AscendingSortedGuid : IComparable, IComparable<AscendingSortedGuid>, IEquatable<AscendingSortedGuid>
     {
-        private const char Separator = '_';
-
         /// <summary>
         /// A read-only instance of the AscendingSortedGuid structure whose value is all zeros.
         /// </summary>
@@ -53,7 +50,7 @@
 
             AscendingSortedGuid result = new AscendingSortedGuid();
 
-            var splits = id.Split(Separator);
+            var splits = id.Split(SortedGuidHelper.TokenSeparator);
 
             string inversedDate = splits[0];
             string guid = splits[1];
@@ -73,14 +70,14 @@
         /// <returns>Returns true if parsing succeeded, otherwise false</returns>
         public static bool TryParse(string id, out AscendingSortedGuid result)
         {
-            result = AscendingSortedGuid.Empty;
+            result = Empty;
 
             if (string.IsNullOrWhiteSpace(id))
                 return false;
 
             try
             {
-                result = AscendingSortedGuid.Parse(id);
+                result = Parse(id);
                 return true;
             }
             catch
@@ -95,7 +92,9 @@
         /// <returns></returns>
         public static AscendingSortedGuid NewSortedGuid()
         {
-            return new AscendingSortedGuid(DateTimeOffset.UtcNow, Guid.NewGuid());
+            return new AscendingSortedGuid(
+                DateTimeOffset.UtcNow,
+                Guid.NewGuid());
         }
 
         /// <summary>
@@ -104,7 +103,7 @@
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format(CultureInfo.InvariantCulture, "{0:D19}{1}{2:N}", Timestamp.Ticks, Separator, Guid);
+            return SortedGuidHelper.GetFormatedString(Timestamp.Ticks, Guid);
         }
 
         /// <summary>
@@ -113,7 +112,7 @@
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return (GetType().GetHashCode() * 907) +
+            return (GetType().GetHashCode() * SortedGuidHelper.HashcodeMultiplier) +
                 Timestamp.GetHashCode().GetHashCode() +
                 Guid.GetHashCode();
         }

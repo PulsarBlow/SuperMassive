@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using NUnit.Framework;
     using SuperMassive.UnitTestHelpers;
 
@@ -61,23 +60,21 @@
         }
 
         [Test]
-        public void AscendingSortedGuid_AscendingSortedGuid_Order_WithSuccess()
+        public void AscendingSortedGuid_LexicalOrdering_Ascending_WithSuccess()
         {
-            List<Fake<AscendingSortedGuid>> expected = new List<Fake<AscendingSortedGuid>>();
-
-            for (int i = 0; i < 3; i++)
+            var timestamp = DateTimeOffset.UtcNow;
+            List<AscendingSortedGuid> expected = new List<AscendingSortedGuid>
             {
-                var item = NewItemAsc();
-                expected.Add(item);
-                Thread.Sleep(10); // slowing down                
-            }
+                new AscendingSortedGuid(timestamp, Guid.NewGuid()),
+                new AscendingSortedGuid(timestamp.AddMilliseconds(10), Guid.NewGuid()),
+                new AscendingSortedGuid(timestamp.AddMilliseconds(100), Guid.NewGuid()),
+                new AscendingSortedGuid(timestamp.AddMilliseconds(1000), Guid.NewGuid()),
+            };
 
-            List<Fake<AscendingSortedGuid>> actual = new List<Fake<AscendingSortedGuid>>();
-
-            actual = expected.OrderBy(x => x.Id.ToString()).ToList();
+            List<AscendingSortedGuid> actual = expected.OrderBy(x => x.ToString()).ToList();
             CommonComparers.AreCollectionEquals(expected, actual, AssertCompare);
 
-            actual = expected.OrderBy(x => x.Id).ToList();
+            actual = expected.OrderBy(x => x).ToList();
             CommonComparers.AreCollectionEquals(expected, actual, AssertCompare);
         }
 

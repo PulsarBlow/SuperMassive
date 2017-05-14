@@ -1,14 +1,12 @@
-﻿using System;
-
-namespace SuperMassive
+﻿namespace SuperMassive
 {
+    using System;
+
     /// A composite identifier made of a Guid and a Timestamp.
     /// Its string representation can be lexicographicaly ordered (REVERSE ORDER).
     /// Originaly implemented by : https://github.com/hatem-b
     public struct DescendingSortedGuid : IComparable, IComparable<DescendingSortedGuid>, IEquatable<DescendingSortedGuid>
     {
-        private const char Separator = '_';
-
         /// <summary>
         /// A read-only instance of the AscendingSortedGuidDescendingSortedGuid structure whose value is all zeros.
         /// </summary>
@@ -17,12 +15,12 @@ namespace SuperMassive
         /// <summary>
         /// TimeStamp
         /// </summary>
-        public DateTimeOffset Timestamp;
+        public DateTimeOffset Timestamp { get; set; }
 
         /// <summary>
         /// Guid
         /// </summary>
-        public Guid Guid;
+        public Guid Guid { get; set; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="DescendingSortedGuid"/>
@@ -49,7 +47,7 @@ namespace SuperMassive
 
             DescendingSortedGuid result = new DescendingSortedGuid();
 
-            var splits = id.Split(Separator);
+            var splits = id.Split(SortedGuidHelper.TokenSeparator);
 
             string inversedDate = splits[0];
             string guid = splits[1];
@@ -69,12 +67,13 @@ namespace SuperMassive
         /// <returns>Returns true if parsing succeeded, otherwise false</returns>
         public static bool TryParse(string id, out DescendingSortedGuid result)
         {
-            Guard.ArgumentNotNullOrWhiteSpace(id, "id");
+            result = Empty;
+            if (string.IsNullOrWhiteSpace(id))
+                return false;
 
-            result = DescendingSortedGuid.NewSortedGuid();
             try
             {
-                result = DescendingSortedGuid.Parse(id);
+                result = Parse(id);
                 return true;
             }
             catch
@@ -89,12 +88,9 @@ namespace SuperMassive
         /// <returns></returns>
         public static DescendingSortedGuid NewSortedGuid()
         {
-            DescendingSortedGuid result = new DescendingSortedGuid();
-
-            result.Guid = Guid.NewGuid();
-            result.Timestamp = DateTime.UtcNow;
-
-            return result;
+            return new DescendingSortedGuid(
+                DateTimeOffset.UtcNow,
+                Guid.NewGuid());
         }
 
         /// <summary>
@@ -103,7 +99,9 @@ namespace SuperMassive
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("{0:D19}{1}{2:N}", DateTime.MaxValue.Ticks - Timestamp.Ticks, Separator, Guid);
+            return SortedGuidHelper.GetFormatedString(
+                DateTime.MaxValue.Ticks - Timestamp.Ticks,
+                Guid);
         }
 
         /// <summary>
@@ -112,7 +110,9 @@ namespace SuperMassive
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return Timestamp.GetHashCode() | Guid.GetHashCode();
+            return (GetType().GetHashCode() * SortedGuidHelper.HashcodeMultiplier) +
+                Timestamp.GetHashCode().GetHashCode() +
+                Guid.GetHashCode();
         }
 
         /// <summary>
@@ -176,6 +176,28 @@ namespace SuperMassive
             return !(value1 == value2);
         }
 
+        public static bool operator >(DescendingSortedGuid value1, DescendingSortedGuid value2)
+        {
+            return value1.CompareTo(value2) == -1;
+        }
+
+        public static bool operator >=(DescendingSortedGuid value1, DescendingSortedGuid value2)
+        {
+            int result = value1.CompareTo(value2);
+            return (result == 0 || result == -1);
+        }
+
+        public static bool operator <(DescendingSortedGuid value1, DescendingSortedGuid value2)
+        {
+            return value1.CompareTo(value2) == 1;
+        }
+
+        public static bool operator <=(DescendingSortedGuid value1, DescendingSortedGuid value2)
+        {
+            int result = value1.CompareTo(value2);
+            return (result == 0 || result == 1);
+        }
+
         /// <summary>
         /// Compares the given value to the current structure
         /// </summary>
@@ -186,7 +208,9 @@ namespace SuperMassive
             if (value == null)
                 return 1;
 
-            Guard.IsInstanceOfType(typeof(DescendingSortedGuid), value, "value");
+            if (!(value is DescendingSortedGuid))
+                return 1;
+
             return CompareTo((DescendingSortedGuid)value);
         }
 
@@ -197,6 +221,11 @@ namespace SuperMassive
         /// <returns></returns>
         public int CompareTo(DescendingSortedGuid other)
         {
+            if (other == null)
+            {
+                return -1;
+            }
+
             if (this.Timestamp < other.Timestamp)
                 return 1;
             if (this.Timestamp > other.Timestamp)
