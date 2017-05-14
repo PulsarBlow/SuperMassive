@@ -154,7 +154,7 @@ namespace SuperMassive
         }
 
         /// <summary>
-        /// Returns true if the given value is a valid <see cref="SortedGuid"/>
+        /// Returns true if the given value is a valid Sorted guid (ascending-descending)
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
