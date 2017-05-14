@@ -1,22 +1,18 @@
-﻿using System;
-
-namespace SuperMassive
+﻿namespace SuperMassive
 {
     /// <summary>
     /// Encapsulate a numeric value and expose some bitwise operation to manupulate it.
     /// </summary>
     public class BitwiseMask
     {
-        #region Members
-        private Int64 _value;
-        #endregion
+        private long _value;
 
-        #region Constructors
         /// <summary>
         /// Creates a new instance of the <see cref="BitwiseMask"/> class.
         /// </summary>
         public BitwiseMask()
         { }
+
         /// <summary>
         /// Creates a new instance of the <see cref="BitwiseMask"/> class.
         /// </summary>
@@ -24,6 +20,7 @@ namespace SuperMassive
         public BitwiseMask(short value)
             : this((long)value)
         { }
+
         /// <summary>
         /// Creates a new instance of the <see cref="BitwiseMask"/> class.
         /// </summary>
@@ -31,6 +28,7 @@ namespace SuperMassive
         public BitwiseMask(int value)
             : this((long)value)
         { }
+
         /// <summary>
         /// Creates a new instance of the <see cref="BitwiseMask"/> class.
         /// </summary>
@@ -39,9 +37,7 @@ namespace SuperMassive
         {
             this._value = value;
         }
-        #endregion
 
-        #region Public Methods
         /// <summary>
         /// Returns true if the current <see cref="BitwiseMask"/> instance contains the given value.
         /// </summary>
@@ -51,6 +47,7 @@ namespace SuperMassive
         {
             return this.Has((long)value);
         }
+
         /// <summary>
         /// Returns true if the current <see cref="BitwiseMask"/> instance contains the given value.
         /// </summary>
@@ -60,6 +57,7 @@ namespace SuperMassive
         {
             return this.Has((long)value);
         }
+
         /// <summary>
         /// Returns true if the current <see cref="BitwiseMask"/> instance contains the given value.
         /// </summary>
@@ -69,6 +67,7 @@ namespace SuperMassive
         {
             return (this._value & value) == value;
         }
+
         /// <summary>
         /// Returns true if the current <see cref="BitwiseMask"/> value is strictly equals to the given value.
         /// </summary>
@@ -76,8 +75,9 @@ namespace SuperMassive
         /// <returns></returns>
         public bool Is(short value)
         {
-            return this.Is((short)value);
+            return this.Is((long)value);
         }
+
         /// <summary>
         /// Returns true if the current <see cref="BitwiseMask"/> value is strictly equals to the given value.
         /// </summary>
@@ -87,6 +87,7 @@ namespace SuperMassive
         {
             return this.Is((long)value);
         }
+
         /// <summary>
         /// Returns true if the current <see cref="BitwiseMask"/> value is strictly equals to the given value.
         /// </summary>
@@ -96,6 +97,7 @@ namespace SuperMassive
         {
             return this._value == value;
         }
+
         /// <summary>
         /// Adds the given value to the <see cref="BitwiseMask"/>.
         /// </summary>
@@ -104,6 +106,7 @@ namespace SuperMassive
         {
             return this.Add((long)value);
         }
+
         /// <summary>
         /// Adds the given value to the <see cref="BitwiseMask"/>.
         /// </summary>
@@ -112,6 +115,7 @@ namespace SuperMassive
         {
             return this.Add((long)value);
         }
+
         /// <summary>
         /// Adds the given value to the <see cref="BitwiseMask"/>.
         /// </summary>
@@ -121,6 +125,7 @@ namespace SuperMassive
             this._value |= value;
             return this;
         }
+
         /// <summary>
         /// Removes the given value from the <see cref="BitwiseMask"/>.
         /// </summary>
@@ -129,6 +134,7 @@ namespace SuperMassive
         {
             return this.Remove((long)value);
         }
+
         /// <summary>
         /// Removes the given value from the <see cref="BitwiseMask"/>.
         /// </summary>
@@ -137,6 +143,7 @@ namespace SuperMassive
         {
             return this.Remove((long)value);
         }
+
         /// <summary>
         /// Removes the given value from the <see cref="BitwiseMask"/>.
         /// </summary>
@@ -146,6 +153,7 @@ namespace SuperMassive
             this._value &= ~value;
             return this;
         }
+
         /// <summary>
         /// Returns true if the <see cref="BitwiseMask"/> instance is empty (internal value = 0)
         /// </summary>
@@ -154,6 +162,7 @@ namespace SuperMassive
         {
             return this._value == 0;
         }
+
         /// <summary>
         /// Resets the current <see cref="BitwiseMask"/> instance/
         /// </summary>
@@ -163,6 +172,5 @@ namespace SuperMassive
             this._value = 0;
             return this;
         }
-        #endregion
     }
 }

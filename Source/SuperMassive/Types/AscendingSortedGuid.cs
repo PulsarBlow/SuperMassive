@@ -136,11 +136,6 @@
         /// <returns></returns>
         public bool Equals(AscendingSortedGuid other)
         {
-            if (other == null)
-            {
-                return false;
-            }
-
             if (this.Timestamp != other.Timestamp)
                 return false;
             if (this.Guid != other.Guid)

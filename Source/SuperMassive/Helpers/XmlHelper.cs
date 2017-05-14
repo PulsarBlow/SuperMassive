@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Specialized;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Xml;
-using System.Xml.Linq;
-
-namespace SuperMassive.Helpers
+﻿namespace SuperMassive
 {
+    using System;
+    using System.Collections.Specialized;
+    using System.IO;
+    using System.Runtime.Serialization;
+    using System.Text;
+    using System.Xml;
+    using System.Xml.Linq;
+
     /// <summary>
     /// DataContract and other Xml serialization utilities
     /// </summary>
@@ -42,6 +42,7 @@ namespace SuperMassive.Helpers
             }
             return result;
         }
+
         /// <summary>
         /// Builds an object from its XML representation that can be passed to the DataContractSerializer.
         /// </summary>
@@ -61,6 +62,7 @@ namespace SuperMassive.Helpers
             }
             return result;
         }
+
         /// <summary>
         /// Read the XML representation of an object from a file.
         /// </summary>
@@ -77,6 +79,7 @@ namespace SuperMassive.Helpers
             }
             return result;
         }
+
         /// <summary>
         /// Reads the XML representation of an object from a file.
         /// </summary>
@@ -101,6 +104,7 @@ namespace SuperMassive.Helpers
                 return null;
             return ReadObject(xml, type);
         }
+
         /// <summary>
         /// Gets the XML representation of the given object by using the DataContracSerializer.
         /// </summary>
@@ -113,6 +117,7 @@ namespace SuperMassive.Helpers
                 throw new ArgumentNullException("obj");
             return WriteObject(obj.GetType(), obj);
         }
+
         /// <summary>
         /// Gets the XML representation of the given object of specified type by using the DataContracSerializer.
         /// </summary>
@@ -138,6 +143,7 @@ namespace SuperMassive.Helpers
                 return xmlSerial.ToString();
             }
         }
+
         /// <summary>
         /// Gets the XML representation the given <see cref="NameValueCollection"/>
         /// </summary>
@@ -152,6 +158,7 @@ namespace SuperMassive.Helpers
                 return null;
             return xmlDocument.InnerXml;
         }
+
         /// <summary>
         /// Writes the XML representation from the DataContractSerializer
         /// into the specified filename. If a file at filename
@@ -164,6 +171,7 @@ namespace SuperMassive.Helpers
         {
             WriteObjectToFile(fileName, obj.GetType(), obj);
         }
+
         /// <summary>
         /// Writes the XML representation from the DataContractSerializer
         /// into the specified filename. If a file at filename
@@ -184,6 +192,7 @@ namespace SuperMassive.Helpers
                 writer.Write(WriteObject(type, value));
             }
         }
+
         /// <summary>
         /// Writes the XML representation of the <see cref="NameValueCollection"/> into a new <see cref="XmlDocument"/> instance.
         /// </summary>
@@ -213,6 +222,7 @@ namespace SuperMassive.Helpers
             xmldoc.AppendChild(xmlRoot);
             return xmldoc;
         }
+
         /// <summary>
         /// Writes the XML representation of the <see cref="NameValueCollection"/> into a new <see cref="XDocument"/> instance.
         /// </summary>
@@ -242,6 +252,7 @@ namespace SuperMassive.Helpers
             }
             return xdoc;
         }
+
         /// <summary>
         /// Returns the string content of the given <see cref="XDocument"/>.
         /// </summary>
@@ -251,7 +262,7 @@ namespace SuperMassive.Helpers
         public static string ToString(XDocument document, XmlWriterSettings settings)
         {
             if (document == null)
-                return null;
+                return string.Empty;
             StringBuilder sb = new StringBuilder();
             using (XmlWriter writer = XmlWriter.Create(sb, settings))
             {
@@ -259,6 +270,7 @@ namespace SuperMassive.Helpers
             }
             return sb.ToString();
         }
+
         /// <summary>
         /// Returns the string content of the given <see cref="XDocument"/>.
         /// </summary>
@@ -271,6 +283,7 @@ namespace SuperMassive.Helpers
             settings.OmitXmlDeclaration = true;
             return ToString(document, settings);
         }
+
         /// <summary>
         /// Returns the cleaned (no illegal chars) string content of the given <see cref="XDocument"/>.
         /// </summary>
@@ -294,6 +307,7 @@ namespace SuperMassive.Helpers
             }
             return SanitizeXmlString(sb.ToString());
         }
+
         /// <summary>
         /// Whether a given character is allowed by XML 1.0.
         /// </summary>
@@ -309,6 +323,7 @@ namespace SuperMassive.Helpers
                 (character >= 0x10000 && character <= 0x10FFFF)
             );
         }
+
         /// <summary>
         /// Remove illegal XML characters from a string.
         /// </summary>

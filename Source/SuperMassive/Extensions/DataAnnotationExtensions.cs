@@ -1,6 +1,4 @@
-﻿
-
-namespace SuperMassive.Extensions
+﻿namespace SuperMassive.Extensions
 {
     using System;
     using System.Collections.Generic;
@@ -15,13 +13,13 @@ namespace SuperMassive.Extensions
         /// <summary>
         /// Converts an <see cref="IEnumerable{ValidationResult}"/> to its <see cref="Dictionary{TKey, TValue}"/> counterpart.
         /// </summary>
-        /// <param name="validationResults"></param>
+        /// <param name="extended"></param>
         /// <returns></returns>
-        public static Dictionary<string, string> ToDictionary(this IEnumerable<ValidationResult> validationResults)
+        public static Dictionary<string, string> ToDictionary(this IEnumerable<ValidationResult> extended)
         {
-            if (validationResults == null)
-                return null;
-            return validationResults.ToDictionary(x => String.Join(",", x.MemberNames), x => x.ErrorMessage);
+            Guard.ArgumentNotNull(extended, nameof(extended));
+
+            return extended.ToDictionary(x => String.Join(",", x.MemberNames), x => x.ErrorMessage);
         }
     }
 }

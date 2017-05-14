@@ -18,14 +18,14 @@ namespace SuperMassive
         /// <returns>The result string</returns>
         public static string RemoveDiacritics(string value)
         {
-            string stFormD = value.Normalize(NormalizationForm.FormD);
+            string formd = value.Normalize(NormalizationForm.FormD);
             StringBuilder sb = new StringBuilder();
-            for (int ich = 0; ich < stFormD.Length; ich++)
+            for (int ich = 0; ich < formd.Length; ich++)
             {
-                UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(stFormD[ich]);
+                UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(formd[ich]);
                 if (uc != UnicodeCategory.NonSpacingMark)
                 {
-                    sb.Append(stFormD[ich]);
+                    sb.Append(formd[ich]);
                 }
             }
             return (sb.ToString().Normalize(NormalizationForm.FormC));
@@ -38,9 +38,7 @@ namespace SuperMassive
         /// <returns></returns>
         public static string Base64Utf8Encode(string decodedValue)
         {
-            byte[] encData_byte = new byte[decodedValue.Length];
-            encData_byte = System.Text.Encoding.UTF8.GetBytes(decodedValue);
-            return Convert.ToBase64String(encData_byte);
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(decodedValue));
         }
 
         /// <summary>
@@ -53,7 +51,7 @@ namespace SuperMassive
             if (String.IsNullOrEmpty(encodedValue))
                 return null;
 
-            System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding();
+            UTF8Encoding encoder = new UTF8Encoding();
             System.Text.Decoder utf8Decode = encoder.GetDecoder();
             byte[] todecode_byte = null;
 
@@ -81,7 +79,11 @@ namespace SuperMassive
         {
             if (String.IsNullOrWhiteSpace(value))
                 return value;
-            return String.Format(CultureInfo.CurrentCulture, "{0}{1}", value[0].ToString().ToUpper(CultureInfo.CurrentCulture), value.Substring(1, value.Length - 1));
+            return String.Format(
+                CultureInfo.CurrentCulture,
+                "{0}{1}",
+                value[0].ToString().ToUpper(CultureInfo.CurrentCulture),
+                value.Substring(1, value.Length - 1));
         }
 
         /// <summary>

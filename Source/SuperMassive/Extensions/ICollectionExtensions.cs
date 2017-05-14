@@ -1,6 +1,4 @@
-﻿
-
-namespace SuperMassive.Extensions
+﻿namespace SuperMassive.Extensions
 {
     using System.Collections.Generic;
 
@@ -13,13 +11,17 @@ namespace SuperMassive.Extensions
         /// Adds an item to the collection if and only if the item is not null
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="collection"></param>
+        /// <param name="extended"></param>
         /// <param name="item"></param>
-        public static void AddIfNotNull<T>(this ICollection<T> collection, T item)
+        public static void AddIfNotNull<T>(this ICollection<T> extended, T item)
             where T : class
         {
-            if (item == null) return;
-            collection.Add(item);
+            Guard.ArgumentNotNull(extended, nameof(extended));
+
+            if (item == null)
+                return;
+
+            extended.Add(item);
         }
     }
 }

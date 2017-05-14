@@ -1,24 +1,11 @@
-﻿
-
-namespace SuperMassive.Tests
+﻿namespace SuperMassive.Tests
 {
     using System;
     using NUnit.Framework;
     using SuperMassive.Extensions;
 
-    public class EnumerationExtensionsTest
+    public class EnumExtensionsTest
     {
-        [Flags]
-        public enum DummyEnum
-        {
-            NotSet = 0,
-            Value1 = 1,
-            Value2 = 2,
-            Value3 = 4,
-            Value4 = 8,
-            Value5 = 16
-        }
-
         [Test]
         public void AllMethodsTest()
         {
@@ -32,6 +19,17 @@ namespace SuperMassive.Tests
             Assert.IsTrue(dummy.Missing(DummyEnum.Value1));
             dummy = dummy.Remove(DummyEnum.Value2 | DummyEnum.Value3);
             Assert.IsTrue(dummy == DummyEnum.NotSet);
+        }
+
+        [Flags]
+        enum DummyEnum
+        {
+            NotSet = 0,
+            Value1 = 1,
+            Value2 = 2,
+            Value3 = 4,
+            Value4 = 8,
+            Value5 = 16
         }
     }
 }

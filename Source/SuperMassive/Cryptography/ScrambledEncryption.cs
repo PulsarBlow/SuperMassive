@@ -45,8 +45,13 @@ namespace SuperMassive.Cryptography
             {
                 char c1 = source[i];
                 var num1 = _scramble1.IndexOf(c1);
-                if (num1 == -1) throw new InvalidOperationException(
-                    String.Format(CultureInfo.InvariantCulture, "Source string contains an invalid character ({0})", c1));
+                if (num1 == -1)
+                {
+                    throw new InvalidOperationException(
+                        String.Format(
+                            CultureInfo.InvariantCulture,
+                            "Source string contains an invalid character ({0})", c1));
+                }
 
                 var adj = this.ApplyFudgeFactor(fudgeFactor);
                 var factor1 = factor2 + adj;

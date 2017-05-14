@@ -30,12 +30,12 @@
                 percentVariance = 0;
             if (percentVariance > 100)
                 percentVariance = 100;
-            _variance = percentVariance / 100;
+            _variance = percentVariance / 100f;
 
         }
         public DateTime Next()
         {
-            if (_last == 0)
+            if (_last.AlmostEquals(0))
             {
                 _last = _start;
                 return DateHelper.FromUnixTime(_last);
