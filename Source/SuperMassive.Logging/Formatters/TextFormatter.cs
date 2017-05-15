@@ -1,10 +1,10 @@
-﻿using SuperMassive.Logging.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
+using SuperMassive.Logging.Properties;
 
 namespace SuperMassive.Logging.Formatters
 {

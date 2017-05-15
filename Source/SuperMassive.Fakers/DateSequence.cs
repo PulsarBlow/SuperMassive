@@ -4,9 +4,8 @@ namespace SuperMassive.Fakers
 {
     public class DateSequence
     {
-        private Random _rnd = new Random();
-        private DateTime _sequenceStart;
-        private TimeSpan _maxTimeBetween;
+        private readonly DateTime _sequenceStart;
+        private readonly TimeSpan _maxTimeBetween;
         private DateTime _lastGenerated = DateTime.MinValue;
 
         public DateSequence(DateTime sequenceStart, TimeSpan maxTimeBetween)
@@ -18,7 +17,8 @@ namespace SuperMassive.Fakers
         {
             if (_lastGenerated == DateTime.MinValue)
                 return First();
-            _lastGenerated = _lastGenerated.AddSeconds(_rnd.Next(1, (int)_maxTimeBetween.TotalSeconds));
+            _lastGenerated = _lastGenerated.AddSeconds(
+                RandomNumberGenerator.Int(1, (int)_maxTimeBetween.TotalSeconds));
             return _lastGenerated;
         }
         public void Reset()
@@ -28,7 +28,7 @@ namespace SuperMassive.Fakers
         private DateTime First()
         {
             int maxSec = (int)_maxTimeBetween.TotalSeconds;
-            _lastGenerated = _sequenceStart.AddSeconds(_rnd.Next(1, maxSec));
+            _lastGenerated = _sequenceStart.AddSeconds(RandomNumberGenerator.Int(1, maxSec));
             return _lastGenerated;
         }
     }

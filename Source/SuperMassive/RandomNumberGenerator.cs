@@ -83,7 +83,9 @@
         /// <param name="max">Maximum included value</param>
         public static float Float(float max)
         {
-            if (max < 0.0f) throw new ArgumentOutOfRangeException("The max must be zero or greater.");
+            if (max < 0.0f) throw new ArgumentOutOfRangeException(
+                nameof(max),
+                "The max must be zero or greater.");
 
             return (float)_random.NextDouble() * max;
         }
@@ -95,7 +97,9 @@
         /// <param name="max">Maximum included value</param>
         public static float Float(float min, float max)
         {
-            if (max < min) throw new ArgumentOutOfRangeException("The max must be min or greater.");
+            if (max < min) throw new ArgumentOutOfRangeException(
+                nameof(max),
+                "The max must be min or greater.");
 
             return Float(max - min) + min;
         }
@@ -107,7 +111,13 @@
         /// <returns></returns>
         public static decimal Decimal(decimal max)
         {
-            if (max < 0M) { throw new ArgumentOutOfRangeException("The max must be positive or equals to zero"); }
+            if (max < 0M)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(max),
+                    "The max must be positive or equals to zero");
+            }
+
             decimal result = _random.NextDecimal(true);
             return result > max ? max : result;
         }
@@ -120,7 +130,13 @@
         /// <returns></returns>
         public static decimal Decimal(decimal min, decimal max)
         {
-            if (max < min) { throw new ArgumentOutOfRangeException("The max must be equals to or greater than min"); }
+            if (max < min)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(max),
+                    "The max must be equals to or greater than min");
+            }
+
             return Decimal(max - min) + min;
         }
 
@@ -141,7 +157,13 @@
         /// <returns></returns>
         public static IEnumerable<int> IntSequence(int length, int min = 0, int max = Int32.MaxValue)
         {
-            if (length == 0) throw new ArgumentOutOfRangeException("Length must be greated than 0");
+            if (length == 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(length),
+                    "Length must be greated than 0");
+            }
+
             int[] result = new int[length];
             for (int i = 0; i < length; i++)
             {

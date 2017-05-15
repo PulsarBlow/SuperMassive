@@ -6,7 +6,7 @@ namespace SuperMassive
     /// <summary>
     /// Provides utility methods to manipulate ipaddress
     /// </summary>
-    public static class IPAddressConverter
+    public static class IpAddressConverter
     {
         /// <summary>
         /// Converts a dot notated ip address into its <see cref="Int64"/> counterpart.

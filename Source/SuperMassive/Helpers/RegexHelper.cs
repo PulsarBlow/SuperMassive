@@ -182,7 +182,7 @@ namespace SuperMassive
                 return false;
             if (String.IsNullOrWhiteSpace(pattern))
                 throw new ArgumentNullException("pattern");
-            return Regex.IsMatch(value, pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            return Regex.IsMatch(value, pattern, regexOptions);
         }
         #endregion
     }

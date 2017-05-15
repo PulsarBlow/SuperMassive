@@ -5,12 +5,11 @@
 
     public class DistributedDateSequence
     {
-        //private Random _rnd = new Random();
-        private double _secBetweenDates;
-        private double _start;
-        private double _end;
+        private readonly double _secBetweenDates;
+        private readonly double _start;
+        private readonly double _end;
         private double _last;
-        private float _variance;
+        private readonly float _variance;
 
         /// <summary>
         /// Creates a new instance of the distributed date sequence

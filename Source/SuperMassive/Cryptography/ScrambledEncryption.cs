@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using SuperMassive.Extensions;
 
 namespace SuperMassive.Cryptography
 {
@@ -10,11 +11,11 @@ namespace SuperMassive.Cryptography
     /// </summary>
     public class ScrambledEncryption
     {
-        string _key;
-        readonly string _scramble1 = "0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
-        readonly string _scramble2 = "UKAH652LMOQ FBDIEG03JT17N4C89XPV-WRSYZ";
-        float _adj = 1.75F;
-        int _mod = 3;
+        private readonly string _key;
+        private readonly string _scramble1 = "0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+        private readonly string _scramble2 = "UKAH652LMOQ FBDIEG03JT17N4C89XPV-WRSYZ";
+        private readonly float _adj = 1.75F;
+        private int _mod = 3;
 
         /// <summary>
         /// Creates a new instance of the <see cref="ScrambledEncryption"/> class.
@@ -59,7 +60,7 @@ namespace SuperMassive.Cryptography
                 num2 = CheckRange(num2);
                 factor2 = factor1 + num2;
 
-                char c2 = _scramble2[(int)num2];
+                char c2 = _scramble2[num2];
                 target.Append(c2);
             }
             return target.ToString();
@@ -89,7 +90,7 @@ namespace SuperMassive.Cryptography
                 var num1 = num2 - (int)Math.Round(factor1);
                 num1 = CheckRange(num1);
                 factor2 = factor1 + num2;
-                char c1 = _scramble1[(int)num1];
+                char c1 = _scramble1[num1];
                 target.Append(c1);
             }
             return target.ToString();
@@ -101,12 +102,9 @@ namespace SuperMassive.Cryptography
             var fudge = fudgeFactor.Dequeue();
             fudge = fudge + _adj;
             fudgeFactor.Enqueue(fudge);
-            if (_mod != 0)
+            if (_mod != 0 && ((double)fudge % _mod).AlmostEquals(0))
             {
-                if (fudge % _mod == 0)
-                {
-                    fudge = fudge * -1;
-                }
+                fudge = fudge * -1;
             }
             return fudge;
 

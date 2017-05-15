@@ -19,7 +19,7 @@ namespace SuperMassive.Logging.Formatters
     /// <typeparam name="T">The type of object to format.</typeparam>
     public class GenericTextFormatter<T>
     {
-        private IEnumerable<Formatter<T>> formatters;
+        private readonly IEnumerable<Formatter<T>> formatters;
 
         /// <summary>
         /// Initializes a new instance of <see cref="GenericTextFormatter{T}"/> with a template and a set of
@@ -36,7 +36,7 @@ namespace SuperMassive.Logging.Formatters
             string template,
             IDictionary<string, TokenHandler<T>> tokenHandlers)
         {
-            List<Formatter<T>> formatters = new List<Formatter<T>>();
+            List<Formatter<T>> result = new List<Formatter<T>>();
 
             int currentRunStart = 0;
             int currentIndex = 0;
@@ -75,11 +75,11 @@ namespace SuperMassive.Logging.Formatters
                             string previousRun = template.Substring(currentRunStart, currentTokenStart - currentRunStart - 1);
                             if (previousRun.Length > 0)
                             {
-                                formatters.Add(o => previousRun);
+                                result.Add(o => previousRun);
                             }
 
                             // add the formatter
-                            formatters.Add(formatter);
+                            result.Add(formatter);
 
                             // start new run where the handler left
                             currentRunStart = currentIndex;
@@ -93,11 +93,11 @@ namespace SuperMassive.Logging.Formatters
                 string previousRun = template.Substring(currentRunStart, currentIndex - currentRunStart);
                 if (previousRun.Length > 0)
                 {
-                    formatters.Add(o => previousRun);
+                    result.Add(o => previousRun);
                 }
             }
 
-            return formatters;
+            return result;
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace SuperMassive.Logging.Formatters
         /// <returns>A token handler.</returns>
         public static TokenHandler<T> CreateSimpleTokenHandler(Formatter<T> formatter)
         {
-            return delegate(string template, ref int currentIndex)
+            return delegate (string template, ref int currentIndex)
             {
                 if ('}' == template[currentIndex])
                 {
@@ -136,7 +136,7 @@ namespace SuperMassive.Logging.Formatters
         /// <returns>A token handler.</returns>
         public static TokenHandler<T> CreateParameterizedTokenHandler(ParameterizedFormatterFactory<T> formatterFactory)
         {
-            return delegate(string template, ref int currentIndex)
+            return delegate (string template, ref int currentIndex)
             {
                 string parameter = string.Empty;
 
@@ -147,8 +147,7 @@ namespace SuperMassive.Logging.Formatters
                     while (true)
                     {
                         // skip until ending ')' is found
-                        while (currentIndex < template.Length && template[currentIndex++] != ')')
-                            ;
+                        while (currentIndex < template.Length && template[currentIndex++] != ')') ;
 
                         // template finished?
                         if (currentIndex == template.Length)
@@ -211,7 +210,7 @@ namespace SuperMassive.Logging.Formatters
     /// <typeparam name="T">The type to format.</typeparam>
     /// <param name="instance">The instance to format.</param>
     /// <returns>A string representing <paramref name="instance"/>.</returns>
-    public delegate string Formatter<T>(T instance);
+    public delegate string Formatter<in T>(T instance);
 
     /// <summary>
     /// Creates a <see cref="Formatter{T}"/> based on a <paramref name="parameter"/>.

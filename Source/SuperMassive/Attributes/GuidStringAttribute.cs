@@ -1,15 +1,15 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-
-namespace SuperMassive
+﻿namespace SuperMassive
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Globalization;
+
     /// <summary>
     /// A validation attribute which will ensure that the provided guid string is a valid Guid format
     /// </summary>
     public class GuidStringAttribute : ValidationAttribute
     {
-        private bool _allowEmpty = false;
+        private readonly bool _allowEmpty = false;
 
         /// <summary>
         /// Creates a new instance of the <see cref="GuidStringAttribute"/>

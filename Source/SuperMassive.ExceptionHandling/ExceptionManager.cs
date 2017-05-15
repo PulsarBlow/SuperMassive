@@ -1,11 +1,11 @@
-﻿using SuperMassive.ExceptionHandling.Properties;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-
-namespace SuperMassive.ExceptionHandling
+﻿namespace SuperMassive.ExceptionHandling
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using SuperMassive.ExceptionHandling.Properties;
+
     /// <summary>
     /// Exception Manager
     /// </summary>
@@ -174,11 +174,10 @@ namespace SuperMassive.ExceptionHandling
         #region Private Methods
         private Exception ExecuteHandlerChain(Exception ex)
         {
-            if (this.handlers == null || this.handlers.Count() == 0)
+            if (this.handlers == null || !this.handlers.Any())
                 return ex;
 
             string lastHandlerName = String.Empty;
-            Exception originalException = ex;
 
             try
             {
@@ -194,6 +193,7 @@ namespace SuperMassive.ExceptionHandling
             }
             return ex;
         }
+
         private bool RethrowRecommanded(Exception chainException, Exception originalException)
         {
             if (postHandlingAction == PostHandlingAction.None)
@@ -218,7 +218,7 @@ namespace SuperMassive.ExceptionHandling
                 throw chainException;
             }
 
-            Exception wrappedException = new ExceptionHandlingException(Resources.ExceptionNullException);
+            Exception wrappedException = new ExceptionHandlingException(Resources.ExceptionNullException, originalException);
             return wrappedException;
         }
         #endregion

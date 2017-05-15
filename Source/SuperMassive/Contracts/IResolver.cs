@@ -1,11 +1,10 @@
-﻿
-namespace SuperMassive
+﻿namespace SuperMassive
 {
     /// <summary>
     /// Resolver
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IResolver<T>
+    public interface IResolver<out T>
     {
         /// <summary>
         /// Resolve

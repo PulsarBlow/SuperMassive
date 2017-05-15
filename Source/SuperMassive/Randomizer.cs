@@ -68,7 +68,7 @@
             if (max < min)
             {
                 throw new ArgumentOutOfRangeException(
-                "min-max",
+                nameof(max),
                 string.Format(
                     CultureInfo.CurrentCulture,
                     Resources.GENERIC_GUARD_FAILURE_ARGUMENT_MUSTBE_GREATERTHAN_WITHFORMAT,

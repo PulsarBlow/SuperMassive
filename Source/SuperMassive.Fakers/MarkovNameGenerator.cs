@@ -1,12 +1,70 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SuperMassive.Fakers
 {
-    //Generates random names based on the statistical weight of letter sequences
-    //in a collection of sample names
+    /// <summary>
+    /// Generates random names based on the statistical weight of letter sequences
+    /// in a collection of sample names
+    /// </summary>
     public class MarkovNameGenerator
     {
+        private readonly Dictionary<string, List<char>> _chains = new Dictionary<string, List<char>>();
+        private readonly List<string> _samples = new List<string>();
+        private readonly List<string> _used = new List<string>();
+        private readonly int _order;
+        private readonly int _minLength;
+
+        //Get the next random name
+        public string NextName
+        {
+            get
+            {
+                //get a random token somewhere in middle of sample word                
+                string s = "";
+                do
+                {
+                    int n = RandomNumberGenerator.Int(_samples.Count);
+                    int nameLength = _samples[n].Length;
+                    s = _samples[n].Substring(
+                        RandomNumberGenerator.Int(0, _samples[n].Length - _order),
+                        _order);
+
+                    while (s.Length < nameLength)
+                    {
+                        string token = s.Substring(s.Length - _order, _order);
+                        char c = GetLetter(token);
+                        if (c != '?')
+                            s += GetLetter(token);
+                        else
+                            break;
+                    }
+
+                    if (s.Contains(" "))
+                    {
+                        string[] tokens = s.Split(' ');
+                        s = "";
+                        for (int t = 0; t < tokens.Length; t++)
+                        {
+                            if (tokens[t] == "")
+                                continue;
+                            if (tokens[t].Length == 1)
+                                tokens[t] = tokens[t].ToUpper();
+                            else
+                                tokens[t] = tokens[t].Substring(0, 1) + tokens[t].Substring(1).ToLower();
+                            if (s != "")
+                                s += " ";
+                            s += tokens[t];
+                        }
+                    }
+                    else
+                        s = s.Substring(0, 1) + s.Substring(1).ToLower();
+                }
+                while (_used.Contains(s) || s.Length < _minLength);
+                _used.Add(s);
+                return s;
+            }
+        }
+
         //constructor
         public MarkovNameGenerator(IEnumerable<string> sampleNames, int order, int minLength)
         {
@@ -51,67 +109,11 @@ namespace SuperMassive.Fakers
             }
         }
 
-        //Get the next random name
-        public string NextName
-        {
-            get
-            {
-                //get a random token somewhere in middle of sample word                
-                string s = "";
-                do
-                {
-                    int n = _rnd.Next(_samples.Count);
-                    int nameLength = _samples[n].Length;
-                    s = _samples[n].Substring(_rnd.Next(0, _samples[n].Length - _order), _order);
-                    while (s.Length < nameLength)
-                    {
-                        string token = s.Substring(s.Length - _order, _order);
-                        char c = GetLetter(token);
-                        if (c != '?')
-                            s += GetLetter(token);
-                        else
-                            break;
-                    }
-
-                    if (s.Contains(" "))
-                    {
-                        string[] tokens = s.Split(' ');
-                        s = "";
-                        for (int t = 0; t < tokens.Length; t++)
-                        {
-                            if (tokens[t] == "")
-                                continue;
-                            if (tokens[t].Length == 1)
-                                tokens[t] = tokens[t].ToUpper();
-                            else
-                                tokens[t] = tokens[t].Substring(0, 1) + tokens[t].Substring(1).ToLower();
-                            if (s != "")
-                                s += " ";
-                            s += tokens[t];
-                        }
-                    }
-                    else
-                        s = s.Substring(0, 1) + s.Substring(1).ToLower();
-                }
-                while (_used.Contains(s) || s.Length < _minLength);
-                _used.Add(s);
-                return s;
-            }
-        }
-
         //Reset the used names
         public void Reset()
         {
             _used.Clear();
         }
-
-        //private members
-        private Dictionary<string, List<char>> _chains = new Dictionary<string, List<char>>();
-        private List<string> _samples = new List<string>();
-        private List<string> _used = new List<string>();
-        private Random _rnd = new Random();
-        private int _order;
-        private int _minLength;
 
         //Get a random letter from the chain
         private char GetLetter(string token)
@@ -119,7 +121,7 @@ namespace SuperMassive.Fakers
             if (!_chains.ContainsKey(token))
                 return '?';
             List<char> letters = _chains[token];
-            int n = _rnd.Next(letters.Count);
+            int n = RandomNumberGenerator.Int(letters.Count);
             return letters[n];
         }
     }

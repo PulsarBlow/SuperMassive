@@ -219,11 +219,6 @@
         /// <returns></returns>
         public int CompareTo(AscendingSortedGuid other)
         {
-            if (other == null)
-            {
-                return 1;
-            }
-
             if (this.Timestamp < other.Timestamp)
                 return -1;
             if (this.Timestamp > other.Timestamp)

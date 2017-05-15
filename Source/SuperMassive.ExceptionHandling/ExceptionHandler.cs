@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace SuperMassive.ExceptionHandling
+﻿namespace SuperMassive.ExceptionHandling
 {
+    using System;
+
     /// <summary>
     /// Base class for Exception Handler implementations
     /// </summary>
@@ -24,7 +24,7 @@ namespace SuperMassive.ExceptionHandling
         /// Initializes a new instance of the <see cref="ExceptionHandler"/> class with the name is the handler.
         /// </summary>
         /// <param name="name"></param>
-        public ExceptionHandler(string name)
+        protected ExceptionHandler(string name)
         {
             if (String.IsNullOrWhiteSpace(name))
                 throw new ArgumentNullException("name");

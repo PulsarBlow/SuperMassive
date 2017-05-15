@@ -11,7 +11,6 @@
         static readonly string[] HOSTS = new[] { "gmail.com", "yahoo.com", "hotmail.com" };
         static readonly string[] DISPOSABLE_HOSTS = new[] { "mailinator.com", "suremail.info", "spamherelots.com", "binkmail.com", "safetymail.info", "tempinbox.com" };
         static readonly string[] DOMAIN_SUFFIXES = new[] { "co.uk", "com", "us", "uk", "ca", "biz", "info", "name" };
-        static readonly string[] IMAGE_SUFFIXES = new[] { "jpg", "png", "svg", "gif" };
 
         public static string Email(string name = null)
         {
@@ -55,7 +54,7 @@
                     case 1:
                         var parts = new[] { Name.FirstName(), Name.LastName() }.Select(n => new Regex(@"\W").Replace(n, ""));
                         return parts.Join(new[] { ".", "_" }.RandPick()).ToLower();
-                    default: throw new ApplicationException();
+                    default: throw new InvalidOperationException();
                 }
             }
         }

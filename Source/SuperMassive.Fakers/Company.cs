@@ -12,7 +12,7 @@
                 case 0: return Fakers.Name.LastName() + " " + Suffix();
                 case 1: return Fakers.Name.LastName() + "-" + Fakers.Name.LastName();
                 case 2: return String.Format("{0}, {1} and {2}", Fakers.Name.LastName(), Fakers.Name.LastName(), Fakers.Name.LastName());
-                default: throw new ApplicationException();
+                default: throw new InvalidOperationException();
             }
         }
 
@@ -43,7 +43,7 @@
                 case 0: return POSITION_PREFIXES.RandPick() + " " + POSITIONS.RandPick();
                 case 1: return POSITION_AREAS.RandPick() + " " + POSITIONS.RandPick();
                 case 2: return POSITION_PREFIXES.RandPick() + " " + POSITION_AREAS.RandPick() + " " + POSITIONS.RandPick();
-                default: throw new ApplicationException();
+                default: throw new InvalidOperationException();
             }
         }
 
