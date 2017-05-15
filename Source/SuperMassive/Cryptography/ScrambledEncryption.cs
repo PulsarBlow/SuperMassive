@@ -15,7 +15,7 @@ namespace SuperMassive.Cryptography
         private readonly string _scramble1 = "0123456789-ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
         private readonly string _scramble2 = "UKAH652LMOQ FBDIEG03JT17N4C89XPV-WRSYZ";
         private readonly float _adj = 1.75F;
-        private int _mod = 3;
+        private readonly int _mod = 3;
 
         /// <summary>
         /// Creates a new instance of the <see cref="ScrambledEncryption"/> class.

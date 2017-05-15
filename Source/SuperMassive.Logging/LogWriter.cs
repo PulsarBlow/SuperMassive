@@ -37,9 +37,9 @@
         private const string DefaultTitle = "";
         private static readonly ICollection<string> _emptyCategoriesList = new string[0];
         private readonly IList<TraceListener> _traceListeners;
-        private bool _disposed;
-        private string _sourceName;
+        private readonly string _sourceName;
         private readonly bool _autoflush;
+        private bool _disposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LogWriter"/> class.
