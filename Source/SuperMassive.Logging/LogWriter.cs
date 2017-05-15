@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-
-namespace SuperMassive.Logging
+﻿namespace SuperMassive.Logging
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Threading;
+
     /// <summary>
     /// Instance based class to write log messages based on a given configuration.
     /// Messages are routed based on category.
@@ -31,19 +31,16 @@ namespace SuperMassive.Logging
         /// </summary>
         public const int LogWriterFailureEventID = 1337;
 
-        #region Members
         private const int DefaultPriority = -1;
         private const TraceEventType DefaultSeverity = TraceEventType.Information;
         private const int DefaultEventId = 1;
         private const string DefaultTitle = "";
-        private static readonly ICollection<string> emptyCategoriesList = new string[0];
-        private IList<TraceListener> traceListeners;
-        private bool disposed;
-        private string sourceName;
-        private bool autoflush;
-        #endregion
+        private static readonly ICollection<string> _emptyCategoriesList = new string[0];
+        private readonly IList<TraceListener> _traceListeners;
+        private bool _disposed;
+        private string _sourceName;
+        private readonly bool _autoflush;
 
-        #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="LogWriter"/> class.
         /// </summary>
@@ -54,11 +51,10 @@ namespace SuperMassive.Logging
         {
             Guard.ArgumentNotNullOrEmpty(sourceName, "sourceName");
             Guard.ArgumentNotNull(traceListeners, "traceListeners");
-            this.sourceName = sourceName;
-            this.autoflush = autoflush;
-            this.traceListeners = traceListeners;
+            this._sourceName = sourceName;
+            this._autoflush = autoflush;
+            this._traceListeners = traceListeners;
         }
-        #endregion
 
         #region IDisposable Members
         /// <summary>
@@ -75,16 +71,16 @@ namespace SuperMassive.Logging
         /// <param name="disposing"><see langword="true"/> when disposing, <see langword="false"/> otherwise.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!_disposed)
             {
                 if (disposing)
                 {
-                    foreach (TraceListener listener in traceListeners)
+                    foreach (TraceListener listener in _traceListeners)
                     {
                         listener.Dispose();
                     }
                 }
-                disposed = true;
+                _disposed = true;
             }
         }
         #endregion
@@ -101,7 +97,7 @@ namespace SuperMassive.Logging
         {
             this.Write(
                 message,
-                emptyCategoriesList,
+                _emptyCategoriesList,
                 DefaultPriority,
                 DefaultEventId,
                 DefaultSeverity,
@@ -185,7 +181,7 @@ namespace SuperMassive.Logging
         {
             this.Write(
                 message,
-                emptyCategoriesList,
+                _emptyCategoriesList,
                 DefaultPriority,
                 DefaultEventId,
                 DefaultSeverity,
@@ -392,7 +388,7 @@ namespace SuperMassive.Logging
         /// <returns></returns>
         public bool IsLoggingEnabled()
         {
-            return this.traceListeners != null && this.traceListeners.Count > 0;
+            return this._traceListeners != null && this._traceListeners.Count > 0;
         }
 
         /// <summary>
@@ -426,15 +422,15 @@ namespace SuperMassive.Logging
         #region Private Methods
         private void ProcessLog(LogEntry log, TraceEventCache traceEventCache)
         {
-            foreach (var listener in this.traceListeners)
+            foreach (var listener in this._traceListeners)
             {
                 try
                 {
                     if (!listener.IsThreadSafe) Monitor.Enter(listener);
 
-                    listener.TraceData(traceEventCache, this.sourceName, log.Severity, log.EventId, log);
+                    listener.TraceData(traceEventCache, this._sourceName, log.Severity, log.EventId, log);
 
-                    if (this.autoflush)
+                    if (this._autoflush)
                     {
                         listener.Flush();
                     }

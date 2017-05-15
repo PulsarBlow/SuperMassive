@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-
-namespace SuperMassive.Logging
+﻿namespace SuperMassive.Logging
 {
+    using System.Collections.Generic;
+    using System.Diagnostics;
+
     /// <summary>
     /// Logging facade
     /// </summary>
@@ -62,19 +62,6 @@ namespace SuperMassive.Logging
         {
             TraceMessage(title, message, eventId, TraceEventType.Error);
         }
-
-        ///// <summary>
-        ///// Logs an exception
-        ///// </summary>
-        ///// <param name="exception"></param>
-        ///// <param name="title"></param>
-        ///// <param name="eventId"></param>
-        //public virtual void TraceException(Exception exception, string title, int eventId)
-        //{
-        //    StringBuilder sb = new StringBuilder();
-        //    FormatException(exception, sb);
-        //    TraceMessage(title, sb.ToString(), eventId, TraceEventType.Error);
-        //}
 
         /// <summary>
         /// Logs a message

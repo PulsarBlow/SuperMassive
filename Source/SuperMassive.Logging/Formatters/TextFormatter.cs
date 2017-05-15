@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Text;
-using SuperMassive.Logging.Properties;
-
-namespace SuperMassive.Logging.Formatters
+﻿namespace SuperMassive.Logging.Formatters
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Reflection;
+    using System.Text;
+    using SuperMassive.Logging.Properties;
+
     /// <summary>
     /// Text Formatter
     /// </summary>
@@ -22,8 +22,12 @@ namespace SuperMassive.Logging.Formatters
         private readonly static Dictionary<string, TokenHandler<LogEntry>> defaultTokenHandlers;
         private readonly static Dictionary<string, TokenHandler<LogEntry>> emptyExtraTokenHandlers;
 
-        private string template;
-        private GenericTextFormatter<LogEntry> formatter;
+        private readonly GenericTextFormatter<LogEntry> formatter;
+
+        /// <summary>
+        /// Gets or sets the formatting template.
+        /// </summary>
+        public string Template { get; set; }
 
         /// <summary>
         /// Sets up the default token handlers for the <see cref="TextFormatter"/>;
@@ -117,11 +121,11 @@ namespace SuperMassive.Logging.Formatters
         {
             if (!string.IsNullOrEmpty(template))
             {
-                this.template = template;
+                Template = template;
             }
             else
             {
-                this.template = DefaultTextFormat;
+                Template = DefaultTextFormat;
             }
 
             Dictionary<string, TokenHandler<LogEntry>> tokenHandlers = defaultTokenHandlers;
@@ -134,7 +138,7 @@ namespace SuperMassive.Logging.Formatters
                 }
             }
 
-            this.formatter = new GenericTextFormatter<LogEntry>(this.template, tokenHandlers);
+            this.formatter = new GenericTextFormatter<LogEntry>(Template, tokenHandlers);
         }
 
         /// <summary>
@@ -388,15 +392,6 @@ namespace SuperMassive.Logging.Formatters
 
                 return entries.ToString();
             };
-        }
-
-        /// <summary>
-        /// Gets or sets the formatting template.
-        /// </summary>
-        public string Template
-        {
-            get { return template; }
-            set { template = value; }
         }
 
         /// <overloads>

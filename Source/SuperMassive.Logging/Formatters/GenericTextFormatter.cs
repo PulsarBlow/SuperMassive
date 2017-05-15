@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Text;
-
-namespace SuperMassive.Logging.Formatters
+﻿namespace SuperMassive.Logging.Formatters
 {
+    using System.Collections.Generic;
+    using System.Text;
+
+
     /// <summary>
     /// Formats an instance for <typeparamref name="T"/> with a sequence of <see cref="Formatter{T}"/> instances.
     /// </summary>
@@ -202,7 +203,7 @@ namespace SuperMassive.Logging.Formatters
     /// <param name="currentIndex">The current index in the template.</param>
     /// <returns>The <see cref="Formatter{T}"/> representing the token, or <see langword="null"/> if the parsing of the token
     /// was not successful.</returns>
-    public delegate Formatter<T> TokenHandler<T>(string template, ref int currentIndex);
+    public delegate Formatter<T> TokenHandler<in T>(string template, ref int currentIndex);
 
     /// <summary>
     /// Returns a string representation of <paramref name="instance"/>
@@ -221,5 +222,5 @@ namespace SuperMassive.Logging.Formatters
     /// <typeparam name="T">The type to format.</typeparam>
     /// <param name="parameter">The parameter to use when creating a formatter, extracted from the token on a template.</param>
     /// <returns>The <see cref="Formatter{T}"/> based on the parameter.</returns>
-    public delegate Formatter<T> ParameterizedFormatterFactory<T>(string parameter);
+    public delegate Formatter<T> ParameterizedFormatterFactory<in T>(string parameter);
 }

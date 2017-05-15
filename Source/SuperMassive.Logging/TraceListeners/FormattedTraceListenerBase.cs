@@ -1,32 +1,13 @@
-﻿using SuperMassive.Logging.Formatters;
-using System.Diagnostics;
-
-namespace SuperMassive.Logging.TraceListeners
+﻿namespace SuperMassive.Logging.TraceListeners
 {
+    using System.Diagnostics;
+    using SuperMassive.Logging.Formatters;
+
     /// <summary>
     /// Base class for <see cref="TraceListener"/>s that deal with formatters.
     /// </summary>
     public abstract class FormattedTraceListenerBase : TraceListener
     {
-        private ILogFormatter formatter;
-
-        /// <summary>
-        /// Initalizes a new instance of <see cref="FormattedTraceListenerBase"/>.
-        /// </summary>
-        protected FormattedTraceListenerBase()
-        {
-        }
-
-        /// <summary>
-        /// Initalizes a new instance of <see cref="FormattedTraceListenerBase"/> with a <see cref="ILogFormatter"/>.
-        /// </summary>
-        /// <param name="formatter">The <see cref="ILogFormatter"/> to use when tracing a <see cref="LogEntry"/>.</param>
-        protected FormattedTraceListenerBase(ILogFormatter formatter)
-        {
-            this.Formatter = formatter;
-        }
-
-
         /// <summary>
         /// Specifies whether this TraceListener is threadsafe
         /// </summary>
@@ -41,17 +22,22 @@ namespace SuperMassive.Logging.TraceListeners
         /// <summary>
         /// The <see cref="ILogFormatter"/> used to format the trace messages.
         /// </summary>
-        public ILogFormatter Formatter
-        {
-            get
-            {
-                return this.formatter;
-            }
+        public ILogFormatter Formatter { get; set; }
 
-            set
-            {
-                this.formatter = value;
-            }
+        /// <summary>
+        /// Initalizes a new instance of <see cref="FormattedTraceListenerBase"/>.
+        /// </summary>
+        protected FormattedTraceListenerBase()
+        {
+        }
+
+        /// <summary>
+        /// Initalizes a new instance of <see cref="FormattedTraceListenerBase"/> with a <see cref="ILogFormatter"/>.
+        /// </summary>
+        /// <param name="formatter">The <see cref="ILogFormatter"/> to use when tracing a <see cref="LogEntry"/>.</param>
+        protected FormattedTraceListenerBase(ILogFormatter formatter)
+        {
+            Formatter = formatter;
         }
 
         /// <summary>
@@ -66,14 +52,14 @@ namespace SuperMassive.Logging.TraceListeners
         /// <param name="data">The data to trace.</param>
         public override void TraceData(TraceEventCache eventCache, string source, TraceEventType eventType, int id, object data)
         {
-            if ((this.Filter == null) || this.Filter.ShouldTrace(eventCache, source, eventType, id, null, null, data, null))
+            if ((Filter == null) || Filter.ShouldTrace(eventCache, source, eventType, id, null, null, data, null))
             {
                 string text1 = string.Empty;
                 if (data != null)
                 {
                     text1 = data.ToString();
 
-                    this.WriteLine(text1);
+                    WriteLine(text1);
                 }
             }
         }

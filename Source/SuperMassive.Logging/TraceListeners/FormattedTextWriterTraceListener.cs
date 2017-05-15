@@ -1,16 +1,19 @@
-﻿using SuperMassive.Logging.Formatters;
-using System;
-using System.Diagnostics;
-using System.IO;
-
-namespace SuperMassive.Logging.TraceListeners
+﻿namespace SuperMassive.Logging.TraceListeners
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using SuperMassive.Logging.Formatters;
+
     /// <summary>
     /// Extends <see cref="TextWriterTraceListener"/> to add formatting capabilities.
     /// </summary>
     public class FormattedTextWriterTraceListener : TextWriterTraceListener
     {
-        private ILogFormatter formatter;
+        /// <summary>
+        /// Gets the <see cref="ILogFormatter"/> used to format the trace messages.
+        /// </summary>
+        public ILogFormatter Formatter { get; set; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="FormattedTextWriterTraceListener"/>.
@@ -187,22 +190,6 @@ namespace SuperMassive.Logging.TraceListeners
                 {
                     base.TraceData(eventCache, source, eventType, id, data);
                 }
-            }
-        }
-
-        /// <summary>
-        /// Gets the <see cref="ILogFormatter"/> used to format the trace messages.
-        /// </summary>
-        public ILogFormatter Formatter
-        {
-            get
-            {
-                return this.formatter;
-            }
-
-            set
-            {
-                this.formatter = value;
             }
         }
 
