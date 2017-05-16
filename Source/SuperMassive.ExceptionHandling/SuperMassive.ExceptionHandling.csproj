@@ -1,14 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFrameworks>net45;net46;net461;net462</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <DebugType Condition="'$(TargetFramework)' != '' AND '$(TargetFramework)' != 'netcoreapp1.0'">Full</DebugType>
+    <Version>2.0.0-alpha.1</Version>
+    <Authors>PulsarBlow</Authors>
+    <Company>PulsarBlow</Company>
+    <Description>SuperMassive is a small condensed framework of reusable .NET components and utility classes. It's your supermassive swiss army knife.</Description>
+    <Copyright>Copyright © Alain Mereaux 2017</Copyright>
+    <PackageLicenseUrl>https://raw.github.com/PulsarBlow/SuperMassive/master/LICENCE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/PulsarBlow/SuperMassive</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/PulsarBlow/SuperMassive/master/supermassive.png</PackageIconUrl>
+    <RepositoryUrl>https://raw.githubusercontent.com/PulsarBlow/SuperMassive</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>SuperMassive Exception Handling ExceptionHandling Abstraction</PackageTags>
+    <PackageReleaseNotes />
+    <Summary>SuperMassive Exception Handling. Handle your application exceptions like a pro.</Summary>
   </PropertyGroup>
-  <PropertyGroup>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\..\GlobalAssemblyInfos.cs" Link="Properties\GlobalAssemblyInfos.cs" />
-  </ItemGroup>
 </Project>

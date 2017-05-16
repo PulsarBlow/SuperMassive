@@ -1,12 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net462</TargetFramework>
-  </PropertyGroup>
-  <PropertyGroup>
-   <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TargetFrameworks>net45;net46;net461;net462</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\GlobalAssemblyInfos.cs" Link="Properties\GlobalAssemblyInfos.cs" />
+    <Compile Include="..\Tests.AssemblyInfos.cs" Link="Properties\Tests.AssemblyInfos.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.6.1" />
@@ -24,5 +21,6 @@
   </ItemGroup>
   <PropertyGroup>
     <DebugType Condition="'$(TargetFramework)' != '' AND '$(TargetFramework)' != 'netcoreapp1.0'">Full</DebugType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 </Project>
