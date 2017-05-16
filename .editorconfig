@@ -9,3 +9,5 @@ insert_final_newline = true
 [*.xml]
 indent_size = 2
 
+[*.csproj]
+indent_size = 2

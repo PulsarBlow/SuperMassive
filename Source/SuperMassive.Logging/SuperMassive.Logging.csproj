@@ -1,10 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
     <PropertyGroup>
         <TargetFrameworks>net45;net46;net461;net462</TargetFrameworks>
-    </PropertyGroup>
-    <PropertyGroup>
         <DebugType Condition="'$(TargetFramework)' != '' AND '$(TargetFramework)' != 'netcoreapp1.0'">Full</DebugType>
-        <Version>2.0.0-alpha.1</Version>
+        <Version>2.0.0-alpha1</Version>
         <Authors>PulsarBlow</Authors>
         <Company>PulsarBlow</Company>
         <Description>SuperMassive is a small condensed framework of reusable .NET components and utility classes. It's your supermassive swiss army knife.</Description>
@@ -17,8 +15,12 @@
         <PackageTags>SuperMassive Logging Abstraction TraceListener Formatter</PackageTags>
         <PackageReleaseNotes />
         <Summary>SuperMassive logging abstractions. A solid foundation on which to build your logging infrastructure.</Summary>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     </PropertyGroup>
     <ItemGroup>
       <ProjectReference Include="..\SuperMassive\SuperMassive.csproj" />
     </ItemGroup>
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Copy SourceFiles="$(OutputPath)\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(SolutionDir)\build" />
+  </Target>
 </Project>

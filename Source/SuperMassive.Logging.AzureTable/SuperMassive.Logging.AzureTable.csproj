@@ -1,10 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
     <PropertyGroup>
         <TargetFrameworks>net45;net46;net461;net462</TargetFrameworks>
-    </PropertyGroup>
-    <PropertyGroup>
         <DebugType Condition="'$(TargetFramework)' != '' AND '$(TargetFramework)' != 'netcoreapp1.0'">Full</DebugType>
-        <Version>2.0.0-alpha.1</Version>
+        <Version>2.0.0-alpha1</Version>
         <Authors>PulsarBlow</Authors>
         <Company>PulsarBlow</Company>
         <Description>SuperMassive is a small condensed framework of reusable .NET components and utility classes. It's your supermassive swiss army knife.</Description>
@@ -17,6 +15,7 @@
         <PackageTags>SuperMassive Logging Trace Azure CloudTable</PackageTags>
         <PackageReleaseNotes />
         <Summary>SuperMassive logging to Microsoft Azure Table Storage. Concrete logging implementation.</Summary>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="WindowsAzure.Storage" Version="8.1.1" />
@@ -28,4 +27,7 @@
     <ItemGroup>
       <Folder Include="Properties\" />
     </ItemGroup>
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Copy SourceFiles="$(OutputPath)\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(SolutionDir)\build" />
+  </Target>
 </Project>
