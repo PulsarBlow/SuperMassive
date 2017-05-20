@@ -17,6 +17,7 @@
         {
             return new BitwiseMask(value);
         }
+
         /// <summary>
         /// Returns the current <see cref="Int32"/> as a <see cref="BitwiseMask"/>
         /// </summary>
@@ -26,6 +27,7 @@
         {
             return new BitwiseMask(value);
         }
+
         /// <summary>
         /// Returns the current <see cref="Int64"/> as a <see cref="BitwiseMask"/>
         /// </summary>
@@ -35,28 +37,39 @@
         {
             return new BitwiseMask(value);
         }
+
         /// <summary>
-        /// Returns a sequence of number
+        /// Returns a sequence of number starting from the current value
         /// </summary>
-        /// <param name="from"></param>
-        /// <param name="to"></param>
+        /// <param name="startingValue"></param>
+        /// <param name="endingValue"></param>
         /// <returns></returns>
-        public static IEnumerable<int> To(this int from, int to)
+        public static IEnumerable<int> To(this int startingValue, int endingValue)
         {
-            if (to >= from)
+            if (endingValue == startingValue)
+                return new int[] { startingValue };
+            if (startingValue == int.MinValue && endingValue == int.MaxValue)
+                return new int[] { startingValue };
+            if (startingValue == int.MaxValue && endingValue == int.MinValue)
+                return new int[] { startingValue };
+
+            List<int> result = new List<int>();
+            if (endingValue > startingValue)
             {
-                for (int i = from; i <= to; i++)
+                for (int i = startingValue; i <= endingValue; i++)
                 {
-                    yield return i;
+                    result.Add(i);
                 }
             }
             else
             {
-                for (int i = from; i >= to; i--)
+                for (int i = startingValue; i >= endingValue; i--)
                 {
-                    yield return i;
+                    result.Add(i);
                 }
             }
+
+            return result;
         }
     }
 }
