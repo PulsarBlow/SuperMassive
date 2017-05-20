@@ -1,4 +1,4 @@
-﻿namespace SuperMassive.Tests.Extensions
+﻿namespace SuperMassive.Tests
 {
     using System;
     using System.Collections.Generic;
