@@ -23,4 +23,7 @@
     <DebugType Condition="'$(TargetFramework)' != '' AND '$(TargetFramework)' != 'netcoreapp1.0'">Full</DebugType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
+  <PropertyGroup>
+    <SonarQubeTestProject>true</SonarQubeTestProject>
+  </PropertyGroup>
 </Project>
