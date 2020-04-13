@@ -1,9 +1,11 @@
-﻿using System;
-using System.Globalization;
-using SuperMassive.Properties;
+﻿#nullable enable
 
 namespace SuperMassive
 {
+    using System;
+    using System.Globalization;
+    using Properties;
+
     /// <summary>
     /// A static helper class that includes various parameter checking routines.
     /// Guard provides a way to specify preconditions in your code.
@@ -17,7 +19,7 @@ namespace SuperMassive
         /// <param name="argumentValue">Argument value to test.</param>
         /// <param name="argumentName">Name of the argument being tested.</param>
         /// <exception cref="ArgumentNullException">If argument value is null</exception>
-        public static void ArgumentNotNull(object argumentValue, string argumentName)
+        public static void ArgumentNotNull(object? argumentValue, string argumentName)
         {
             if (argumentValue == null)
             {
@@ -31,14 +33,19 @@ namespace SuperMassive
         /// <typeparam name="TWrapException">Exception type to wrap the <see cref="ArgumentNullException"/> type with</typeparam>
         /// <param name="argumentValue">The argument value</param>
         /// <param name="argumentName">The argument name</param>
-        public static void ArgumentNotNull<TWrapException>(object argumentValue, string argumentName)
+        public static void ArgumentNotNull<TWrapException>(object? argumentValue, string argumentName)
             where TWrapException : Exception, new()
         {
             if (argumentValue != null)
                 return;
+
             WrapAndThrow<TWrapException, ArgumentNullException>(
-                string.Format(CultureInfo.CurrentCulture, Resources.GENERIC_GUARD_FAILURE_ARGUMENT_ISNULL_WITHFORMAT, argumentName),
-                () => { return new ArgumentNullException(argumentName); });
+                string.Format(
+                    CultureInfo.CurrentCulture,
+                    Resources.GENERIC_GUARD_FAILURE_ARGUMENT_ISNULL_WITHFORMAT,
+                    argumentName),
+                () => new ArgumentNullException(argumentName),
+                argumentName);
         }
 
         /// <summary>
@@ -76,10 +83,11 @@ namespace SuperMassive
 
             if (argumentValue.Length == 0)
             {
-                WrapAndThrow<TWrapException>(string.Format(
-                    CultureInfo.CurrentCulture,
-                    Resources.GENERIC_GUARD_FAILURE_ARGUMENT_ISEMPTY_WITHFORMAT,
-                    argumentName));
+                WrapAndThrow<TWrapException>(
+                    string.Format(
+                        CultureInfo.CurrentCulture,
+                        Resources.GENERIC_GUARD_FAILURE_ARGUMENT_ISEMPTY_WITHFORMAT,
+                        argumentName));
             }
         }
 
@@ -132,7 +140,7 @@ namespace SuperMassive
         /// <param name="preconditionName">The name of the precondition. Will be use to format the exception message</param>
         /// <param name="argumentName">Argument name which must fulfill the precondition</param>
         /// <exception cref="ArgumentException">Occurs when the precondition is not satisfied</exception>
-        public static void Requires(Func<bool> precondition, string preconditionName = null, string argumentName = null)
+        public static void Requires(Func<bool> precondition, string? preconditionName = null, string? argumentName = null)
         {
             ArgumentNotNull(precondition, nameof(precondition));
 
@@ -157,7 +165,7 @@ namespace SuperMassive
         /// <param name="argumentName">Argument name which must fulfill the precondition</param>
         /// <exception cref="ArgumentNullException">Occurs when the precondition is null</exception>
         /// <exception cref="ArgumentException">Occurs when the precondition is not satisfied</exception>
-        public static void Requires<TWrapException>(Func<bool> precondition, string preconditionName = null, string argumentName = null)
+        public static void Requires<TWrapException>(Func<bool> precondition, string? preconditionName = null, string? argumentName = null)
             where TWrapException : Exception, new()
         {
             ArgumentNotNull<TWrapException>(precondition, nameof(precondition));
@@ -226,7 +234,8 @@ namespace SuperMassive
                     CultureInfo.CurrentCulture,
                     Resources.GENERIC_GUARD_FAILURE_TYPE_ISNOTASSIGNABLE_WITHFORMAT,
                     targetType,
-                    GetTypeName(instance)));
+                    GetTypeName(instance)),
+                    argumentName);
             }
         }
 
@@ -274,7 +283,8 @@ namespace SuperMassive
                     CultureInfo.CurrentCulture,
                     Resources.GENERIC_GUARD_FAILURE_TYPE_ISNOTASSIGNABLE_WITHFORMAT,
                     targetType,
-                    valueType));
+                    valueType),
+                    argumentName);
             }
         }
 
@@ -309,7 +319,7 @@ namespace SuperMassive
         {
             try
             {
-                return assignmentInstance.GetType().FullName;
+                return assignmentInstance.GetType().FullName ?? string.Empty;
             }
             catch (Exception)
             {
@@ -317,20 +327,23 @@ namespace SuperMassive
             }
         }
 
-        private static void WrapAndThrow<TWrapException, TInnerException>(string message, Func<TInnerException> innerActivator)
+        private static void WrapAndThrow<TWrapException, TInnerException>(string message, Func<TInnerException> innerActivator, string? argumentName = null)
             where TWrapException : Exception, new()
             where TInnerException : Exception, new()
         {
-            throw Activator.CreateInstance(
-                   typeof(TWrapException),
-                   message,
-                   innerActivator.Invoke()) as TWrapException;
+            if (Activator.CreateInstance(typeof(TWrapException), message,
+                innerActivator.Invoke()) is TWrapException instance)
+                throw instance;
+            throw new ArgumentException(message, argumentName);
         }
 
-        private static void WrapAndThrow<TWrapException>(string message)
+        private static void WrapAndThrow<TWrapException>(string message, string? argumentName = null)
             where TWrapException : Exception, new()
         {
-            throw Activator.CreateInstance(typeof(TWrapException), message, new ArgumentException(message)) as TWrapException;
+            if (Activator.CreateInstance(typeof(TWrapException), message,
+                new ArgumentException(message, argumentName)) is TWrapException instance)
+                throw instance;
+            throw new ArgumentException(message, argumentName);
         }
     }
 }
