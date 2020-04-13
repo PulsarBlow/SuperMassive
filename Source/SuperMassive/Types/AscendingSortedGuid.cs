@@ -1,6 +1,9 @@
-﻿namespace SuperMassive
+﻿#nullable enable
+
+namespace SuperMassive
 {
     using System;
+    using Properties;
 
     /// <summary>
     /// A composite identifier made of a Guid and a Timestamp which
@@ -17,12 +20,12 @@
         /// <summary>
         /// TimeStamp
         /// </summary>
-        public DateTimeOffset Timestamp { get; set; }
+        public DateTimeOffset Timestamp { get; }
 
         /// <summary>
         /// Guid
         /// </summary>
-        public Guid Guid { get; set; }
+        public Guid Guid { get; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="AscendingSortedGuid"/>
@@ -31,10 +34,11 @@
         /// <param name="guid"></param>
         public AscendingSortedGuid(DateTimeOffset timestamp, Guid guid)
         {
-            Guard.ArgumentNotNull(timestamp, "timestamp");
-            Guard.ArgumentNotNull(guid, "guid");
-            this.Timestamp = timestamp;
-            this.Guid = guid;
+            Guard.ArgumentNotNull(timestamp, nameof(timestamp));
+            Guard.ArgumentNotNull(guid, nameof(guid));
+
+            Timestamp = timestamp;
+            Guid = guid;
         }
 
         /// <summary>
@@ -42,24 +46,20 @@
         /// </summary>
         /// <param name="id">Should be in the form of 0000000000000000000_00000000000000000000000000000000</param>
         /// <returns></returns>
-
         public static AscendingSortedGuid Parse(string id)
         {
-            Guard.ArgumentNotNullOrEmpty(id, "id");
-            if (!RegexHelper.IsSortedGuid(id)) { throw new ArgumentException("Not valid SortedGuid", nameof(id)); }
-
-            AscendingSortedGuid result = new AscendingSortedGuid();
+            Guard.ArgumentNotNullOrEmpty(id, nameof(id));
+            if (!RegexHelper.IsSortedGuid(id)) { throw new ArgumentException(Resources.Validation_NotValidSortedGuid, nameof(id)); }
 
             var splits = id.Split(SortedGuidHelper.TokenSeparator);
 
-            string inversedDate = splits[0];
+            string invertedDate = splits[0];
             string guid = splits[1];
-            long date = long.Parse(inversedDate);
+            long date = long.Parse(invertedDate);
 
-            result.Guid = Guid.Parse(guid);
-            result.Timestamp = new DateTimeOffset(date, new TimeSpan(0));
-
-            return result;
+            return new AscendingSortedGuid(
+                new DateTimeOffset(date, new TimeSpan(0)),
+                Guid.Parse(guid));
         }
 
         /// <summary>
@@ -122,11 +122,9 @@
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            if (obj == null || !(obj is AscendingSortedGuid))
-                return false;
-            return Equals((AscendingSortedGuid)obj);
+            return obj is AscendingSortedGuid guid && Equals(guid);
         }
 
         /// <summary>
@@ -136,11 +134,10 @@
         /// <returns></returns>
         public bool Equals(AscendingSortedGuid other)
         {
-            if (this.Timestamp != other.Timestamp)
+            if (Timestamp != other.Timestamp)
                 return false;
-            if (this.Guid != other.Guid)
-                return false;
-            return true;
+
+            return Guid == other.Guid;
         }
 
         /// <summary>
@@ -155,11 +152,8 @@
             {
                 return false;
             }
-            if (value1.Guid != value2.Guid)
-            {
-                return false;
-            }
-            return true;
+
+            return !(value1.Guid != value2.Guid);
         }
 
         /// <summary>
@@ -173,22 +167,46 @@
             return !(value1 == value2);
         }
 
+        /// <summary>
+        /// Greater operator overloading
+        /// </summary>
+        /// <param name="value1"></param>
+        /// <param name="value2"></param>
+        /// <returns></returns>
         public static bool operator >(AscendingSortedGuid value1, AscendingSortedGuid value2)
         {
             return value1.CompareTo(value2) == 1;
         }
 
+        /// <summary>
+        /// Greater or equal, operator overloading
+        /// </summary>
+        /// <param name="value1"></param>
+        /// <param name="value2"></param>
+        /// <returns></returns>
         public static bool operator >=(AscendingSortedGuid value1, AscendingSortedGuid value2)
         {
             int result = value1.CompareTo(value2);
             return (result == 0 || result == 1);
         }
 
+        /// <summary>
+        /// Lesser operator overloading
+        /// </summary>
+        /// <param name="value1"></param>
+        /// <param name="value2"></param>
+        /// <returns></returns>
         public static bool operator <(AscendingSortedGuid value1, AscendingSortedGuid value2)
         {
             return value1.CompareTo(value2) == -1;
         }
 
+        /// <summary>
+        /// Lesser or equal, operator overloading
+        /// </summary>
+        /// <param name="value1"></param>
+        /// <param name="value2"></param>
+        /// <returns></returns>
         public static bool operator <=(AscendingSortedGuid value1, AscendingSortedGuid value2)
         {
             int result = value1.CompareTo(value2);
@@ -200,7 +218,7 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public int CompareTo(object value)
+        public int CompareTo(object? value)
         {
             if (value == null)
                 return -1;
@@ -219,12 +237,10 @@
         /// <returns></returns>
         public int CompareTo(AscendingSortedGuid other)
         {
-            if (this.Timestamp < other.Timestamp)
+            if (Timestamp < other.Timestamp)
                 return -1;
-            if (this.Timestamp > other.Timestamp)
-                return 1;
-            // Timestamp are equal, check guid now
-            return this.Guid.CompareTo(other.Guid);
+
+            return Timestamp > other.Timestamp ? 1 : Guid.CompareTo(other.Guid);
         }
     }
 }

@@ -1,26 +1,29 @@
-﻿namespace SuperMassive
+﻿#nullable enable
+
+namespace SuperMassive
 {
     using System;
+    using Properties;
 
     /// A composite identifier made of a Guid and a Timestamp.
-    /// Its string representation can be lexicographicaly ordered (REVERSE ORDER).
-    /// Originaly implemented by : https://github.com/hatem-b
+    /// Its string representation can be lexicographically ordered (REVERSE ORDER).
+    /// Originally implemented by : https://github.com/hatem-b
     public struct DescendingSortedGuid : IComparable, IComparable<DescendingSortedGuid>, IEquatable<DescendingSortedGuid>
     {
         /// <summary>
         /// A read-only instance of the AscendingSortedGuidDescendingSortedGuid structure whose value is all zeros.
         /// </summary>
-        public readonly static DescendingSortedGuid Empty = new DescendingSortedGuid();
+        public static readonly DescendingSortedGuid Empty = new DescendingSortedGuid();
 
         /// <summary>
         /// TimeStamp
         /// </summary>
-        public DateTimeOffset Timestamp { get; set; }
+        public DateTimeOffset Timestamp { get; }
 
         /// <summary>
         /// Guid
         /// </summary>
-        public Guid Guid { get; set; }
+        public Guid Guid { get; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="DescendingSortedGuid"/>
@@ -29,10 +32,11 @@
         /// <param name="guid"></param>
         public DescendingSortedGuid(DateTimeOffset timestamp, Guid guid)
         {
-            Guard.ArgumentNotNull(timestamp, "timestamp");
-            Guard.ArgumentNotNull(guid, "guid");
-            this.Timestamp = timestamp;
-            this.Guid = guid;
+            Guard.ArgumentNotNull(timestamp, nameof(timestamp));
+            Guard.ArgumentNotNull(guid, nameof(guid));
+
+            Timestamp = timestamp;
+            Guid = guid;
         }
 
         /// <summary>
@@ -42,21 +46,19 @@
         /// <returns></returns>
         public static DescendingSortedGuid Parse(string id)
         {
-            Guard.ArgumentNotNullOrWhiteSpace(id, "id");
-            if (!RegexHelper.IsSortedGuid(id)) { throw new ArgumentException("Not valid SortedGuid"); }
+            Guard.ArgumentNotNullOrWhiteSpace(id, nameof(id));
+            if (!RegexHelper.IsSortedGuid(id)) { throw new ArgumentException(Resources.Validation_NotValidSortedGuid, nameof(id)); }
 
-            DescendingSortedGuid result = new DescendingSortedGuid();
 
             var splits = id.Split(SortedGuidHelper.TokenSeparator);
 
-            string inversedDate = splits[0];
+            string invertedDate = splits[0];
             string guid = splits[1];
-            long date = DateTime.MaxValue.Ticks - long.Parse(inversedDate);
+            long date = DateTime.MaxValue.Ticks - long.Parse(invertedDate);
 
-            result.Guid = Guid.Parse(guid);
-            result.Timestamp = new DateTimeOffset(date, new TimeSpan(0));
-
-            return result;
+            return new DescendingSortedGuid(
+                new DateTimeOffset(date, new TimeSpan(0)),
+                Guid.Parse(guid));
         }
 
         /// <summary>
@@ -107,7 +109,7 @@
         /// <summary>
         /// Gets hash code
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns the hashcode of the current <see cref="DescendingSortedGuid"/></returns>
         public override int GetHashCode()
         {
             return (GetType().GetHashCode() * SortedGuidHelper.HashcodeMultiplier) +
@@ -120,11 +122,9 @@
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            if (obj == null || !(obj is DescendingSortedGuid))
-                return false;
-            return Equals((DescendingSortedGuid)obj);
+            return obj is DescendingSortedGuid guid && Equals(guid);
         }
 
         /// <summary>
@@ -134,11 +134,10 @@
         /// <returns></returns>
         public bool Equals(DescendingSortedGuid other)
         {
-            if (this.Timestamp != other.Timestamp)
+            if (Timestamp != other.Timestamp)
                 return false;
-            if (this.Guid != other.Guid)
-                return false;
-            return true;
+
+            return Guid == other.Guid;
         }
 
         /// <summary>
@@ -153,11 +152,8 @@
             {
                 return false;
             }
-            if (value1.Guid != value2.Guid)
-            {
-                return false;
-            }
-            return true;
+
+            return !(value1.Guid != value2.Guid);
         }
 
         /// <summary>
@@ -198,15 +194,12 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public int CompareTo(object value)
+        public int CompareTo(object? value)
         {
             if (value == null)
                 return 1;
 
-            if (!(value is DescendingSortedGuid))
-                return 1;
-
-            return CompareTo((DescendingSortedGuid)value);
+            return !(value is DescendingSortedGuid) ? 1 : CompareTo((DescendingSortedGuid)value);
         }
 
         /// <summary>
@@ -216,12 +209,12 @@
         /// <returns></returns>
         public int CompareTo(DescendingSortedGuid other)
         {
-            if (this.Timestamp < other.Timestamp)
+            if (Timestamp < other.Timestamp)
                 return 1;
-            if (this.Timestamp > other.Timestamp)
+            if (Timestamp > other.Timestamp)
                 return -1;
             // Timestamp are equal, check guid now
-            return this.Guid.CompareTo(other.Guid);
+            return Guid.CompareTo(other.Guid);
         }
     }
 }

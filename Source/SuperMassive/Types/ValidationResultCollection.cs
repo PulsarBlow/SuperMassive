@@ -1,10 +1,14 @@
-﻿namespace SuperMassive
+﻿using System;
+
+#nullable enable
+
+namespace SuperMassive
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Globalization;
     using System.Text;
-    using SuperMassive.Extensions;
+    using Extensions;
 
     /// <summary>
     /// A collection wrapper which is used by the <see cref="ValidationFailedException"/>.
@@ -23,7 +27,6 @@
         /// Creates a new instance of the <see cref="ValidationResultCollection"/> class.
         /// </summary>
         public ValidationResultCollection()
-            : base()
         { }
 
         /// <summary>
@@ -39,20 +42,21 @@
         /// or the representation of the type if the inner list is empty.
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        public override string? ToString()
         {
-            if (this.Count == 0)
+            if (Count == 0)
             {
                 return base.ToString();
             }
 
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             foreach (var result in this)
             {
                 builder.AppendFormat(CultureInfo.InvariantCulture, "{0} ({1})\n",
                     result.ErrorMessage,
-                    result.MemberNames != null ? result.MemberNames.Join(", ") : "");
+                    result.MemberNames != null ? result.MemberNames.Join(", ") : string.Empty);
             }
+
             return builder.ToString();
         }
     }
