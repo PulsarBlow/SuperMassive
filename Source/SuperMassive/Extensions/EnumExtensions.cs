@@ -1,4 +1,6 @@
-﻿namespace SuperMassive.Extensions
+﻿#nullable enable
+
+namespace SuperMassive.Extensions
 {
     using System;
 
@@ -7,113 +9,112 @@
         /// <summary>
         /// Includes an enumerated type and returns the new value
         /// </summary>
-        public static T Include<T>(this Enum extended, T item)
+        // TODO: Rename Include to Add and make Include obsolete
+        public static T Include<T>(this Enum @enum, T value)
+            where T : struct
         {
-            Type type = extended.GetType();
+            var type = @enum.GetType();
+            object result = @enum;
 
-            //determine the values
-            object result = extended;
-            NarrowedValue parsed = new NarrowedValue(item, type);
-            if (parsed.Signed is long)
+            var parsed = new NarrowedValue(value, type);
+            if (parsed.Signed != null)
             {
-                result = Convert.ToInt64(extended) | (long)parsed.Signed;
+                result = Convert.ToInt64(@enum) | parsed.Signed.Value;
             }
-            else if (parsed.Unsigned is ulong)
+            else if (parsed.Unsigned != null)
             {
-                result = Convert.ToUInt64(extended) | (ulong)parsed.Unsigned;
+                result = Convert.ToUInt64(@enum) | parsed.Unsigned.Value;
             }
 
-            //return the final value
-            return (T)Enum.Parse(type, result.ToString());
+            return (T) Enum.Parse(type, result.ToString()!);
         }
 
         /// <summary>
         /// Removes an enumerated type and returns the new value
         /// </summary>
-        public static T Remove<T>(this Enum extended, T item)
+        public static T Remove<T>(this Enum @enum, T value)
+            where T : struct
         {
-            Type type = extended.GetType();
+            var type = @enum.GetType();
+            object result = @enum;
 
-            //determine the values
-            object result = extended;
-            NarrowedValue parsed = new NarrowedValue(item, type);
-            if (parsed.Signed is long)
+            var parsed = new NarrowedValue(value, type);
+            if (parsed.Signed != null)
             {
-                result = Convert.ToInt64(extended) & ~parsed.Signed;
+                result = Convert.ToInt64(@enum) & ~parsed.Signed;
             }
-            else if (parsed.Unsigned is ulong)
+            else if (parsed.Unsigned != null)
             {
-                result = Convert.ToUInt64(extended) & ~parsed.Unsigned;
+                result = Convert.ToUInt64(@enum) & ~parsed.Unsigned;
             }
 
-            //return the final value
-            return (T)Enum.Parse(type, result.ToString());
+            return (T) Enum.Parse(type, result.ToString()!);
         }
 
         /// <summary>
         /// Checks if an enumerated type contains a value
         /// </summary>
-        public static bool Has<T>(this Enum extended, T check)
+        public static bool Has<T>(this Enum @enum, T value)
+            where T : struct
         {
-            Type type = extended.GetType();
+            var type = @enum.GetType();
 
-            NarrowedValue parsed = new NarrowedValue(check, type);
-            if (parsed.Signed is long)
+            var parsed = new NarrowedValue(value, type);
+            if (parsed.Signed != null)
             {
-                return (Convert.ToInt64(extended) &
-                    (long)parsed.Signed) == parsed.Signed;
+                return (Convert.ToInt64(@enum) &
+                        (long) parsed.Signed) == parsed.Signed;
             }
-            else if (parsed.Unsigned is ulong)
+
+            if (parsed.Unsigned != null)
             {
-                return (Convert.ToUInt64(extended) &
-                    (ulong)parsed.Unsigned) == parsed.Unsigned;
+                return (Convert.ToUInt64(@enum) &
+                        (ulong) parsed.Unsigned) == parsed.Unsigned;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <summary>
         /// Checks if an enumerated type is missing a value
         /// </summary>
-        public static bool Missing<T>(this Enum extended, T value)
+        // TODO: Rename Missing to HasNot and make Missing obsolete
+        public static bool Missing<T>(this Enum @enum, T value)
+            where T : struct
         {
-            return !Has<T>(extended, value);
+            return !Has(@enum, value);
         }
 
-        //class to simplify narrowing values between a ulong and long since either value should cover any lesser value
+        // Class to simplify narrowing values between a ulong and long since either value should cover any lesser value
         private class NarrowedValue
         {
-            //cached comparisons for tye to use
-            private static Type _unsignedLong = typeof(ulong);
-            private static Type _signedLong = typeof(long);
+            // Cached comparisons for type to use
+            private static readonly Type UnsignedLong = typeof(ulong);
+            private static readonly Type SignedLong = typeof(long);
 
-            public long? Signed;
-            public ulong? Unsigned;
+            public readonly long? Signed;
+            public readonly ulong? Unsigned;
 
             public NarrowedValue(object value, Type type)
             {
-                //make sure it is even an enum to work with
+                // Make sure it is even an enum to work with
                 Guard.Requires<ArgumentException>(() => type.IsEnum, "isEnum_type_mismatch", nameof(type));
 
-                //then check for the enumerated value
-                Type compare = Enum.GetUnderlyingType(type);
+                // Then check for the enumerated value
+                var compare = Enum.GetUnderlyingType(type);
 
-                //if this is an unsigned long then the only
-                //value that can hold it would be a ulong
-                if (compare.Equals(NarrowedValue._signedLong) || compare.Equals(NarrowedValue._unsignedLong))
+                // If this is an unsigned long then the only
+                // value that can hold it would be a ulong
+                if (compare == SignedLong || compare == UnsignedLong)
                 {
-                    this.Unsigned = Convert.ToUInt64(value);
+                    Unsigned = Convert.ToUInt64(value);
                 }
                 //otherwise, a long should cover anything else
                 else
                 {
-                    this.Signed = Convert.ToInt64(value);
+                    Signed = Convert.ToInt64(value);
                 }
-
             }
-
         }
     }
 }
