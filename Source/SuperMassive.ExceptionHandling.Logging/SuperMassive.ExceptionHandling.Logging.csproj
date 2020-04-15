@@ -1,27 +1,29 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../../props/common.props"/>
+  <Import Project="../../props/package.props"/>
+
   <PropertyGroup>
-    <TargetFrameworks>net45;net46;net461;net462</TargetFrameworks>
-    <DebugType Condition="'$(TargetFramework)' != '' AND '$(TargetFramework)' != 'netcoreapp1.0'">Full</DebugType>
-    <Version>2.0.0-alpha1</Version>
-    <Authors>PulsarBlow</Authors>
-    <Company>PulsarBlow</Company>
-    <Description>SuperMassive is a small condensed framework of reusable .NET components and utility classes. It's your supermassive swiss army knife.</Description>
-    <Copyright>Copyright © Alain Mereaux 2017</Copyright>
-    <PackageLicenseUrl>https://raw.github.com/PulsarBlow/SuperMassive/master/LICENCE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/PulsarBlow/SuperMassive</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/PulsarBlow/SuperMassive/master/supermassive.png</PackageIconUrl>
-    <RepositoryUrl>https://raw.githubusercontent.com/PulsarBlow/SuperMassive</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageTags>SuperMassive Exception Handling ExceptionHandling Logging</PackageTags>
-    <PackageReleaseNotes />
+    <Title>Your supermassive swiss army knife</Title>
+    <PackageTags>supermassive;exception;handling;exceptionhandling;logging</PackageTags>
+    <PackageReleaseNotes/>
     <Summary>SuperMassive exception handling with logging. Plug logging features to your exception handling pipeline.</Summary>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SuperMassive.ExceptionHandling\SuperMassive.ExceptionHandling.csproj" />
-    <ProjectReference Include="..\SuperMassive.Logging\SuperMassive.Logging.csproj" />
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
-  <Target Name="CopyPackage" AfterTargets="Pack">
-    <Copy SourceFiles="$(OutputPath)\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(SolutionDir)\build" />
-  </Target>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SuperMassive.ExceptionHandling\SuperMassive.ExceptionHandling.csproj"/>
+    <ProjectReference Include="..\SuperMassive.Logging\SuperMassive.Logging.csproj"/>
+  </ItemGroup>
 </Project>

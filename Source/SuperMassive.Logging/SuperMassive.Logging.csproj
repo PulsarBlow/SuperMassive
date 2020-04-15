@@ -1,26 +1,31 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
-    <PropertyGroup>
-        <TargetFrameworks>net45;net46;net461;net462</TargetFrameworks>
-        <DebugType Condition="'$(TargetFramework)' != '' AND '$(TargetFramework)' != 'netcoreapp1.0'">Full</DebugType>
-        <Version>2.0.0-alpha1</Version>
-        <Authors>PulsarBlow</Authors>
-        <Company>PulsarBlow</Company>
-        <Description>SuperMassive is a small condensed framework of reusable .NET components and utility classes. It's your supermassive swiss army knife.</Description>
-        <Copyright>Copyright © Alain Mereaux 2017</Copyright>
-        <PackageLicenseUrl>https://raw.github.com/PulsarBlow/SuperMassive/master/LICENCE</PackageLicenseUrl>
-        <PackageProjectUrl>https://github.com/PulsarBlow/SuperMassive</PackageProjectUrl>
-        <PackageIconUrl>https://raw.githubusercontent.com/PulsarBlow/SuperMassive/master/supermassive.png</PackageIconUrl>
-        <RepositoryUrl>https://raw.githubusercontent.com/PulsarBlow/SuperMassive</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <PackageTags>SuperMassive Logging Abstraction TraceListener Formatter</PackageTags>
-        <PackageReleaseNotes />
-        <Summary>SuperMassive logging abstractions. A solid foundation on which to build your logging infrastructure.</Summary>
-        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    </PropertyGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\SuperMassive\SuperMassive.csproj" />
-    </ItemGroup>
-  <Target Name="CopyPackage" AfterTargets="Pack">
-    <Copy SourceFiles="$(OutputPath)\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(SolutionDir)\build" />
-  </Target>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../props/common.props" />
+  <Import Project="../../props/package.props" />
+  <PropertyGroup>
+    <Title>Your supermassive swiss army knife</Title>
+    <Summary>SuperMassive logging abstractions. A solid foundation on which to build your logging infrastructure.</Summary>
+    <PackageTags>SuperMassive Logging Abstraction TraceListener Formatter</PackageTags>
+    <PackageReleaseNotes />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SuperMassive\SuperMassive.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Security.Permissions" Version="4.7.0" />
+  </ItemGroup>
 </Project>

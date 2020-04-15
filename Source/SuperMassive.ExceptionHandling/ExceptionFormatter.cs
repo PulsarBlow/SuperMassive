@@ -15,7 +15,7 @@ namespace SuperMassive.ExceptionHandling
 {
     /// <summary>
     /// Represents the base class from which all implementations of exception formatters must derive. The formatter provides functionality for formatting <see cref="Exception"/> objects.
-    /// </summary>	
+    /// </summary>
     public abstract class ExceptionFormatter
     {
         private static readonly List<string> IgnoredProperties = new List<string>{ "Source", "Message", "HelpLink", "InnerException", "StackTrace" };
@@ -46,12 +46,12 @@ namespace SuperMassive.ExceptionHandling
         }
         /// <summary>
         /// Gets additional information related to the <see cref="Exception"/> but not
-        /// stored in the exception (eg: the time in which the <see cref="Exception"/> was 
+        /// stored in the exception (eg: the time in which the <see cref="Exception"/> was
         /// thrown).
         /// </summary>
         /// <value>
         /// Additional information related to the <see cref="Exception"/> but not
-        /// stored in the exception (for example, the time when the <see cref="Exception"/> was 
+        /// stored in the exception (for example, the time when the <see cref="Exception"/> was
         /// thrown).
         /// </value>
         public NameValueCollection AdditionalInfo
@@ -66,7 +66,6 @@ namespace SuperMassive.ExceptionHandling
                     this.additionalInfo.Add("FullName", Assembly.GetExecutingAssembly().FullName);
                     this.additionalInfo.Add("AppDomainName", AppDomain.CurrentDomain.FriendlyName);
                     this.additionalInfo.Add("ThreadIdentity", Thread.CurrentPrincipal.Identity.Name);
-                    this.additionalInfo.Add("WindowsIdentity", GetWindowsIdentity());
                 }
 
                 return this.additionalInfo;
@@ -87,7 +86,7 @@ namespace SuperMassive.ExceptionHandling
         /// Formats the exception and all nested inner exceptions.
         /// </summary>
         /// <param name="exceptionToFormat">The exception to format.</param>
-        /// <param name="outerException">The outer exception. This 
+        /// <param name="outerException">The outer exception. This
         /// value will be null when writing the outer-most exception.</param>
         /// <remarks>
         /// <para>This method calls itself recursively until it reaches
@@ -154,9 +153,9 @@ namespace SuperMassive.ExceptionHandling
         /// The <see cref="Exception"/> to be formatted.
         /// </param>
         /// <remarks>
-        /// <para>This method reflects over the public, instance properties 
+        /// <para>This method reflects over the public, instance properties
         /// and public, instance fields
-        /// of the specified exception and prints them to the formatter.  
+        /// of the specified exception and prints them to the formatter.
         /// Certain property names are ignored
         /// because they are handled explicitly in other places.</para>
         /// </remarks>
@@ -273,21 +272,6 @@ namespace SuperMassive.ExceptionHandling
             }
 
             return machineName;
-        }
-
-        private static string GetWindowsIdentity()
-        {
-            string windowsIdentity = String.Empty;
-            try
-            {
-                windowsIdentity = WindowsIdentity.GetCurrent().Name;
-            }
-            catch (SecurityException)
-            {
-                windowsIdentity = Resources.PermissionDenied;
-            }
-
-            return windowsIdentity;
         }
     }
 }

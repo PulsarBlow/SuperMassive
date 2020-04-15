@@ -35,7 +35,8 @@ namespace SuperMassive.Logging.AzureTable
         /// <param name="cloudStorageConnectionString"></param>
         public AzureTableFormattedTraceListener(string cloudStorageConnectionString)
             : this(cloudStorageConnectionString, DefaultAzureTableName, null)
-        { }
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of the <see cref="AzureTableFormattedTraceListener"/>
@@ -44,7 +45,8 @@ namespace SuperMassive.Logging.AzureTable
         /// <param name="azureTableName"></param>
         public AzureTableFormattedTraceListener(string cloudStorageConnectionString, string azureTableName)
             : this(cloudStorageConnectionString, azureTableName, null)
-        { }
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of the <see cref="AzureTableFormattedTraceListener"/>
@@ -52,7 +54,8 @@ namespace SuperMassive.Logging.AzureTable
         /// <param name="cloudStorageConnectionString"></param>
         /// <param name="azureTableName"></param>
         /// <param name="formatter"></param>
-        public AzureTableFormattedTraceListener(string cloudStorageConnectionString, string azureTableName, ILogFormatter formatter)
+        public AzureTableFormattedTraceListener(string cloudStorageConnectionString, string azureTableName,
+            ILogFormatter formatter)
             : base(formatter)
         {
             Guard.ArgumentNotNullOrWhiteSpace(cloudStorageConnectionString, "cloudStorageConnectionString");
@@ -68,7 +71,7 @@ namespace SuperMassive.Logging.AzureTable
         public override void Write(string message)
         {
             LogEntry logEntry = CreateDefaultLogEntry(message);
-            ExecuteWriteLog(logEntry);
+            Task.Factory.StartNew(async () => await ExecuteWriteLog(logEntry));
         }
 
         /// <summary>
@@ -109,14 +112,16 @@ namespace SuperMassive.Logging.AzureTable
         /// <param name="eventType"></param>
         /// <param name="id"></param>
         /// <param name="data">Data to log. Can be a <see cref="String"/> or <see cref="LogEntry"/></param>
-        public override void TraceData(TraceEventCache eventCache, string source, TraceEventType eventType, int id, object data)
+        public override void TraceData(TraceEventCache eventCache, string source, TraceEventType eventType, int id,
+            object data)
         {
-            if (this.Filter == null || this.Filter.ShouldTrace(eventCache, source, eventType, id, null, null, data, null))
+            if (this.Filter == null ||
+                this.Filter.ShouldTrace(eventCache, source, eventType, id, null, null, data, null))
             {
                 if (data is LogEntry)
                 {
                     LogEntry logEntry = data as LogEntry;
-                    ExecuteWriteLog(logEntry);
+                    Task.Factory.StartNew(async () => await ExecuteWriteLog(logEntry));
                 }
                 else if (data is String)
                 {
@@ -133,16 +138,16 @@ namespace SuperMassive.Logging.AzureTable
         /// CloudStorage write implementation
         /// </summary>
         /// <param name="logEntry"></param>
-        protected void ExecuteWriteLog(LogEntry logEntry)
+        protected async Task ExecuteWriteLog(LogEntry logEntry)
         {
             ApplicationLogEntity entity = ApplicationLogEntityManager.CreateFromLogEntry(logEntry, this.Formatter);
             if (entity == null)
                 return;
 
             CloudTable table = GetTableReference();
-            table.CreateIfNotExists();
+            await table.CreateIfNotExistsAsync();
             TableOperation insertOperation = TableOperation.Insert(entity);
-            table.Execute(insertOperation);
+            await table.ExecuteAsync(insertOperation);
         }
 
         /// <summary>
