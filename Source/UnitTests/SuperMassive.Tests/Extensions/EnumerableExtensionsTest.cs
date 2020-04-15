@@ -1,4 +1,4 @@
-﻿namespace SuperMassive.Tests
+﻿namespace SuperMassive.Tests.Extensions
 {
     using System;
     using System.Collections.Generic;
@@ -26,7 +26,7 @@
         public void EnumerableExtensions_Each_Execute_Delegate_On_All_CollectionElements()
         {
             int counter = 0;
-            IEnumerable<string> collection = new List<string> { "a", "b", "c" };
+            IEnumerable<string> collection = new List<string> {"a", "b", "c"};
             collection.Each(x => counter++);
             Assert.IsTrue(counter == collection.Count());
         }

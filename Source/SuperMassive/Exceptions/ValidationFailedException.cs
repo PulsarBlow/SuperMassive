@@ -1,24 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
+﻿#nullable enable
 
 namespace SuperMassive
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Runtime.Serialization;
+
     /// <summary>
     /// Define an exception which occurs when any data validation process fails
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2240:ImplementISerializableCorrectly"), Serializable]
     public class ValidationFailedException : Exception
     {
         /// <summary>
         /// A collection of ValidationResult (broken rules) associated with this exception
         /// </summary>
-        public ValidationResultCollection ValidationResults
+        public ValidationResultCollection? ValidationResults
         {
             get;
             protected set;
         }
+
         /// <summary>
         /// Instantiates a new <see cref="ValidationFailedException"/>
         /// </summary>
@@ -36,10 +38,11 @@ namespace SuperMassive
         /// Instantiates a new <see cref="ValidationFailedException"/>
         /// </summary>
         /// <param name="message"></param>
+        /// <param name="validationResults"></param>
         public ValidationFailedException(string message, IEnumerable<ValidationResult> validationResults)
             : base(message)
         {
-            this.ValidationResults = new ValidationResultCollection(validationResults);
+            ValidationResults = new ValidationResultCollection(validationResults);
         }
         /// <summary>
         /// Instantiates a new <see cref="ValidationFailedException"/>

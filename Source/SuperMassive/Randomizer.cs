@@ -1,10 +1,12 @@
-﻿namespace SuperMassive
+﻿#nullable enable
+
+namespace SuperMassive
 {
     using System;
     using System.Globalization;
     using System.Security.Cryptography;
     using System.Text;
-    using SuperMassive.Properties;
+    using Properties;
 
     /// <summary>
     /// Provides utilities to generate random primitives.

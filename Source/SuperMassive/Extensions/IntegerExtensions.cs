@@ -1,4 +1,6 @@
-﻿namespace SuperMassive.Extensions
+﻿#nullable enable
+
+namespace SuperMassive.Extensions
 {
     using System;
     using System.Collections.Generic;
@@ -9,31 +11,31 @@
     public static class IntegerExtensions
     {
         /// <summary>
-        /// Returns the current <see cref="Int16"/> as a <see cref="BitwiseMask"/>
+        /// Returns the current <see cref="short"/> as a <see cref="BitwiseMask"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static BitwiseMask AsMask(this Int16 value)
+        public static BitwiseMask AsMask(this short value)
         {
             return new BitwiseMask(value);
         }
 
         /// <summary>
-        /// Returns the current <see cref="Int32"/> as a <see cref="BitwiseMask"/>
+        /// Returns the current <see cref="int"/> as a <see cref="BitwiseMask"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static BitwiseMask AsMask(this Int32 value)
+        public static BitwiseMask AsMask(this int value)
         {
             return new BitwiseMask(value);
         }
 
         /// <summary>
-        /// Returns the current <see cref="Int64"/> as a <see cref="BitwiseMask"/>
+        /// Returns the current <see cref="long"/> as a <see cref="BitwiseMask"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static BitwiseMask AsMask(this Int64 value)
+        public static BitwiseMask AsMask(this long value)
         {
             return new BitwiseMask(value);
         }
@@ -47,13 +49,16 @@
         public static IEnumerable<int> To(this int startingValue, int endingValue)
         {
             if (endingValue == startingValue)
-                return new int[] { startingValue };
-            if (startingValue == int.MinValue && endingValue == int.MaxValue)
-                return new int[] { startingValue };
-            if (startingValue == int.MaxValue && endingValue == int.MinValue)
-                return new int[] { startingValue };
+                return new[] { startingValue };
+            switch (startingValue)
+            {
+                case int.MinValue when endingValue == int.MaxValue:
+                    return new[] { startingValue };
+                case int.MaxValue when endingValue == int.MinValue:
+                    return new[] { startingValue };
+            }
 
-            List<int> result = new List<int>();
+            var result = new List<int>();
             if (endingValue > startingValue)
             {
                 for (int i = startingValue; i <= endingValue; i++)

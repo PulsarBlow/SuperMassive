@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text.RegularExpressions;
+﻿#nullable enable
 
 namespace SuperMassive
 {
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Text.RegularExpressions;
+
     /// <summary>
-    /// Summary for the Inflector class
+    /// Summary for the <see cref="Inflector"/> class
     /// </summary>
     public static class Inflector
     {
-        private static readonly List<InflectorRule> _plurals = new List<InflectorRule>();
-        private static readonly List<InflectorRule> _singulars = new List<InflectorRule>();
-        private static readonly List<string> _uncountables = new List<string>();
+        private static readonly List<Rule> Plurals = new List<Rule>();
+        private static readonly List<Rule> Singulars = new List<Rule>();
+        private static readonly List<string> Uncountables = new List<string>();
 
         /// <summary>
         /// Initializes the <see cref="Inflector"/> class.
@@ -37,7 +38,7 @@ namespace SuperMassive
             AddPluralRule("^(ox)$", "$1en");
             AddPluralRule("(quiz)$", "$1zes");
 
-            AddSingularRule("s$", String.Empty);
+            AddSingularRule("s$", string.Empty);
             AddSingularRule("ss$", "ss");
             AddSingularRule("(n)ews$", "$1ews");
             AddSingularRule("([ti])a$", "$1um");
@@ -89,8 +90,8 @@ namespace SuperMassive
         /// <param name="plural">The plural.</param>
         private static void AddIrregularRule(string singular, string plural)
         {
-            AddPluralRule(String.Concat("(", singular[0], ")", singular.Substring(1), "$"), String.Concat("$1", plural.Substring(1)));
-            AddSingularRule(String.Concat("(", plural[0], ")", plural.Substring(1), "$"), String.Concat("$1", singular.Substring(1)));
+            AddPluralRule(string.Concat("(", singular[0], ")", singular.Substring(1), "$"), string.Concat("$1", plural.Substring(1)));
+            AddSingularRule(string.Concat("(", plural[0], ")", plural.Substring(1), "$"), string.Concat("$1", singular.Substring(1)));
         }
 
         /// <summary>
@@ -99,7 +100,7 @@ namespace SuperMassive
         /// <param name="word">The word.</param>
         private static void AddUnknownCountRule(string word)
         {
-            _uncountables.Add(word.ToLower());
+            Uncountables.Add(word.ToLower());
         }
 
         /// <summary>
@@ -109,7 +110,7 @@ namespace SuperMassive
         /// <param name="replacement">The replacement.</param>
         private static void AddPluralRule(string rule, string replacement)
         {
-            _plurals.Add(new InflectorRule(rule, replacement));
+            Plurals.Add(new Rule(rule, replacement));
         }
 
         /// <summary>
@@ -119,7 +120,7 @@ namespace SuperMassive
         /// <param name="replacement">The replacement.</param>
         private static void AddSingularRule(string rule, string replacement)
         {
-            _singulars.Add(new InflectorRule(rule, replacement));
+            Singulars.Add(new Rule(rule, replacement));
         }
 
         /// <summary>
@@ -129,7 +130,7 @@ namespace SuperMassive
         /// <returns></returns>
         public static string MakePlural(string word)
         {
-            return ApplyRules(_plurals, word);
+            return ApplyRules(Plurals, word);
         }
 
         /// <summary>
@@ -139,7 +140,7 @@ namespace SuperMassive
         /// <returns></returns>
         public static string MakeSingular(string word)
         {
-            return ApplyRules(_singulars, word);
+            return ApplyRules(Singulars, word);
         }
 
         /// <summary>
@@ -148,14 +149,14 @@ namespace SuperMassive
         /// <param name="rules">The rules.</param>
         /// <param name="word">The word.</param>
         /// <returns></returns>
-        private static string ApplyRules(IList<InflectorRule> rules, string word)
+        private static string ApplyRules(IList<Rule> rules, string word)
         {
             string result = word;
-            if (!_uncountables.Contains(word.ToLower()))
+            if (!Uncountables.Contains(word.ToLower()))
             {
                 for (int i = rules.Count - 1; i >= 0; i--)
                 {
-                    string currentPass = rules[i].Apply(word);
+                    string? currentPass = rules[i].Apply(word);
                     if (currentPass != null)
                     {
                         result = currentPass;
@@ -205,7 +206,7 @@ namespace SuperMassive
         /// <returns></returns>
         public static string MakeInitialCaps(string word)
         {
-            return String.Concat(word.Substring(0, 1).ToUpper(), word.Substring(1).ToLower());
+            return string.Concat(word.Substring(0, 1).ToUpper(), word.Substring(1).ToLower());
         }
 
         /// <summary>
@@ -215,21 +216,24 @@ namespace SuperMassive
         /// <returns></returns>
         public static string MakeInitialLowerCase(string word)
         {
-            return String.Concat(word.Substring(0, 1).ToLower(), word.Substring(1));
+            return string.Concat(word.Substring(0, 1).ToLower(), word.Substring(1));
         }
 
 
         /// <summary>
         /// Determine whether the passed string is numeric, by attempting to parse it to a double
         /// </summary>
-        /// <param name="str">The string to evaluated for numeric conversion</param>
+        /// <param name="value">The string to evaluated for numeric conversion</param>
         /// <returns>
         /// 	<c>true</c> if the string can be converted to a number; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsStringNumeric(string str)
+        public static bool IsStringNumeric(string value)
         {
-            double result;
-            return (double.TryParse(str, NumberStyles.Float, NumberFormatInfo.CurrentInfo, out result));
+            return double.TryParse(
+                value,
+                NumberStyles.Float,
+                NumberFormatInfo.CurrentInfo,
+                out var result);
         }
 
         /// <summary>
@@ -239,27 +243,21 @@ namespace SuperMassive
         /// <returns></returns>
         public static string AddOrdinalSuffix(string number)
         {
-            if (IsStringNumeric(number))
+            if (!IsStringNumeric(number)) return number;
+
+            int n = int.Parse(number);
+            int nMod100 = n % 100;
+
+            if (nMod100 >= 11 && nMod100 <= 13)
+                return string.Concat(number, "th");
+
+            return (n % 10) switch
             {
-                int n = int.Parse(number);
-                int nMod100 = n % 100;
-
-                if (nMod100 >= 11 && nMod100 <= 13)
-                    return String.Concat(number, "th");
-
-                switch (n % 10)
-                {
-                    case 1:
-                        return String.Concat(number, "st");
-                    case 2:
-                        return String.Concat(number, "nd");
-                    case 3:
-                        return String.Concat(number, "rd");
-                    default:
-                        return String.Concat(number, "th");
-                }
-            }
-            return number;
+                1 => string.Concat(number, "st"),
+                2 => string.Concat(number, "nd"),
+                3 => string.Concat(number, "rd"),
+                _ => string.Concat(number, "th")
+            };
         }
 
         /// <summary>
@@ -272,53 +270,28 @@ namespace SuperMassive
             return underscoredWord.Replace('_', '-');
         }
 
-
-        #region Nested type: InflectorRule
-
-        /// <summary>
-        /// Summary for the InflectorRule class
-        /// </summary>
-        private class InflectorRule
+        private class Rule
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            public readonly Regex regex;
+            private readonly Regex _regex;
+            private readonly string _replacement;
 
-            /// <summary>
-            /// 
-            /// </summary>
-            public readonly string replacement;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="InflectorRule"/> class.
-            /// </summary>
-            /// <param name="regexPattern">The regex pattern.</param>
-            /// <param name="replacementText">The replacement text.</param>
-            public InflectorRule(string regexPattern, string replacementText)
+            public Rule(string regexPattern, string replacementText)
             {
-                regex = new Regex(regexPattern, RegexOptions.IgnoreCase);
-                replacement = replacementText;
+                _regex = new Regex(regexPattern, RegexOptions.IgnoreCase);
+                _replacement = replacementText;
             }
 
-            /// <summary>
-            /// Applies the specified word.
-            /// </summary>
-            /// <param name="word">The word.</param>
-            /// <returns></returns>
-            public string Apply(string word)
+            public string? Apply(string word)
             {
-                if (!regex.IsMatch(word))
+                if (!_regex.IsMatch(word))
                     return null;
 
-                string replace = regex.Replace(word, replacement);
+                var replace = _regex.Replace(word, _replacement);
                 if (word == word.ToUpper())
                     replace = replace.ToUpper();
 
                 return replace;
             }
         }
-
-        #endregion
     }
 }

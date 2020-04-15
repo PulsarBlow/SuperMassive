@@ -1,20 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
-  <Import Project="../../../props/common.props"/>
+  <Import Project="../../../props/common.props" />
   
   <PropertyGroup>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="nunit" Version="$(NUnitVersion)"/>
-    <PackageReference Include="NUnit3TestAdapter" Version="$(NUnitTestAdapterVersion)"/>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(TestSdkVersion)"/>
+    <PackageReference Include="nunit" Version="$(NUnitVersion)" />
+    <PackageReference Include="NUnit3TestAdapter" Version="$(NUnitTestAdapterVersion)" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(TestSdkVersion)" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SuperMassive\SuperMassive.csproj"/>
-    <ProjectReference Include="..\SuperMassive.UnitTestHelpers\SuperMassive.UnitTestHelpers.csproj"/>
+    <ProjectReference Include="..\..\SuperMassive\SuperMassive.csproj" />
+    <ProjectReference Include="..\SuperMassive.UnitTestHelpers\SuperMassive.UnitTestHelpers.csproj" />
   </ItemGroup>
 
 </Project>

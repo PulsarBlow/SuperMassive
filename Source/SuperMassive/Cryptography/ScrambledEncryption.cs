@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-using SuperMassive.Extensions;
+﻿#nullable enable
 
 namespace SuperMassive.Cryptography
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Text;
+    using Extensions;
+
     /// <summary>
     /// Scramble Encryption
     /// </summary>
@@ -23,7 +25,7 @@ namespace SuperMassive.Cryptography
         /// <param name="key"></param>
         public ScrambledEncryption(string key)
         {
-            Guard.ArgumentNotNullOrEmpty(key, "key");
+            Guard.ArgumentNotNullOrEmpty(key, nameof(key));
             _key = key;
         }
         /// <summary>
@@ -34,9 +36,9 @@ namespace SuperMassive.Cryptography
         /// <returns></returns>
         public string Encrypt(string source, int minLength = 8)
         {
-            Guard.ArgumentNotNullOrEmpty(source, "source");
+            Guard.ArgumentNotNullOrEmpty(source, nameof(source));
 
-            var fudgeFactor = this.ConvertKey(_key);
+            var fudgeFactor = ConvertKey(_key);
 
             source = source.PadRight(minLength);
             StringBuilder target = new StringBuilder(minLength);
@@ -49,12 +51,12 @@ namespace SuperMassive.Cryptography
                 if (num1 == -1)
                 {
                     throw new InvalidOperationException(
-                        String.Format(
+                        string.Format(
                             CultureInfo.InvariantCulture,
                             "Source string contains an invalid character ({0})", c1));
                 }
 
-                var adj = this.ApplyFudgeFactor(fudgeFactor);
+                var adj = ApplyFudgeFactor(fudgeFactor);
                 var factor1 = factor2 + adj;
                 var num2 = (int)Math.Round(factor1) + num1;
                 num2 = CheckRange(num2);
@@ -71,11 +73,11 @@ namespace SuperMassive.Cryptography
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public string Decrypt(string source)
+        public string? Decrypt(string source)
         {
             Guard.ArgumentNotNullOrEmpty(source, "source");
 
-            var fudgeFactor = this.ConvertKey(_key);
+            var fudgeFactor = ConvertKey(_key);
             var target = new StringBuilder();
             var factor2 = 0F;
 
@@ -96,7 +98,6 @@ namespace SuperMassive.Cryptography
             return target.ToString();
         }
 
-        #region Private Methods
         private float ApplyFudgeFactor(Queue<float> fudgeFactor)
         {
             var fudge = fudgeFactor.Dequeue();
@@ -104,43 +105,44 @@ namespace SuperMassive.Cryptography
             fudgeFactor.Enqueue(fudge);
             if (_mod != 0 && ((double)fudge % _mod).AlmostEquals(0))
             {
-                fudge = fudge * -1;
+                fudge *= -1;
             }
             return fudge;
 
         }
+
         private int CheckRange(int num)
         {
             var limit = _scramble1.Length;
             while (num >= limit)
             {
-                num = num - limit;
+                num -= limit;
             }
             while (num < 0)
             {
-                num = num + limit;
+                num += limit;
             }
             return num;
         }
+
         private Queue<float> ConvertKey(string key)
         {
             Guard.ArgumentNotNullOrEmpty(key, "key");
+
             Queue<float> result = new Queue<float>();
             result.Enqueue(key.Length); // first entry in array is length of key
             int tot = 0;
-            for (int i = 0; i < key.Length; i++)
+            foreach (var c in key)
             {
-                char c = key[i];
-                int pos = this._scramble1.IndexOf(c);
+                int pos = _scramble1.IndexOf(c);
                 if (pos == -1)
-                    throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture,
-                        "Key contains an invalid character ({0})", c));
+                    throw new InvalidOperationException($"Key contains an invalid character ({c})");
+
                 result.Enqueue(pos);
-                tot = tot + pos;
+                tot += pos;
             }
             result.Enqueue(tot); // last entry in array is computed total
             return result;
         }
-        #endregion
     }
 }

@@ -1,9 +1,9 @@
-﻿using System;
-using NUnit.Framework;
-using SuperMassive;
-
-namespace SuperMassiveTests
+﻿namespace SuperMassive.Tests.Attributes
 {
+    using System;
+    using NUnit.Framework;
+    using SuperMassive;
+
     public class GuidStringAttributeTest
     {
         [Test]
@@ -14,7 +14,6 @@ namespace SuperMassiveTests
             Assert.IsTrue(attribute.IsValid("b77ad6f9-624a-4c28-96e8-545923e56502"));
             Assert.IsTrue(attribute.IsValid("B77AD6F9-624A-4C28-96E8-545923E56502"));
             Assert.IsTrue(attribute.IsValid(Guid.NewGuid().ToString()));
-
         }
 
         [Test]

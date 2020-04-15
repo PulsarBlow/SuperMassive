@@ -1,16 +1,17 @@
-﻿using System;
-using System.Globalization;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿#nullable enable
 
 namespace SuperMassive
 {
+    using System;
+    using System.Globalization;
+    using System.Text;
+    using System.Text.RegularExpressions;
+
     /// <summary>
     /// String manipulation helping methods
-    /// </summary>    
+    /// </summary>
     public static class StringHelper
     {
-        #region Public Methods
         /// <summary>
         /// Removes accents from a string.
         /// </summary>
@@ -18,17 +19,19 @@ namespace SuperMassive
         /// <returns>The result string</returns>
         public static string RemoveDiacritics(string value)
         {
-            string formd = value.Normalize(NormalizationForm.FormD);
-            StringBuilder sb = new StringBuilder();
-            for (int ich = 0; ich < formd.Length; ich++)
+            var formD = value.Normalize(NormalizationForm.FormD);
+            var sb = new StringBuilder();
+            foreach (var @char in formD)
             {
-                UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(formd[ich]);
-                if (uc != UnicodeCategory.NonSpacingMark)
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(@char);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
                 {
-                    sb.Append(formd[ich]);
+                    sb.Append(@char);
                 }
             }
-            return (sb.ToString().Normalize(NormalizationForm.FormC));
+            return sb
+                .ToString()
+                .Normalize(NormalizationForm.FormC);
         }
 
         /// <summary>
@@ -36,6 +39,7 @@ namespace SuperMassive
         /// </summary>
         /// <param name="decodedValue"></param>
         /// <returns></returns>
+        // TODO: Make obsolete in place of CryptographyHelper.EncodeBase64
         public static string Base64Utf8Encode(string decodedValue)
         {
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(decodedValue));
@@ -46,28 +50,28 @@ namespace SuperMassive
         /// </summary>
         /// <param name="encodedValue"></param>
         /// <returns></returns>
-        public static string Base64Utf8Decode(string encodedValue)
+        // TODO: Make obsolete in place of CryptographyHelper.DecodeBase64
+        public static string? Base64Utf8Decode(string encodedValue)
         {
-            if (String.IsNullOrEmpty(encodedValue))
+            if (string.IsNullOrEmpty(encodedValue))
                 return null;
 
             UTF8Encoding encoder = new UTF8Encoding();
-            System.Text.Decoder utf8Decode = encoder.GetDecoder();
-            byte[] todecode_byte = null;
-
+            Decoder decoder = encoder.GetDecoder();
+            byte[] bytes;
             try
             {
-                todecode_byte = Convert.FromBase64String(encodedValue);
+                bytes = Convert.FromBase64String(encodedValue);
             }
             catch (FormatException)
             {
                 return null;
             }
 
-            int charCount = utf8Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
-            char[] decoded_char = new char[charCount];
-            utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
-            return new String(decoded_char);
+            int charCount = decoder.GetCharCount(bytes, 0, bytes.Length);
+            char[] decodedChar = new char[charCount];
+            decoder.GetChars(bytes, 0, bytes.Length, decodedChar, 0);
+            return new string(decodedChar);
         }
 
         /// <summary>
@@ -77,9 +81,9 @@ namespace SuperMassive
         /// <returns></returns>
         public static string Capitalize(string value)
         {
-            if (String.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value))
                 return value;
-            return String.Format(
+            return string.Format(
                 CultureInfo.CurrentCulture,
                 "{0}{1}",
                 value[0].ToString().ToUpper(CultureInfo.CurrentCulture),
@@ -97,8 +101,12 @@ namespace SuperMassive
         // Inspired by http://stringjs.com/#methods/dasherize
         public static string Dasherize(string value)
         {
-            if (String.IsNullOrWhiteSpace(value)) { return value; }
-            return Regex.Replace(value, @"\p{Lu}", m => "-" + m.ToString().ToLower(CultureInfo.CurrentCulture));
+            return string.IsNullOrWhiteSpace(value) ?
+                value :
+                Regex.Replace(
+                    value,
+                    @"\p{Lu}",
+                    m => "-" + m.ToString().ToLower(CultureInfo.CurrentCulture));
         }
 
         /// <summary>
@@ -114,8 +122,14 @@ namespace SuperMassive
         // Inspired by http://stringjs.com/#methods/camelize
         public static string Camelize(string value)
         {
-            if (String.IsNullOrWhiteSpace(value)) { return value; }
-            return Regex.Replace(value, @"[-_]\p{L}", m => m.ToString().ToUpper(CultureInfo.CurrentCulture)).Replace("-", "").Replace("_", "");
+            return string.IsNullOrWhiteSpace(value) ?
+                value :
+                Regex.Replace(
+                    value,
+                    @"[-_]\p{L}",
+                    m => m.ToString().ToUpper(CultureInfo.CurrentCulture))
+                    .Replace("-", string.Empty)
+                    .Replace("_", string.Empty);
         }
 
         /// <summary>
@@ -131,10 +145,9 @@ namespace SuperMassive
         /// <example>StringHelper.CollapseWhiteSpaces("  String value"); // " String value"</example>
         public static string CollapseWhiteSpaces(string value)
         {
-            if (String.IsNullOrEmpty(value)) { return value; }
-            Regex reg = new Regex(@" {2,}", RegexOptions.Compiled);
+            if (string.IsNullOrEmpty(value)) { return value; }
+            var reg = new Regex(@" {2,}", RegexOptions.Compiled);
             return reg.Replace(value, " ");
         }
-        #endregion
     }
 }

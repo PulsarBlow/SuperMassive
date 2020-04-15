@@ -1,8 +1,9 @@
-﻿using System;
-using NUnit.Framework;
-
-namespace SuperMassive.Maths.Tests
+﻿namespace SuperMassive.Tests.Maths
 {
+    using System;
+    using NUnit.Framework;
+    using SuperMassive.Maths;
+
     public class RealIntervalTest
     {
         [Test]

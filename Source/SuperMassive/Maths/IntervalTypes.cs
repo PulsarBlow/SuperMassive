@@ -1,4 +1,6 @@
 ﻿
+#nullable enable
+
 namespace SuperMassive.Maths
 {
     /// <summary>

@@ -1,3 +1,5 @@
+#nullable enable
+
 namespace SuperMassive.Cryptography
 {
     using System;
@@ -20,26 +22,23 @@ namespace SuperMassive.Cryptography
     /// </remarks>
     internal sealed class Crc32 : HashAlgorithm
     {
-        public const UInt32 DefaultPolynomial = 0xedb88320u;
-        public const UInt32 DefaultSeed = 0xffffffffu;
+        private const uint DefaultPolynomial = 0xedb88320u;
+        private const uint DefaultSeed = 0xffffffffu;
 
-        private static UInt32[] _defaultTable;
+        private static uint[]? _defaultTable;
 
-        private readonly UInt32 _seed;
-        private readonly UInt32[] _table;
-        private UInt32 _hash;
+        private readonly uint _seed;
+        private readonly uint[] _table;
+        private uint _hash;
 
-        public override int HashSize
-        {
-            get { return 32; }
-        }
+        public override int HashSize => 32;
 
         public Crc32()
             : this(DefaultPolynomial, DefaultSeed)
         {
         }
 
-        public Crc32(UInt32 polynomial, UInt32 seed)
+        public Crc32(uint polynomial, uint seed)
         {
             _table = InitializeTable(polynomial);
             _seed = seed;
@@ -58,40 +57,40 @@ namespace SuperMassive.Cryptography
 
         protected override byte[] HashFinal()
         {
-            var hashBuffer = UInt32ToBigEndianBytes(~_hash);
+            var hashBuffer = UintToBigEndianBytes(~_hash);
             HashValue = hashBuffer;
             return hashBuffer;
         }
 
-        public static UInt32 Compute(byte[] buffer)
+        public static uint Compute(byte[] buffer)
         {
             return Compute(DefaultSeed, buffer);
         }
 
-        public static UInt32 Compute(UInt32 seed, byte[] buffer)
+        public static uint Compute(uint seed, byte[] buffer)
         {
             return Compute(DefaultPolynomial, seed, buffer);
         }
 
-        public static UInt32 Compute(UInt32 polynomial, UInt32 seed, byte[] buffer)
+        public static uint Compute(uint polynomial, uint seed, byte[] buffer)
         {
             return ~CalculateHash(InitializeTable(polynomial), seed, buffer, 0, buffer.Length);
         }
 
-        private static UInt32[] InitializeTable(UInt32 polynomial)
+        private static uint[] InitializeTable(uint polynomial)
         {
             if (polynomial == DefaultPolynomial && _defaultTable != null)
                 return _defaultTable;
 
-            var createTable = new UInt32[256];
+            var createTable = new uint[256];
             for (var i = 0; i < 256; i++)
             {
-                var entry = (UInt32) i;
+                var entry = (uint) i;
                 for (var j = 0; j < 8; j++)
                     if ((entry & 1) == 1)
                         entry = (entry >> 1) ^ polynomial;
                     else
-                        entry = entry >> 1;
+                        entry >>= 1;
                 createTable[i] = entry;
             }
 
@@ -101,7 +100,7 @@ namespace SuperMassive.Cryptography
             return createTable;
         }
 
-        private static UInt32 CalculateHash(UInt32[] table, UInt32 seed, IList<byte> buffer, int start, int size)
+        private static uint CalculateHash(uint[] table, uint seed, IList<byte> buffer, int start, int size)
         {
             var crc = seed;
             for (var i = start; i < size - start; i++)
@@ -109,7 +108,7 @@ namespace SuperMassive.Cryptography
             return crc;
         }
 
-        private static byte[] UInt32ToBigEndianBytes(UInt32 uint32)
+        private static byte[] UintToBigEndianBytes(uint uint32)
         {
             var result = BitConverter.GetBytes(uint32);
 

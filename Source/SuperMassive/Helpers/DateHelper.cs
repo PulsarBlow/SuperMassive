@@ -1,7 +1,9 @@
-﻿using System;
+﻿#nullable enable
 
 namespace SuperMassive
 {
+    using System;
+
     /// <summary>
     /// Provides helping method for manipulating dates. Provides DateTime extension methods too
     /// </summary>
@@ -14,13 +16,11 @@ namespace SuperMassive
         /// <returns>The date-time in UTC time.</returns>
         public static DateTime AsUtc(this DateTime value)
         {
-            if (value.Kind == DateTimeKind.Unspecified)
-            {
-                return new DateTime(value.Ticks, DateTimeKind.Utc);
-            }
-
-            return value.ToUniversalTime();
+            return value.Kind == DateTimeKind.Unspecified ?
+                new DateTime(value.Ticks, DateTimeKind.Utc) :
+                value.ToUniversalTime();
         }
+
         /// <summary>
         /// Ensures that local times are converted to UTC times.  Unspecified kinds are recast to UTC with no conversion.
         /// </summary>
@@ -29,13 +29,12 @@ namespace SuperMassive
         public static DateTime? AsUtc(this DateTime? value)
         {
             if (!value.HasValue) { return null; }
-            if (value.Value.Kind == DateTimeKind.Unspecified)
-            {
-                return new DateTime(value.Value.Ticks, DateTimeKind.Utc);
-            }
 
-            return value.Value.ToUniversalTime();
+            return value.Value.Kind == DateTimeKind.Unspecified ?
+                new DateTime(value.Value.Ticks, DateTimeKind.Utc) :
+                value.Value.ToUniversalTime();
         }
+
         /// <summary>
         /// Convert a unix timestamp to the corresponding datetime.
         /// </summary>
@@ -43,7 +42,7 @@ namespace SuperMassive
         /// <returns></returns>
         public static DateTime FromUnixTime(double value)
         {
-            DateTime unixStart = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            var unixStart = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return unixStart.AddSeconds(value);
         }
         /// <summary>
@@ -53,8 +52,8 @@ namespace SuperMassive
         /// <returns></returns>
         public static long ToUnixTime(DateTime date)
         {
-            DateTime unixStart = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            TimeSpan timespan = date - unixStart;
+            var unixStart = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            var timespan = date - unixStart;
             return (long)Math.Floor(timespan.TotalSeconds);
         }
     }

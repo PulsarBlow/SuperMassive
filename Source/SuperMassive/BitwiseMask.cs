@@ -1,7 +1,9 @@
-﻿namespace SuperMassive
+﻿#nullable enable
+
+namespace SuperMassive
 {
     /// <summary>
-    /// Encapsulate a numeric value and expose some bitwise operation to manupulate it.
+    /// Encapsulate a numeric value and expose some bitwise operation to manipulate it.
     /// </summary>
     public class BitwiseMask
     {
@@ -35,7 +37,7 @@
         /// <param name="value"></param>
         public BitwiseMask(long value)
         {
-            this._value = value;
+            _value = value;
         }
 
         /// <summary>
@@ -45,7 +47,7 @@
         /// <returns></returns>
         public bool Has(short value)
         {
-            return this.Has((long)value);
+            return Has((long)value);
         }
 
         /// <summary>
@@ -55,7 +57,7 @@
         /// <returns></returns>
         public bool Has(int value)
         {
-            return this.Has((long)value);
+            return Has((long)value);
         }
 
         /// <summary>
@@ -65,7 +67,7 @@
         /// <returns></returns>
         public bool Has(long value)
         {
-            return (this._value & value) == value;
+            return (_value & value) == value;
         }
 
         /// <summary>
@@ -75,7 +77,7 @@
         /// <returns></returns>
         public bool Is(short value)
         {
-            return this.Is((long)value);
+            return Is((long)value);
         }
 
         /// <summary>
@@ -85,7 +87,7 @@
         /// <returns></returns>
         public bool Is(int value)
         {
-            return this.Is((long)value);
+            return Is((long)value);
         }
 
         /// <summary>
@@ -95,7 +97,7 @@
         /// <returns></returns>
         public bool Is(long value)
         {
-            return this._value == value;
+            return _value == value;
         }
 
         /// <summary>
@@ -104,7 +106,7 @@
         /// <param name="value"></param>
         public BitwiseMask Add(short value)
         {
-            return this.Add((long)value);
+            return Add((long)value);
         }
 
         /// <summary>
@@ -113,7 +115,7 @@
         /// <param name="value"></param>
         public BitwiseMask Add(int value)
         {
-            return this.Add((long)value);
+            return Add((long)value);
         }
 
         /// <summary>
@@ -122,7 +124,7 @@
         /// <param name="value"></param>
         public BitwiseMask Add(long value)
         {
-            this._value |= value;
+            _value |= value;
             return this;
         }
 
@@ -132,7 +134,7 @@
         /// <param name="value"></param>
         public BitwiseMask Remove(short value)
         {
-            return this.Remove((long)value);
+            return Remove((long)value);
         }
 
         /// <summary>
@@ -141,7 +143,7 @@
         /// <param name="value"></param>
         public BitwiseMask Remove(int value)
         {
-            return this.Remove((long)value);
+            return Remove((long)value);
         }
 
         /// <summary>
@@ -150,7 +152,7 @@
         /// <param name="value"></param>
         public BitwiseMask Remove(long value)
         {
-            this._value &= ~value;
+            _value &= ~value;
             return this;
         }
 
@@ -160,7 +162,7 @@
         /// <returns></returns>
         public bool IsEmpty()
         {
-            return this._value == 0;
+            return _value == 0;
         }
 
         /// <summary>
@@ -169,7 +171,7 @@
         /// <returns></returns>
         public BitwiseMask Reset()
         {
-            this._value = 0;
+            _value = 0;
             return this;
         }
     }

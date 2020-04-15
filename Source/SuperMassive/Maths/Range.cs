@@ -1,8 +1,10 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿#nullable enable
 
 namespace SuperMassive.Maths
 {
+    using System;
+    using System.Runtime.Serialization;
+
     /// <summary>
     /// Defines a range
     /// </summary>
@@ -17,6 +19,7 @@ namespace SuperMassive.Maths
         /// </summary>
         [DataMember]
         public T Min { get; set; }
+
         /// <summary>
         /// Upper bound limit of the range
         /// </summary>

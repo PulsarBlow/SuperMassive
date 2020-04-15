@@ -1,4 +1,4 @@
-using System.Security.Cryptography;
+#nullable enable
 
 namespace SuperMassive.Cryptography
 {
@@ -13,7 +13,7 @@ namespace SuperMassive.Cryptography
     internal sealed class Crc16Ccitt
     {
         private const uint DefaultPolynomial = 0x8408;
-        private ushort[] _table;
+        private ushort[] _table = new ushort[256];
 
         public Crc16Ccitt()
         {
@@ -38,7 +38,6 @@ namespace SuperMassive.Cryptography
 
         private void InitializeTable()
         {
-            _table = new ushort[256];
             for (ushort i = 0; i < 256; ++i)
             {
                 ushort value = 0;

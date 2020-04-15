@@ -1,4 +1,6 @@
-﻿namespace SuperMassive.Extensions
+﻿#nullable enable
+
+namespace SuperMassive.Extensions
 {
     using System;
 

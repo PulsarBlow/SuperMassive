@@ -1,4 +1,9 @@
-﻿namespace SuperMassive
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+
+#nullable enable
+
+namespace SuperMassive
 {
     using System;
     using System.Collections.Specialized;
@@ -22,25 +27,14 @@
         public static object ReadObject(string xml, Type type)
         {
             if (string.IsNullOrEmpty(xml))
-                throw new ArgumentNullException("xml");
+                throw new ArgumentNullException(nameof(xml));
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
 
-            object result = null;
-            DataContractSerializer dcs = new DataContractSerializer(type);
-            StringReader reader = null;
-            try
-            {
-                reader = new StringReader(xml);
-                XmlReader xmlReader = new XmlTextReader(reader);
-                result = dcs.ReadObject(xmlReader);
-            }
-            finally
-            {
-                if (reader != null)
-                    reader.Dispose();
-            }
-            return result;
+            var serializer = new DataContractSerializer(type);
+            using var reader = new StringReader(xml);
+            XmlReader xmlReader = new XmlTextReader(reader);
+            return serializer.ReadObject(xmlReader);
         }
 
         /// <summary>
@@ -51,15 +45,10 @@
         public static T ReadObject<T>(string xml)
         {
             if (string.IsNullOrEmpty(xml))
-                throw new ArgumentNullException("xml");
+                throw new ArgumentNullException(nameof(xml));
 
-            T result = default(T);
-
-            object objResult = ReadObject(xml, typeof(T));
-            if (objResult != null)
-            {
-                result = (T)objResult;
-            }
+            var objResult = ReadObject(xml, typeof(T));
+            var result = (T) objResult;
             return result;
         }
 
@@ -71,12 +60,8 @@
         /// <returns></returns>
         public static T ReadObjectFromFile<T>(string fileName)
         {
-            T result = default(T);
-            object objResult = ReadObjectFromFile(fileName, typeof(T));
-            if (objResult != null)
-            {
-                result = (T)objResult;
-            }
+            var objResult = ReadObjectFromFile(fileName, typeof(T));
+            var result = (T) objResult;
             return result;
         }
 
@@ -90,18 +75,13 @@
         public static object ReadObjectFromFile(string fileName, Type type)
         {
             if (string.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
 
             if (!File.Exists(fileName))
-                throw new FileNotFoundException("fileName");
-            string xml = null;
-            using (StreamReader reader = new StreamReader(fileName, Encoding.UTF8))
-            {
-                xml = reader.ReadToEnd();
-                // reader.Close(); CA2202
-            }
-            if (xml == null)
-                return null;
+                throw new FileNotFoundException("File not found", fileName);
+
+            using var reader = new StreamReader(fileName, Encoding.UTF8);
+            var xml = reader.ReadToEnd();
             return ReadObject(xml, type);
         }
 
@@ -114,7 +94,7 @@
         public static string WriteObject<T>(T obj)
         {
             if (obj == null)
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
             return WriteObject(obj.GetType(), obj);
         }
 
@@ -127,21 +107,21 @@
         public static string WriteObject(Type type, object value)
         {
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
             if (value == null)
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
 
-            StringBuilder xmlSerial = new StringBuilder();
-            DataContractSerializer dcSerializer = new DataContractSerializer(type);
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Encoding = Encoding.UTF8;
-            settings.OmitXmlDeclaration = true;
-            using (XmlWriter xWriter = XmlWriter.Create(xmlSerial, settings))
+            var builder = new StringBuilder();
+            var serializer = new DataContractSerializer(type);
+            var settings = new XmlWriterSettings
             {
-                dcSerializer.WriteObject(xWriter, value);
-                xWriter.Flush();
-                return xmlSerial.ToString();
-            }
+                Encoding = Encoding.UTF8,
+                OmitXmlDeclaration = true
+            };
+            using var xWriter = XmlWriter.Create(builder, settings);
+            serializer.WriteObject(xWriter, value);
+            xWriter.Flush();
+            return builder.ToString();
         }
 
         /// <summary>
@@ -151,12 +131,10 @@
         /// <param name="rootName"></param>
         /// <param name="namespaceUri"></param>
         /// <returns></returns>
-        public static string WriteObject(NameValueCollection myCollection, string rootName, string namespaceUri)
+        public static string? WriteObject(NameValueCollection myCollection, string rootName, string namespaceUri)
         {
-            XmlDocument xmlDocument = WriteObjectToXmlDocument(myCollection, rootName, namespaceUri);
-            if (xmlDocument == null)
-                return null;
-            return xmlDocument.InnerXml;
+            var xmlDocument = WriteObjectToXmlDocument(myCollection, rootName, namespaceUri);
+            return xmlDocument?.InnerXml;
         }
 
         /// <summary>
@@ -167,7 +145,7 @@
         /// <typeparam name="T"></typeparam>
         /// <param name="fileName"></param>
         /// <param name="obj"></param>
-        public static void WriteObjectToFile<T>(string fileName, T obj)
+        public static void WriteObjectToFile<T>(string fileName, [DisallowNull] T obj)
         {
             WriteObjectToFile(fileName, obj.GetType(), obj);
         }
@@ -183,14 +161,10 @@
         public static void WriteObjectToFile(string fileName, Type type, object value)
         {
             if (string.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("fileName");
-            if (value == null)
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(fileName));
 
-            using (StreamWriter writer = new StreamWriter(fileName, false, Encoding.UTF8))
-            {
-                writer.Write(WriteObject(type, value));
-            }
+            using var writer = new StreamWriter(fileName, false, Encoding.UTF8);
+            writer.Write(WriteObject(type, value));
         }
 
         /// <summary>
@@ -200,27 +174,31 @@
         /// <param name="rootName"></param>
         /// <param name="namespaceUri"></param>
         /// <returns></returns>
-        public static XmlDocument WriteObjectToXmlDocument(NameValueCollection myCollection, string rootName, string namespaceUri)
+        public static XmlDocument? WriteObjectToXmlDocument(
+            NameValueCollection myCollection,
+            string rootName,
+            string namespaceUri)
         {
-            if (myCollection == null)
-                return null;
-            if (namespaceUri == null)
-                namespaceUri = String.Empty;
-            if (String.IsNullOrEmpty(rootName))
+            if (string.IsNullOrEmpty(rootName))
                 rootName = "xmldocument";
-            XmlDocument xmldoc = new XmlDocument();
-            XmlElement xmlRoot = xmldoc.CreateElement("", XmlConvert.EncodeName(rootName.ToLowerInvariant()), namespaceUri);
-            XmlElement xmlElement = null;
-            XmlCDataSection xmlCDataSection = null;
-            foreach (string s in myCollection)
+            var xmlDocument = new XmlDocument();
+            var xmlRoot =
+                xmlDocument.CreateElement(
+                    string.Empty,
+                    XmlConvert.EncodeName(rootName.ToLowerInvariant()),
+                    namespaceUri);
+
+            foreach (string? item in myCollection)
             {
-                xmlElement = xmldoc.CreateElement("", XmlConvert.EncodeName(s.ToLowerInvariant()), namespaceUri);
-                xmlCDataSection = xmldoc.CreateCDataSection(myCollection[s]);
+                string s = item ?? string.Empty;
+                var xmlElement = xmlDocument.CreateElement(string.Empty, XmlConvert.EncodeName(s.ToLowerInvariant()), namespaceUri);
+                var xmlCDataSection = xmlDocument.CreateCDataSection(myCollection[item]);
                 xmlElement.AppendChild(xmlCDataSection);
                 xmlRoot.AppendChild(xmlElement);
             }
-            xmldoc.AppendChild(xmlRoot);
-            return xmldoc;
+
+            xmlDocument.AppendChild(xmlRoot);
+            return xmlDocument;
         }
 
         /// <summary>
@@ -230,27 +208,29 @@
         /// <param name="rootName"></param>
         /// <param name="namespaceUri"></param>
         /// <returns></returns>
-        public static XDocument WriteObjectToXDocument(NameValueCollection myCollection, string rootName, string namespaceUri)
+        public static XDocument? WriteObjectToXDocument(NameValueCollection myCollection, string rootName,
+            string namespaceUri)
         {
             if (myCollection == null)
                 return null;
             if (namespaceUri == null)
-                namespaceUri = String.Empty;
-            if (String.IsNullOrEmpty(rootName))
-                rootName = "xdocument";
-            else
-                rootName = XmlConvert.EncodeName(rootName.ToLowerInvariant());
+                namespaceUri = string.Empty;
+            rootName = string.IsNullOrEmpty(rootName) ?
+                "xdocument" :
+                XmlConvert.EncodeName(rootName.ToLowerInvariant());
             XNamespace ns = namespaceUri;
-            XDocument xdoc = new XDocument(
-                /*new XDeclaration("1.0", "utf-8", "yes"),*/
+            var xDocument = new XDocument(
                 new XElement(ns + rootName));
-            foreach (string s in myCollection)
+            foreach (string? item in myCollection)
             {
-                xdoc.Element(ns + rootName).Add(
-                    new XElement(ns + XmlConvert.EncodeName(s.ToLowerInvariant()),
-                        myCollection[s] != null ? new XCData(myCollection[s]) : null));
+                string s = item ?? string.Empty;
+                xDocument.Element(ns + rootName)
+                    ?.Add(
+                        new XElement(ns + XmlConvert.EncodeName(s.ToLowerInvariant()),
+                        myCollection[item] != null ? new XCData(myCollection[item]) : null));
             }
-            return xdoc;
+
+            return xDocument;
         }
 
         /// <summary>
@@ -263,11 +243,9 @@
         {
             if (document == null)
                 return string.Empty;
-            StringBuilder sb = new StringBuilder();
-            using (XmlWriter writer = XmlWriter.Create(sb, settings))
-            {
-                document.Save(writer);
-            }
+            var sb = new StringBuilder();
+            using var writer = XmlWriter.Create(sb, settings);
+            document.Save(writer);
             return sb.ToString();
         }
 
@@ -278,9 +256,11 @@
         /// <returns></returns>
         public static string ToString(XDocument document)
         {
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Encoding = Encoding.UTF8;
-            settings.OmitXmlDeclaration = true;
+            var settings = new XmlWriterSettings
+            {
+                Encoding = Encoding.UTF8,
+                OmitXmlDeclaration = true
+            };
             return ToString(document, settings);
         }
 
@@ -289,22 +269,19 @@
         /// </summary>
         /// <param name="document"></param>
         /// <returns></returns>
-        public static string ToCleanString(XDocument document)
+        public static string? ToCleanString(XDocument document)
         {
             if (document == null) return null;
 
-            XmlWriterSettings settings = new XmlWriterSettings()
+            var settings = new XmlWriterSettings()
             {
                 Encoding = Encoding.UTF8,
                 OmitXmlDeclaration = true,
                 CheckCharacters = false
             };
-            StringBuilder sb = new StringBuilder();
-            using (XmlWriter writer = XmlWriter.Create(sb, settings))
-            {
-                document.Save(writer);
-                // writer.Close(); CA2202
-            }
+            var sb = new StringBuilder();
+            using var writer = XmlWriter.Create(sb, settings);
+            document.Save(writer);
             return SanitizeXmlString(sb.ToString());
         }
 
@@ -315,9 +292,9 @@
         {
             return
             (
-                 character == 0x9 /* == '\t' == 9   */        ||
-                 character == 0xA /* == '\n' == 10  */        ||
-                 character == 0xD /* == '\r' == 13  */        ||
+                character == 0x9 /* == '\t' == 9   */ ||
+                character == 0xA /* == '\n' == 10  */ ||
+                character == 0xD /* == '\r' == 13  */ ||
                 (character >= 0x20 && character <= 0xD7FF) ||
                 (character >= 0xE000 && character <= 0xFFFD) ||
                 (character >= 0x10000 && character <= 0x10FFFF)
@@ -336,12 +313,9 @@
 
             var buffer = new StringBuilder(xml.Length);
 
-            foreach (char c in xml)
+            foreach (var c in xml.Where(c => IsLegalXmlChar(c)))
             {
-                if (IsLegalXmlChar(c))
-                {
-                    buffer.Append(c);
-                }
+                buffer.Append(c);
             }
 
             return buffer.ToString();

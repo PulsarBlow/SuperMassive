@@ -1,8 +1,10 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+﻿#nullable enable
 
 namespace SuperMassive
 {
+    using System.Diagnostics;
+    using System.Reflection;
+
     /// <summary>
     /// Provides helping methods for manipulating assemblies
     /// </summary>
@@ -22,6 +24,7 @@ namespace SuperMassive
         /// </summary>
         /// <param name="assembly"></param>
         /// <returns></returns>
+        // TODO: Fix Informational Version. Should comes from Assembly attributes
         public static string GetInformationalVersion(Assembly assembly)
         {
             return FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;

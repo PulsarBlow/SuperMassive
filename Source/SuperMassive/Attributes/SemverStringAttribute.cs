@@ -1,9 +1,11 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
+﻿#nullable enable
 
 namespace SuperMassive
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Globalization;
+
     /// <summary>
     /// A validation attribute which will ensure that the provided string is a valid semver format
     /// http://semver.org/
@@ -20,9 +22,9 @@ namespace SuperMassive
         /// <param name="value"></param>
         /// <param name="validationContext"></param>
         /// <returns></returns>
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(object value, ValidationContext validationContext)
         {
-            if (!RegexHelper.IsSemver(Convert.ToString(value, CultureInfo.InvariantCulture)))
+            if (!RegexHelper.IsSemver(Convert.ToString(value, CultureInfo.InvariantCulture) ?? string.Empty))
             {
                 return new ValidationResult(
                     validationContext != null ?
@@ -30,6 +32,7 @@ namespace SuperMassive
                         ErrorMessage
                 );
             }
+
             return null;
         }
     }

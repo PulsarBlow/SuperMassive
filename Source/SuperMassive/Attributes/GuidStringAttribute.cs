@@ -1,4 +1,6 @@
-﻿namespace SuperMassive
+﻿#nullable enable
+
+namespace SuperMassive
 {
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -28,18 +30,16 @@
             _allowEmpty = allowEmpty;
         }
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(object value, ValidationContext validationContext)
         {
-            string input = Convert.ToString(value, CultureInfo.InvariantCulture);
-
-            Guid result;
-            if (!Guid.TryParse(input, out result))
+            if (!Guid.TryParse(Convert.ToString(value, CultureInfo.InvariantCulture), out var result))
             {
                 return new ValidationResult(
                     validationContext != null ?
                         FormatErrorMessage(validationContext.DisplayName) :
                         ErrorMessage);
             }
+
             if (result == Guid.Empty && !_allowEmpty)
             {
                 return new ValidationResult(

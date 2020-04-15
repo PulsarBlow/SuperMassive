@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
-using SuperMassive;
-
-namespace SuperMassiveTests
+﻿namespace SuperMassive.Tests.Attributes
 {
+    using NUnit.Framework;
+    using SuperMassive;
+
     public class SemverStringAttributeTest
     {
         [Test]

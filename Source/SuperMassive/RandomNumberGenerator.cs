@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using SuperMassive.Extensions;
+    using Extensions;
 
     /// <summary>
     /// Random Number Generator
@@ -195,7 +195,7 @@
         /// <returns>A random sample from the Bernoulli distribution.</returns>
         public static int DoBernoulliTrial(double p)
         {
-            if (RandomNumberGenerator.Float(1) < p)
+            if (Float(1) < p)
                 return 1;
             return 0;
         }
@@ -206,7 +206,7 @@
         /// <returns></returns>
         public static int FlipCoin()
         {
-            return RandomNumberGenerator.DoBernoulliTrial(0.5);
+            return DoBernoulliTrial(0.5);
         }
 
         /// <summary>

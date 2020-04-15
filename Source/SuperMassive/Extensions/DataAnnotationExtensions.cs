@@ -1,4 +1,6 @@
-﻿namespace SuperMassive.Extensions
+﻿#nullable enable
+
+namespace SuperMassive.Extensions
 {
     using System;
     using System.Collections.Generic;
@@ -19,7 +21,7 @@
         {
             Guard.ArgumentNotNull(extended, nameof(extended));
 
-            return extended.ToDictionary(x => String.Join(",", x.MemberNames), x => x.ErrorMessage);
+            return extended.ToDictionary(x => string.Join(",", x.MemberNames), x => x.ErrorMessage);
         }
     }
 }

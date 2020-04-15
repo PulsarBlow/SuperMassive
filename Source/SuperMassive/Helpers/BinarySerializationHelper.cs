@@ -1,8 +1,10 @@
-﻿using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+﻿#nullable enable
 
 namespace SuperMassive
 {
+    using System.IO;
+    using System.Runtime.Serialization.Formatters.Binary;
+
     /// <summary>
     /// Provides helping methods to handle binary serialization
     /// </summary>
@@ -15,18 +17,15 @@ namespace SuperMassive
         /// <returns></returns>
         public static byte[] Serialize(object value)
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                // Serialize the object in memory
-                bf.Serialize(memoryStream, value);
+            var bf = new BinaryFormatter();
 
-                // Make sure all is loaded in the stream
-                memoryStream.Flush();
+            using var memoryStream = new MemoryStream();
+            bf.Serialize(memoryStream, value);
+            memoryStream.Flush();
 
-                return memoryStream.GetBuffer();
-            }
+            return memoryStream.GetBuffer();
         }
+
         /// <summary>
         /// Deserialize a byte array into an object
         /// </summary>
@@ -34,11 +33,9 @@ namespace SuperMassive
         /// <returns></returns>
         public static object Deserialize(byte[] value)
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            using (MemoryStream memoryStream = new MemoryStream(value))
-            {
-                return bf.Deserialize(memoryStream);
-            }
+            var bf = new BinaryFormatter();
+            using var memoryStream = new MemoryStream(value);
+            return bf.Deserialize(memoryStream);
         }
     }
 }

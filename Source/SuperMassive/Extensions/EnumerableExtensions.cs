@@ -1,4 +1,6 @@
-﻿namespace SuperMassive.Extensions
+﻿#nullable enable
+
+namespace SuperMassive.Extensions
 {
     using System;
     using System.Collections.Generic;
@@ -10,19 +12,19 @@
     public static class EnumerableExtensions
     {
         /// <summary>
-        /// Execute an lambda expression on each items
+        /// Execute an lambda expression on each items of the collection
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="items"></param>
+        /// <param name="collection"></param>
         /// <param name="action"></param>
-        public static void Each<T>(this IEnumerable<T> items, Action<T> action)
+        public static void Each<T>(this IEnumerable<T> collection, Action<T> action)
         {
-            Guard.ArgumentNotNull(items, nameof(items));
+            Guard.ArgumentNotNull(collection, nameof(collection));
             Guard.ArgumentNotNull(action, nameof(action));
 
-            foreach (T local in items)
+            foreach (var item in collection)
             {
-                action(local);
+                action(item);
             }
         }
 
@@ -30,14 +32,14 @@
         /// Joins all items in the current collection by calling ToString() on each.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="items"></param>
+        /// <param name="collection"></param>
         /// <param name="separator"></param>
         /// <returns></returns>
-        public static string Join<T>(this IEnumerable<T> items, string separator)
+        public static string Join<T>(this IEnumerable<T> collection, string separator)
         {
-            Guard.ArgumentNotNull(items, nameof(items));
+            Guard.ArgumentNotNull(collection, nameof(collection));
 
-            return String.Join(separator, items);
+            return string.Join(separator, collection);
         }
 
         /// <summary>
@@ -65,8 +67,8 @@
         {
             Guard.ArgumentNotNull(collection, nameof(collection));
 
-            T[] items = collection.ToArray();
-            for (int i = 0; i < count; i++)
+            var items = collection.ToArray();
+            for (var i = 0; i < count; i++)
                 yield return items[RandomNumberGenerator.Int(items.Length)];
         }
     }

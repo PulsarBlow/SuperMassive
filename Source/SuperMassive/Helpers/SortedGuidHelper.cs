@@ -11,7 +11,7 @@
 
         public static string GetFormatedString(long ticks, Guid guid)
         {
-            return String.Format(
+            return string.Format(
                 CultureInfo.InvariantCulture,
                 Format,
                 ticks,

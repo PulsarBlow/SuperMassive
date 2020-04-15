@@ -1,4 +1,5 @@
-﻿
+﻿#nullable enable
+
 namespace SuperMassive.Maths
 {
     /// <summary>
@@ -6,7 +7,6 @@ namespace SuperMassive.Maths
     /// </summary>
     public class RealInterval
     {
-        #region Properties
         /// <summary>
         /// Upper interval limit
         /// </summary>
@@ -31,9 +31,7 @@ namespace SuperMassive.Maths
             get;
             set;
         }
-        #endregion
 
-        #region Public Methods
         /// <summary>
         /// Returns true if the given real number is in interval limits
         /// </summary>
@@ -41,21 +39,19 @@ namespace SuperMassive.Maths
         /// <returns></returns>
         public bool IsValueInLimits(double value)
         {
-            switch (this.IntervalType)
+            switch (IntervalType)
             {
                 case IntervalTypes.HalfInclusive:
-                    return value >= this.LowerLimit && value < this.UpperLimit;
+                    return value >= LowerLimit && value < UpperLimit;
                 case IntervalTypes.Inclusive:
-                    return value >= this.LowerLimit && value <= this.UpperLimit;
+                    return value >= LowerLimit && value <= UpperLimit;
                 case IntervalTypes.HalfExclusive:
-                    return value > this.LowerLimit && value <= this.UpperLimit;
+                    return value > LowerLimit && value <= UpperLimit;
                 case IntervalTypes.Exclusive:
-                    return value > this.LowerLimit && value < this.UpperLimit;
-                case IntervalTypes.NotSet:
+                    return value > LowerLimit && value < UpperLimit;
                 default:
                     return false;
             }
         }
-        #endregion
     }
 }

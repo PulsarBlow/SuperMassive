@@ -1,14 +1,15 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿#nullable enable
 
 namespace SuperMassive
 {
+    using System;
+    using System.Text.RegularExpressions;
+
     /// <summary>
     /// Provides regex utilities
     /// </summary>
     public static class RegexHelper
     {
-        #region Public Methods
         /// <summary>
         /// SHA-256 Regex pattern
         /// </summary>
@@ -119,7 +120,7 @@ namespace SuperMassive
         /// <returns></returns>
         public static bool IsTableContainerNameValid(string value)
         {
-            if (String.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value))
                 return false;
 
             if (value.Equals("$root"))
@@ -137,7 +138,7 @@ namespace SuperMassive
         /// <returns></returns>
         public static bool IsBlobContainerNameValid(string value)
         {
-            if (String.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value))
                 return false;
 
             return IsPatternMatch(value, BlobContainerNamePattern, RegexOptions.Compiled);
@@ -173,17 +174,16 @@ namespace SuperMassive
             return IsPatternMatch(value, SemverPattern, RegexOptions.Compiled);
         }
 
-        #endregion
-
-        #region Private Methods
-        private static bool IsPatternMatch(string value, string pattern, RegexOptions regexOptions = RegexOptions.IgnoreCase | RegexOptions.Compiled)
+        private static bool IsPatternMatch(
+            string value,
+            string pattern,
+            RegexOptions regexOptions = RegexOptions.IgnoreCase | RegexOptions.Compiled)
         {
-            if (String.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value))
                 return false;
-            if (String.IsNullOrWhiteSpace(pattern))
-                throw new ArgumentNullException("pattern");
+            if (string.IsNullOrWhiteSpace(pattern))
+                throw new ArgumentNullException(nameof(pattern));
             return Regex.IsMatch(value, pattern, regexOptions);
         }
-        #endregion
     }
 }
