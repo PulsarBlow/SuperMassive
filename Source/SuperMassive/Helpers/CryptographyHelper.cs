@@ -1,4 +1,4 @@
-namespace SuperMassive
+﻿namespace SuperMassive
 {
     using Cryptography;
     using System;
@@ -14,15 +14,15 @@ namespace SuperMassive
         /// <summary>
         /// Compute the MD5 hash of a UTF-8 string
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="value"></param>
         /// <returns>The md5 hashed string</returns>
-        public static string ComputeMD5Hash(string input)
+        public static string ComputeMD5Hash(string value)
         {
-            if (input == string.Empty)
+            if (value == string.Empty)
                 return string.Empty;
 
             using var hasher = MD5.Create();
-            return ByteToHex(hasher.ComputeHash(Encoding.UTF8.GetBytes(input)));
+            return ByteToHex(hasher.ComputeHash(Encoding.UTF8.GetBytes(value)));
         }
 
         /// <summary>
@@ -41,15 +41,15 @@ namespace SuperMassive
         /// <summary>
         /// Compute the SHA256 hash of a UTF-8 string
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public static string ComputeSHA256Hash(string input)
+        public static string ComputeSHA256Hash(string value)
         {
-            if (input == string.Empty)
+            if (value == string.Empty)
                 return string.Empty;
 
             using var hasher = SHA256.Create();
-            return ByteToHex(hasher.ComputeHash(Encoding.UTF8.GetBytes(input)));
+            return ByteToHex(hasher.ComputeHash(Encoding.UTF8.GetBytes(value)));
         }
 
         /// <summary>
@@ -68,12 +68,14 @@ namespace SuperMassive
         /// <summary>
         /// Compute the SHA1 hash of a UTF-8 string
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public static string ComputeSHA1Hash(string input)
+        public static string ComputeSHA1Hash(string value)
         {
+            if (value == string.Empty)
+                return string.Empty;
             using var hasher = SHA1.Create();
-            return ByteToHex(hasher.ComputeHash(Encoding.UTF8.GetBytes(input)));
+            return ByteToHex(hasher.ComputeHash(Encoding.UTF8.GetBytes(value)));
         }
 
         /// <summary>
@@ -87,6 +89,56 @@ namespace SuperMassive
             using var stream = File.OpenRead(fileName);
             using var hasher = SHA1.Create();
             return ComputeHashFromStream(stream, hasher, base64);
+        }
+
+        /// <summary>
+        /// This method computes the CRC32 hash of the given value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string ComputeCRC32Hash(string value)
+        {
+            if (value == string.Empty)
+                return string.Empty;
+
+            using var crc32 = new Crc32();
+            return ByteToHex(crc32.ComputeHash(Encoding.UTF8.GetBytes(value)));
+        }
+
+        /// <summary>
+        /// This method computes the CRC32 hash of the given value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static byte[] ComputeCRC32HashByte(string value)
+        {
+            var crc32 = new Crc32();
+            return crc32.ComputeHash(Encoding.UTF8.GetBytes(value));
+        }
+
+        /// <summary>
+        /// This method compute the CRC16 hash of the given value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string ComputeCRC16Hash(string value)
+        {
+            Guard.ArgumentNotNullOrWhiteSpace(value, nameof(value));
+
+            var crc16 = new Crc16Ccitt();
+            return ByteToHex(crc16.ComputeHashBytes(Encoding.UTF8.GetBytes(value)));
+        }
+
+        /// <summary>
+        /// This method computes the CRC16 hash of the given value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        // TODO: Rename ComputeCRC16HashByte to ComputeCrc16HashBits and deprecated previous name
+        public static byte[] ComputeCRC16HashByte(string value)
+        {
+            var crc16 = new Crc16Ccitt();
+            return crc16.ComputeHashBytes(Encoding.UTF8.GetBytes(value));
         }
 
         /// <summary>
@@ -130,52 +182,6 @@ namespace SuperMassive
             return Encoding.UTF8.GetString(bytes);
         }
 
-        /// <summary>
-        /// This method computes the CRC32 hash of the given value
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static string ComputeCRC32Hash(string value)
-        {
-            var crc32 = new Crc32();
-            return ByteToHex(crc32.ComputeHash(Encoding.UTF8.GetBytes(value)));
-        }
-
-        /// <summary>
-        /// This method computes the CRC32 hash of the given value
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static byte[] ComputeCRC32HashByte(string value)
-        {
-            var crc32 = new Crc32();
-            return crc32.ComputeHash(Encoding.UTF8.GetBytes(value));
-        }
-
-        /// <summary>
-        /// This method compute the CRC16 hash of the given value.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static string ComputeCRC16Hash(string value)
-        {
-            Guard.ArgumentNotNullOrWhiteSpace(value, nameof(value));
-
-            var crc16 = new Crc16Ccitt();
-            return ByteToHex(crc16.ComputeHashBytes(Encoding.UTF8.GetBytes(value)));
-        }
-
-        /// <summary>
-        /// This method computes the CRC16 hash of the given value
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static byte[] ComputeCRC16HashByte(string value)
-        {
-            var crc16 = new Crc16Ccitt();
-            return crc16.ComputeHashBytes(Encoding.UTF8.GetBytes(value));
-        }
-
         internal static string ComputeHashFromStream(Stream stream, HashAlgorithm hasher, bool base64)
         {
             if (stream.Length == 0)
@@ -183,7 +189,7 @@ namespace SuperMassive
 
             return base64
                 ? Convert.ToBase64String(hasher.ComputeHash(stream))
-                : BitConverter.ToString(hasher.ComputeHash(stream)).Replace("-", string.Empty);
+                : ByteToHex(hasher.ComputeHash(stream));
         }
     }
 }
