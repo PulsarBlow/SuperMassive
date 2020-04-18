@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace SuperMassive
+﻿namespace SuperMassive
 {
     /// <summary>
     /// Encapsulate a numeric value and expose some bitwise operation to manipulate it.

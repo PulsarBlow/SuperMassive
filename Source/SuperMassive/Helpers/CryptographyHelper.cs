@@ -1,4 +1,3 @@
-﻿#nullable enable
 namespace SuperMassive
 {
     using Cryptography;

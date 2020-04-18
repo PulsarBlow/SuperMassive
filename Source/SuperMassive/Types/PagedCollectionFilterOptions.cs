@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace SuperMassive
+﻿namespace SuperMassive
 {
     /// <summary>
     /// Encapsulates filtering options for a <see cref="PagedCollection{T}"/>

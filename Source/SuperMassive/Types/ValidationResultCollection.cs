@@ -1,8 +1,4 @@
-﻿using System;
-
-#nullable enable
-
-namespace SuperMassive
+﻿namespace SuperMassive
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

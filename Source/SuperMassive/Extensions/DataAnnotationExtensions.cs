@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace SuperMassive.Extensions
+﻿namespace SuperMassive.Extensions
 {
     using System;
     using System.Collections.Generic;
@@ -19,9 +17,9 @@ namespace SuperMassive.Extensions
         /// <returns></returns>
         public static Dictionary<string, string> ToDictionary(this IEnumerable<ValidationResult> extended)
         {
-            Guard.ArgumentNotNull(extended, nameof(extended));
-
-            return extended.ToDictionary(x => string.Join(",", x.MemberNames), x => x.ErrorMessage);
+            return extended.ToDictionary(
+                x => string.Join(",", x.MemberNames),
+                x => x.ErrorMessage);
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace SuperMassive
+﻿namespace SuperMassive
 {
     /// <summary>
     /// Resolver

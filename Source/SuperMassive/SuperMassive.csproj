@@ -4,6 +4,7 @@
   <Import Project="../../props/package.props" />
 
   <PropertyGroup>
+    <Nullable>enable</Nullable>
     <Title>Your supermassive swiss army knife</Title>
     <Summary>SuperMassive Core features. Stripped to their bare minimum.</Summary>
     <PackageTags>supermassive;helpers;extensions;converters;crypto</PackageTags>

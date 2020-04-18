@@ -1,7 +1,4 @@
-﻿
-#nullable enable
-
-namespace SuperMassive.Maths
+﻿namespace SuperMassive.Maths
 {
     /// <summary>
     /// Enumerates the different existing interval types.

@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace SuperMassive.Maths
+﻿namespace SuperMassive.Maths
 {
     using System;
     using System.Runtime.Serialization;

@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace SuperMassive.Cryptography
+﻿namespace SuperMassive.Cryptography
 {
     using System;
     using System.Collections.Generic;

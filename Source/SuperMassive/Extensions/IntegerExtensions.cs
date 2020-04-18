@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace SuperMassive.Extensions
+﻿namespace SuperMassive.Extensions
 {
     using System;
     using System.Collections.Generic;

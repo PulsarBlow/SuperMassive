@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace SuperMassive.Extensions
+﻿namespace SuperMassive.Extensions
 {
     using System;
 
@@ -8,7 +6,7 @@ namespace SuperMassive.Extensions
     {
         public static bool IsNullable(this Type type)
         {
-            return type != null && type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
     }
 }

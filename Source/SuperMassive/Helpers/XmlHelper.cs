@@ -1,10 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-
-#nullable enable
-
-namespace SuperMassive
+﻿namespace SuperMassive
 {
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using System;
     using System.Collections.Specialized;
     using System.IO;
