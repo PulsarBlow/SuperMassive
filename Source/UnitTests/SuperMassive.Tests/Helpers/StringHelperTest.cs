@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SuperMassive.Tests.Helpers
+﻿namespace SuperMassive.Tests.Helpers
 {
     using NUnit.Framework;
 

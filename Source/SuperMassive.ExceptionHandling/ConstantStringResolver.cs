@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SuperMassive.ExceptionHandling
+﻿namespace SuperMassive.ExceptionHandling
 {
     /// <summary>
     /// Resolves strings by returning a constant value.

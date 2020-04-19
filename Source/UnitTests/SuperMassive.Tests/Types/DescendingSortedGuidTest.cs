@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Threading;
     using NUnit.Framework;
-    using UnitTestHelpers;
 
     public class DescendingSortedGuidTest
     {
@@ -21,7 +20,8 @@
         public void DescendingSortedGuid_TryParse_With_Valid_DescendingSortedGuid_Returns_True()
         {
             DescendingSortedGuid guid;
-            Assert.IsTrue(DescendingSortedGuid.TryParse("0635318522499400050_B77AD6F9624A4C2896E8545923E56502", out guid));
+            Assert.IsTrue(DescendingSortedGuid.TryParse("0635318522499400050_B77AD6F9624A4C2896E8545923E56502",
+                out guid));
             Assert.AreEqual("0635318522499400050_b77ad6f9624a4c2896e8545923e56502", guid.ToString());
         }
 
@@ -63,29 +63,27 @@
         [Test]
         public void DescendingSortedGuid_Order_WithSuccess()
         {
-            List<Fake<DescendingSortedGuid>> expected = new List<Fake<DescendingSortedGuid>>();
+            var expected = new List<Fake<DescendingSortedGuid>>();
 
-            for (int i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
             {
                 var item = NewItemDesc();
                 expected.Add(item);
                 Thread.Sleep(10); // slowing down
             }
 
-            List<Fake<DescendingSortedGuid>> actual = new List<Fake<DescendingSortedGuid>>();
-
-            actual = expected.OrderByDescending(x => x.Id.ToString()).ToList();
-            CommonComparers.AreCollectionEquals(expected, actual, AssertCompare);
+            var actual = expected.OrderByDescending(x => x.Id.ToString()).ToList();
+            Assert.That(actual, Is.EqualTo(expected));
 
             actual = expected.OrderByDescending(x => x.Id).ToList();
-            CommonComparers.AreCollectionEquals(expected, actual, AssertCompare);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
         public void DescendingSortedGuid_LexicalOrdering_Descending_WithSuccess()
         {
             var timestamp = DateTimeOffset.UtcNow;
-            List<DescendingSortedGuid> expected = new List<DescendingSortedGuid>
+            var expected = new List<DescendingSortedGuid>
             {
                 new DescendingSortedGuid(timestamp, Guid.NewGuid()),
                 new DescendingSortedGuid(timestamp.AddMilliseconds(-10), Guid.NewGuid()),
@@ -93,11 +91,11 @@
                 new DescendingSortedGuid(timestamp.AddMilliseconds(-1000), Guid.NewGuid()),
             };
 
-            List<DescendingSortedGuid> actual = expected.OrderBy(x => x.ToString()).ToList();
-            CommonComparers.AreCollectionEquals(expected, actual, AssertCompare);
+            var actual = expected.OrderBy(x => x.ToString()).ToList();
+            Assert.That(actual, Is.EqualTo((expected)));
 
             actual = expected.OrderBy(x => x).ToList();
-            CommonComparers.AreCollectionEquals(expected, actual, AssertCompare);
+            Assert.That(actual, Is.EqualTo((expected)));
         }
 
         [Test]
@@ -130,10 +128,10 @@
         [Test]
         public void DescendingSortedGuid_GetHasCode_WithFastIteration_Creates_UniqueHasCode()
         {
-            HashSet<int> hashSet = new HashSet<int>();
-            for (int i = 0; i < 1000; i++)
+            var hashSet = new HashSet<int>();
+            for (var i = 0; i < 1000; i++)
             {
-                int hashCode = DescendingSortedGuid.NewSortedGuid().GetHashCode();
+                var hashCode = DescendingSortedGuid.NewSortedGuid().GetHashCode();
                 Assert.IsTrue(hashSet.Add(hashCode), $"Duplicate hashcode: {hashCode}");
             }
         }
@@ -144,10 +142,11 @@
             var guid = Guid.NewGuid();
             var timestamp = DateTimeOffset.UtcNow;
 
-            Assert.IsTrue(new DescendingSortedGuid(timestamp, guid).Equals((object)new DescendingSortedGuid(timestamp, guid)));
+            Assert.IsTrue(
+                new DescendingSortedGuid(timestamp, guid).Equals((object) new DescendingSortedGuid(timestamp, guid)));
             Assert.IsTrue(new DescendingSortedGuid(timestamp, guid).Equals(new DescendingSortedGuid(timestamp, guid)));
             Assert.IsTrue(new DescendingSortedGuid(timestamp, guid).Equals(new DescendingSortedGuid(timestamp, guid)));
-            Assert.IsTrue(DescendingSortedGuid.Empty.Equals((object)DescendingSortedGuid.Empty));
+            Assert.IsTrue(DescendingSortedGuid.Empty.Equals((object) DescendingSortedGuid.Empty));
             Assert.IsTrue(DescendingSortedGuid.Empty.Equals(DescendingSortedGuid.Empty));
         }
 
@@ -155,7 +154,7 @@
         public void DescendingSortedGuid_Equals_With_NotEqualItems_Returns_False()
         {
             Assert.IsFalse(new DescendingSortedGuid().Equals(null));
-            Assert.IsFalse(new DescendingSortedGuid().Equals(new { Toto = "toto" }));
+            Assert.IsFalse(new DescendingSortedGuid().Equals(new {Toto = "toto"}));
             Assert.IsFalse(DescendingSortedGuid.NewSortedGuid().Equals(DescendingSortedGuid.NewSortedGuid()));
         }
 
@@ -167,7 +166,8 @@
             var smallerTimestamp = timestamp.AddMilliseconds(-1);
 
             Assert.IsTrue(new DescendingSortedGuid(timestamp, guid) <= new DescendingSortedGuid(timestamp, guid));
-            Assert.IsTrue(new DescendingSortedGuid(smallerTimestamp, guid) <= new DescendingSortedGuid(timestamp, guid));
+            Assert.IsTrue(new DescendingSortedGuid(smallerTimestamp, guid) <=
+                          new DescendingSortedGuid(timestamp, guid));
         }
 
         [Test]
@@ -177,7 +177,8 @@
             var timestamp = DateTimeOffset.UtcNow;
             var biggerTimestamp = timestamp.AddMilliseconds(1);
 
-            Assert.IsFalse(new DescendingSortedGuid(biggerTimestamp, guid) <= new DescendingSortedGuid(timestamp, guid));
+            Assert.IsFalse(new DescendingSortedGuid(biggerTimestamp, guid) <=
+                           new DescendingSortedGuid(timestamp, guid));
         }
 
         [Test]
@@ -188,7 +189,8 @@
             var smallerTimestamp = timestamp.AddMilliseconds(-1);
 
             Assert.IsTrue(new DescendingSortedGuid(timestamp, guid) >= new DescendingSortedGuid(timestamp, guid));
-            Assert.IsTrue(new DescendingSortedGuid(timestamp, guid) >= new DescendingSortedGuid(smallerTimestamp, guid));
+            Assert.IsTrue(new DescendingSortedGuid(timestamp, guid) >=
+                          new DescendingSortedGuid(smallerTimestamp, guid));
         }
 
         [Test]
@@ -198,7 +200,8 @@
             var timestamp = DateTimeOffset.UtcNow;
             var biggerTimestamp = timestamp.AddMilliseconds(1);
 
-            Assert.IsFalse(new DescendingSortedGuid(timestamp, guid) >= new DescendingSortedGuid(biggerTimestamp, guid));
+            Assert.IsFalse(new DescendingSortedGuid(timestamp, guid) >=
+                           new DescendingSortedGuid(biggerTimestamp, guid));
         }
 
         [Test]
@@ -246,8 +249,10 @@
             var timestamp = DateTimeOffset.UtcNow;
             var smallerTimestamp = timestamp.AddMilliseconds(-1);
 
-            Assert.IsTrue(new DescendingSortedGuid(timestamp, guid) != new DescendingSortedGuid(smallerTimestamp, guid));
-            Assert.IsTrue(new DescendingSortedGuid(smallerTimestamp, guid) != new DescendingSortedGuid(timestamp, guid));
+            Assert.IsTrue(new DescendingSortedGuid(timestamp, guid) !=
+                          new DescendingSortedGuid(smallerTimestamp, guid));
+            Assert.IsTrue(new DescendingSortedGuid(smallerTimestamp, guid) !=
+                          new DescendingSortedGuid(timestamp, guid));
             Assert.IsTrue(DescendingSortedGuid.NewSortedGuid() != DescendingSortedGuid.NewSortedGuid());
         }
 
@@ -274,7 +279,7 @@
         [Test]
         public void DescendingSortedGUid_CompareToObject_With_NotAssignableType_Returns_PlusOne()
         {
-            object obj = new { value = "value" };
+            object obj = new {value = "value"};
             Assert.IsTrue(new DescendingSortedGuid().CompareTo(obj) == 1);
         }
 
@@ -285,14 +290,20 @@
             var timestamp = DateTimeOffset.UtcNow;
             var greaterTimestamp = timestamp.AddMilliseconds(1);
 
-            Assert.IsTrue(new DescendingSortedGuid(timestamp, guid).CompareTo((object)new DescendingSortedGuid(greaterTimestamp, guid)) == 1);
-            Assert.IsTrue(new DescendingSortedGuid(greaterTimestamp, guid).CompareTo((object)new DescendingSortedGuid(timestamp, guid)) == -1);
-            Assert.IsTrue(new DescendingSortedGuid(timestamp, guid).CompareTo((object)new DescendingSortedGuid(timestamp, guid)) == 0);
+            Assert.IsTrue(
+                new DescendingSortedGuid(timestamp, guid).CompareTo(
+                    (object) new DescendingSortedGuid(greaterTimestamp, guid)) == 1);
+            Assert.IsTrue(
+                new DescendingSortedGuid(greaterTimestamp, guid).CompareTo(
+                    (object) new DescendingSortedGuid(timestamp, guid)) == -1);
+            Assert.IsTrue(
+                new DescendingSortedGuid(timestamp, guid).CompareTo(
+                    (object) new DescendingSortedGuid(timestamp, guid)) == 0);
         }
 
         private static Fake<DescendingSortedGuid> NewItemDesc()
         {
-            Fake<DescendingSortedGuid> item = new Fake<DescendingSortedGuid>();
+            var item = new Fake<DescendingSortedGuid>();
             item.Id = DescendingSortedGuid.NewSortedGuid();
             item.Name = Randomizer.GetRandomString();
             return item;
@@ -309,9 +320,10 @@
             AssertCompare(expected.Id, actual.Id);
             Assert.AreEqual(expected.Name, actual.Name);
         }
-        class Fake<IdType>
+
+        private class Fake<T>
         {
-            public IdType Id { get; set; }
+            public T Id { get; set; }
             public string Name { get; set; }
         }
     }

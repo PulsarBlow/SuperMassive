@@ -1,18 +1,20 @@
-﻿using System;
-using NUnit.Framework;
-using SuperMassive.UnitTestHelpers;
-
-namespace SuperMassive.Tests
+﻿namespace SuperMassive.Tests
 {
+    using System;
+    using NUnit.Framework;
+
     public class DateHelperTest
     {
         [Test]
         public void ToUnixTimeTest()
         {
-            DateTime expected = DateTime.Now;
-            long timeStamp = DateHelper.ToUnixTime(expected);
-            DateTime actual = DateHelper.FromUnixTime(timeStamp);
-            CommonComparers.AreSimilar(expected, actual);
+            const string comparisonFormat = "yyyy/MM/dd HH:mm:ss";
+
+            var expected = DateTime.Now;
+            var timeStamp = DateHelper.ToUnixTime(expected);
+            var actual = DateHelper.FromUnixTime(timeStamp);
+
+            Assert.That(actual.ToString(comparisonFormat), Is.EqualTo(expected.ToString(comparisonFormat)));
         }
     }
 }

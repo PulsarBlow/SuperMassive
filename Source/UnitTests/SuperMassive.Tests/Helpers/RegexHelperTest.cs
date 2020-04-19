@@ -1,9 +1,6 @@
 ﻿namespace SuperMassive.Tests
 {
-    using System;
     using NUnit.Framework;
-    using SuperMassive.Extensions;
-    using UnitTestHelpers;
 
     public class RegexHelperTest
     {

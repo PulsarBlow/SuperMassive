@@ -4,14 +4,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using NUnit.Framework;
-    using UnitTestHelpers;
 
     public class AscendingSortedGuidTest
     {
         [Test]
         public void AscendingSortedGuid_CreateNewSortedGuid_Returns_New_AscendingSortedGuid()
         {
-            AscendingSortedGuid idAsc = AscendingSortedGuid.NewSortedGuid();
+            var idAsc = AscendingSortedGuid.NewSortedGuid();
             Assert.IsNotNull(idAsc);
             Assert.IsFalse(string.IsNullOrWhiteSpace(idAsc.ToString()));
         }
@@ -19,8 +18,7 @@
         [Test]
         public void AscendingSortedGuid_TryParse_WithValid_AscendingSortedGuid_Returns_True()
         {
-            AscendingSortedGuid guid;
-            Assert.IsTrue(AscendingSortedGuid.TryParse("0635318522499400050_B77AD6F9624A4C2896E8545923E56502", out guid));
+            Assert.IsTrue(AscendingSortedGuid.TryParse("0635318522499400050_B77AD6F9624A4C2896E8545923E56502", out var guid));
             Assert.AreEqual("0635318522499400050_b77ad6f9624a4c2896e8545923e56502", guid.ToString());
         }
 
@@ -37,8 +35,8 @@
         [Test]
         public void AscendingSortedGuid_Parse_With_ValidFormat_Returns_ParsedItem()
         {
-            AscendingSortedGuid expected = AscendingSortedGuid.NewSortedGuid();
-            AscendingSortedGuid actual = AscendingSortedGuid.Parse(expected.ToString());
+            var expected = AscendingSortedGuid.NewSortedGuid();
+            var actual = AscendingSortedGuid.Parse(expected.ToString());
 
             AssertCompare(expected, actual);
         }
@@ -63,7 +61,7 @@
         public void AscendingSortedGuid_LexicalOrdering_Ascending_WithSuccess()
         {
             var timestamp = DateTimeOffset.UtcNow;
-            List<AscendingSortedGuid> expected = new List<AscendingSortedGuid>
+            var expected = new List<AscendingSortedGuid>
             {
                 new AscendingSortedGuid(timestamp, Guid.NewGuid()),
                 new AscendingSortedGuid(timestamp.AddMilliseconds(10), Guid.NewGuid()),
@@ -71,11 +69,11 @@
                 new AscendingSortedGuid(timestamp.AddMilliseconds(1000), Guid.NewGuid()),
             };
 
-            List<AscendingSortedGuid> actual = expected.OrderBy(x => x.ToString()).ToList();
-            CommonComparers.AreCollectionEquals(expected, actual, AssertCompare);
+            var actual = expected.OrderBy(x => x.ToString()).ToList();
+            Assert.That(actual, Is.EqualTo(expected));
 
             actual = expected.OrderBy(x => x).ToList();
-            CommonComparers.AreCollectionEquals(expected, actual, AssertCompare);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]

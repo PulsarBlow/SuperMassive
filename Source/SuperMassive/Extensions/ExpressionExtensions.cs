@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// Provides extensions methods for the <see cref="Expression"/> type.

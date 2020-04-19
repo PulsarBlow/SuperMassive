@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="../../../props/common.props" />
 
@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\SuperMassive\SuperMassive.csproj" />
-    <ProjectReference Include="..\SuperMassive.UnitTestHelpers\SuperMassive.UnitTestHelpers.csproj" />
   </ItemGroup>
 
 </Project>

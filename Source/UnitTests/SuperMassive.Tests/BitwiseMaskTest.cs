@@ -1,6 +1,5 @@
 ﻿namespace SuperMassive.Tests
 {
-    using System;
     using NUnit.Framework;
 
     public class BitwiseMaskTest
