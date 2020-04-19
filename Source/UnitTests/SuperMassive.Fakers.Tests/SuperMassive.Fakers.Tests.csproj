@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="$(CoverletCollectorVersion)"/>
     <PackageReference Include="nunit" Version="$(NUnitVersion)" />
     <PackageReference Include="NUnit3TestAdapter" Version="$(NUnitTestAdapterVersion)" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(TestSdkVersion)" />
