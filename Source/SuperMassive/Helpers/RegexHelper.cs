@@ -6,6 +6,11 @@
     /// <summary>
     /// Provides regex utilities
     /// </summary>
+    // TODO: RegexHelper should be renamed to something like ValidationHelper
+    // because some regex pattern should be removed in place of native implementations
+    // eg. Guid using native TryParse
+    // eg. Url using Url native type
+    // etc..
     public static class RegexHelper
     {
         /// <summary>
@@ -27,12 +32,14 @@
         /// Email Regex pattern
         /// </summary>
         /// <remarks>As per HTML5 specification : http://www.w3.org/TR/html5/forms.html#valid-e-mail-address</remarks>
-        public const string EmailPattern = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+        public const string EmailPattern =
+            @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
 
         /// <summary>
         /// Url Regex pattern
         /// </summary>
-        public const string UrlPattern = @"^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?$";
+        public const string UrlPattern =
+            @"^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?$";
 
         /// <summary>
         /// Valid pattern for a Azure Table container name
@@ -56,10 +63,11 @@
         public const string SortedGuidPattern = @"^[0-9]{19}_[A-F0-9]{32}$";
 
         /// <summary>
-        /// Valid pattern for a Semantic Versioning 2.0.0 value
+        /// Valid pattern for a Semantic Version 2.0.0 value
         /// http://semver.org/
         /// </summary>
-        public const string SemverPattern = @"^(?'MAJOR'(?:0|(?:[1-9]\d*)))\.(?'MINOR'(?:0|(?:[1-9]\d*)))\.(?'PATCH'(?:0|(?:[1-9]\d*)))(?:-(?'prerelease'[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*))?(?:\+(?'build'[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*))?$";
+        public const string SemverPattern =
+            @"^(?'MAJOR'(?:0|(?:[1-9]\d*)))\.(?'MINOR'(?:0|(?:[1-9]\d*)))\.(?'PATCH'(?:0|(?:[1-9]\d*)))(?:-(?'prerelease'[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*))?(?:\+(?'build'[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*))?$";
 
         /// <summary>
         /// Returns true if the given value is an SHA-256 hash
@@ -106,6 +114,7 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
+        // TODO: Should support http://localhost which is a valid url
         public static bool IsUrl(string value)
         {
             return IsPatternMatch(value, UrlPattern);
@@ -116,17 +125,15 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
+        // TODO: Deprecate IsTableContainerNameValid to remove Azure concerns
         public static bool IsTableContainerNameValid(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return false;
 
-            if (value.Equals("$root"))
-            {
-                return true;
-            }
-
-            return IsPatternMatch(value, TableContainerNamePattern, RegexOptions.Compiled);
+            return
+                value.Equals("$root") ||
+                IsPatternMatch(value, TableContainerNamePattern, RegexOptions.Compiled);
         }
 
         /// <summary>
@@ -134,12 +141,12 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
+        // TODO: Deprecate IsBlobContainerNameValid to remove Azure concerns
         public static bool IsBlobContainerNameValid(string value)
         {
-            if (string.IsNullOrWhiteSpace(value))
-                return false;
-
-            return IsPatternMatch(value, BlobContainerNamePattern, RegexOptions.Compiled);
+            return
+                !string.IsNullOrWhiteSpace(value) &&
+                IsPatternMatch(value, BlobContainerNamePattern, RegexOptions.Compiled);
         }
 
         /// <summary>

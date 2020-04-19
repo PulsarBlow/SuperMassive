@@ -60,21 +60,6 @@ namespace SuperMassive.Cryptography
             return hashBuffer;
         }
 
-        public static uint Compute(byte[] buffer)
-        {
-            return Compute(DefaultSeed, buffer);
-        }
-
-        public static uint Compute(uint seed, byte[] buffer)
-        {
-            return Compute(DefaultPolynomial, seed, buffer);
-        }
-
-        public static uint Compute(uint polynomial, uint seed, byte[] buffer)
-        {
-            return ~CalculateHash(InitializeTable(polynomial), seed, buffer, 0, buffer.Length);
-        }
-
         private static uint[] InitializeTable(uint polynomial)
         {
             if (polynomial == DefaultPolynomial && _defaultTable != null)

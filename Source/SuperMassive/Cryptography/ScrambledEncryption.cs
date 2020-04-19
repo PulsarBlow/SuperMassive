@@ -39,19 +39,15 @@
             var fudgeFactor = ConvertKey(_key);
 
             source = source.PadRight(minLength);
-            StringBuilder target = new StringBuilder(minLength);
+            var target = new StringBuilder(minLength);
             var factor2 = 0F;
 
-            for (int i = 0; i < source.Length; i++)
+            foreach (var @char in source)
             {
-                char c1 = source[i];
-                var num1 = _scramble1.IndexOf(c1);
+                var num1 = _scramble1.IndexOf(@char);
                 if (num1 == -1)
                 {
-                    throw new InvalidOperationException(
-                        string.Format(
-                            CultureInfo.InvariantCulture,
-                            "Source string contains an invalid character ({0})", c1));
+                    throw new InvalidOperationException($"Source string contains an invalid character ({@char})");
                 }
 
                 var adj = ApplyFudgeFactor(fudgeFactor);
@@ -79,10 +75,9 @@
             var target = new StringBuilder();
             var factor2 = 0F;
 
-            for (int i = 0; i < source.Length; i++)
+            foreach (var @char in source)
             {
-                char c2 = source[i];
-                int num2 = _scramble2.IndexOf(c2);
+                int num2 = _scramble2.IndexOf(@char);
                 if (num2 == -1)
                     return null;
                 var adj = ApplyFudgeFactor(fudgeFactor);
@@ -99,7 +94,7 @@
         private float ApplyFudgeFactor(Queue<float> fudgeFactor)
         {
             var fudge = fudgeFactor.Dequeue();
-            fudge = fudge + _adj;
+            fudge += _adj;
             fudgeFactor.Enqueue(fudge);
             if (_mod != 0 && ((double)fudge % _mod).AlmostEquals(0))
             {
@@ -127,9 +122,9 @@
         {
             Guard.ArgumentNotNullOrEmpty(key, "key");
 
-            Queue<float> result = new Queue<float>();
+            var result = new Queue<float>();
             result.Enqueue(key.Length); // first entry in array is length of key
-            int tot = 0;
+            var total = 0;
             foreach (var c in key)
             {
                 int pos = _scramble1.IndexOf(c);
@@ -137,9 +132,9 @@
                     throw new InvalidOperationException($"Key contains an invalid character ({c})");
 
                 result.Enqueue(pos);
-                tot += pos;
+                total += pos;
             }
-            result.Enqueue(tot); // last entry in array is computed total
+            result.Enqueue(total); // last entry in array is computed total
             return result;
         }
     }

@@ -1,4 +1,4 @@
-namespace SuperMassive
+﻿namespace SuperMassive
 {
     using System;
     using System.Globalization;
@@ -143,7 +143,11 @@ namespace SuperMassive
         /// <example>StringHelper.CollapseWhiteSpaces("  String value"); // " String value"</example>
         public static string CollapseWhiteSpaces(string value)
         {
-            if (string.IsNullOrEmpty(value)) { return value; }
+            if (value == string.Empty)
+            {
+                return string.Empty;
+            }
+
             var reg = new Regex(@" {2,}", RegexOptions.Compiled);
             return reg.Replace(value, " ");
         }
