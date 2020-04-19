@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Threading;
     using NUnit.Framework;
-    using SuperMassive.UnitTestHelpers;
+    using UnitTestHelpers;
 
     public class DescendingSortedGuidTest
     {

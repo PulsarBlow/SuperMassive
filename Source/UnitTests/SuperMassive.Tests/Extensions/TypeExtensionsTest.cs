@@ -6,14 +6,6 @@
 
     public class TypeExtensionsTest
     {
-        [Test]
-        public void TypeExtensions_IsNullable_With_Null_Argument_Returns_False()
-        {
-            var type = typeof(int?);
-            type = null;
-            Assert.IsFalse(type.IsNullable());
-        }
-
         [TestCase(typeof(string))]
         [TestCase(typeof(int))]
         [TestCase(typeof(long))]

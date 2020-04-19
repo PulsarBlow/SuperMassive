@@ -24,6 +24,7 @@
         {
             return new DateTime(date.Ticks - date.Ticks % roundTicks, date.Kind);
         }
+
         /// <summary>
         /// Round a date up to midpoint.
         /// </summary>
@@ -36,6 +37,7 @@
             long midpoint = ((span.Ticks + 1) >> 1);
             return date.AddTicks(midpoint - ((date.Ticks + midpoint) % span.Ticks));
         }
+
         /// <summary>
         /// Floor a date
         /// </summary>
@@ -47,6 +49,7 @@
         {
             return date.AddTicks(-(date.Ticks % span.Ticks));
         }
+
         /// <summary>
         /// Ceil a date
         /// </summary>
@@ -58,6 +61,7 @@
         {
             return date.AddTicks(span.Ticks - (date.Ticks % span.Ticks));
         }
+
         /// <summary>
         /// Get UnixTimeStamp
         /// </summary>

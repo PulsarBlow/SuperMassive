@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  
+
   <Import Project="../../../props/common.props" />
-  
+
   <PropertyGroup>
     <IsPackable>false</IsPackable>
   </PropertyGroup>

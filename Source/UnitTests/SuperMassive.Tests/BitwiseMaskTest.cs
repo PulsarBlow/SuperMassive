@@ -1,45 +1,100 @@
-﻿using NUnit.Framework;
-
-namespace SuperMassive.Tests
+﻿namespace SuperMassive.Tests
 {
+    using System;
+    using NUnit.Framework;
+
     public class BitwiseMaskTest
     {
         [Test]
-        public void Has()
+        public void Has_Returns_True()
         {
-            short valueAsShort = 4;
-            int valueAsInt = 4;
-            long valueAsLong = 4;
+            var mask = new BitwiseMask(short.MaxValue);
+            Assert.That(mask.Has(short.MaxValue), Is.True);
 
-            BitwiseMask flag = new BitwiseMask(valueAsShort);
-            Assert.IsTrue(flag.Has(valueAsShort));
-            flag.Remove(valueAsShort);
-            Assert.IsFalse(flag.Has(valueAsShort));
+            mask = new BitwiseMask(int.MaxValue);
+            Assert.That(mask.Has(int.MaxValue), Is.True);
 
-            flag = new BitwiseMask(valueAsInt);
-            Assert.IsTrue(flag.Has(valueAsInt));
-            flag.Remove(valueAsInt);
-            Assert.IsFalse(flag.Has(valueAsInt));
+            mask = new BitwiseMask(long.MaxValue);
+            Assert.That(mask.Has(long.MaxValue), Is.True);
+        }
 
-            flag = new BitwiseMask(valueAsLong);
-            Assert.IsTrue(flag.Has(valueAsLong));
-            flag.Remove(valueAsLong);
-            Assert.IsFalse(flag.Has(valueAsLong));
+        [Test]
+        public void Has_Returns_False()
+        {
+            var mask = new BitwiseMask();
+            Assert.That(mask.Has(short.MaxValue), Is.False);
+            Assert.That(mask.Has(int.MaxValue), Is.False);
+            Assert.That(mask.Has(long.MaxValue), Is.False);
+        }
 
-            flag = new BitwiseMask(4);
-            Assert.IsFalse(flag.IsEmpty());
-            flag.Remove(4);
-            Assert.IsTrue(flag.IsEmpty());
-            flag.Add(8).Add(16).Add(32);
-            Assert.IsTrue(flag.Has(8));
-            Assert.IsTrue(flag.Has(32));
-            flag.Remove(32);
-            Assert.IsFalse(flag.Has(32));
+        [Test]
+        public void Is_Returns_True()
+        {
+            var mask = new BitwiseMask(short.MaxValue);
+            Assert.That(mask.Is(short.MaxValue), Is.True);
 
-            flag = new BitwiseMask();
-            flag.Add(4).Add(8).Add(16);
-            Assert.IsTrue(flag.Is((4 | 8 | 16)));
-            Assert.IsFalse(flag.Is(256));
+            mask = new BitwiseMask(int.MaxValue);
+            Assert.That(mask.Is(int.MaxValue), Is.True);
+
+            mask = new BitwiseMask(long.MaxValue);
+            Assert.That(mask.Is(long.MaxValue), Is.True);
+        }
+
+        [Test]
+        public void Is_Returns_False()
+        {
+            var mask = new BitwiseMask();
+            Assert.That(mask.Is(short.MaxValue), Is.False);
+            Assert.That(mask.Is(int.MaxValue), Is.False);
+            Assert.That(mask.Is(long.MaxValue), Is.False);
+        }
+
+        [Test]
+        public void Add_Adds()
+        {
+            var mask = new BitwiseMask((short)1);
+            mask.Add((short) 2);
+            Assert.That(mask.Is((short)3), Is.True);
+
+            mask = new BitwiseMask(1);
+            mask.Add(2);
+            Assert.That(mask.Is(3), Is.True);
+
+            mask = new BitwiseMask((long) 1);
+            mask.Add((long) 2);
+            Assert.That(mask.Is((long) 3), Is.True);
+        }
+
+        [Test]
+        public void Remove_Removes()
+        {
+            var mask = new BitwiseMask((short) 3);
+            mask.Remove((short) 1);
+            Assert.That(mask.Is((short) 2), Is.True);
+
+            mask = new BitwiseMask(3);
+            mask.Remove(1);
+            Assert.That(mask.Is(2), Is.True);
+
+            mask = new BitwiseMask((long) 3);
+            mask.Remove((long) 1);
+            Assert.That(mask.Is((long) 2), Is.True);
+        }
+
+        [Test]
+        public void Is_Empty_Returns_True_When_Empty()
+        {
+            var mask = new BitwiseMask();
+            Assert.That(mask.IsEmpty(), Is.True);
+        }
+
+        [Test]
+        public void Reset_Resets()
+        {
+            var mask = new BitwiseMask(1);
+            mask.Reset();
+
+            Assert.That(mask.IsEmpty, Is.True);
         }
     }
 }
