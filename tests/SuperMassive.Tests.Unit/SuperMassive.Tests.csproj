@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../../props/common.props" />
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>SuperMassive.Tests.Unit</AssemblyName>
+    <RootNamespace>SuperMassive.Tests.Unit</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="$(CoverletCollectorVersion)" />
+    <PackageReference Include="nunit" Version="$(NUnitVersion)" />
+    <PackageReference Include="NUnit3TestAdapter" Version="$(NUnitTestAdapterVersion)" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(TestSdkVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/SuperMassive/SuperMassive.csproj">
+      <Project>{6e00c548-906c-463c-99e6-ac2e2996168d}</Project>
+      <Name>SuperMassive</Name>
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>

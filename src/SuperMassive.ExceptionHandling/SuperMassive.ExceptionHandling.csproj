@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../../props/common.props"/>
+  <Import Project="../../props/package.props"/>
+
+  <PropertyGroup>
+    <Title>Your supermassive swiss army knife</Title>
+    <Summary>SuperMassive Exception Handling. Handle your application exceptions like a pro.</Summary>
+    <PackageTags>supermassive;exception;hanling;exceptionhandling;errors;abstraction</PackageTags>
+    <PackageReleaseNotes />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

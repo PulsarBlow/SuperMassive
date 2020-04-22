@@ -1,0 +1,17 @@
+<Project>
+
+  <PropertyGroup>
+    <Authors>Alain Mereaux (PulsarBlow)</Authors>
+    <Company>pulsarblow.dev</Company>
+    <Copyright>© 2015 Alain Mereaux</Copyright>
+    <Description>SuperMassive is a small condensed framework of reusable .NET components and utility classes. It's your supermassive .NET swiss army knife.</Description>
+    <PackageLicenseUrl>https://raw.github.com/PulsarBlow/SuperMassive/master/LICENCE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/PulsarBlow/SuperMassive</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/PulsarBlow/SuperMassive/master/supermassive.png</PackageIconUrl>
+    <RepositoryUrl>https://raw.githubusercontent.com/PulsarBlow/SuperMassive</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+</Project>

@@ -4,44 +4,49 @@
 
 ![SuperMassive Logo](https://github.com/PulsarBlow/SuperMassive/blob/master/supermassive.png)
 
-SuperMassive is a small condensed framework of reusable .NET components and utility classes.
+SuperMassive is a small condensed libraries of reusable .NET components and utility classes.
 
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/PulsarBlow/SuperMassive?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-## SonarQube
-The repository code quality is monitored with SonarQube :  
-https://sonarqube.com/dashboard?id=SuperMassive
-
-### Projects descriptions
+## Libraries
 
 * **SuperMassive** : Core features - SuperMassive swiss army knife!
-* **SuperMassive.ExceptionHandling** : Exception handling as it should be. 
+* **SuperMassive.ExceptionHandling** : Exception handling as it should be.
 * **SuperMassive.ExceptionHandling.Logging** : Exception handling with logging features.
 * **SuperMassive.Fakers** : A suit of data fakers to feed your hungry unit tests with "almost" real data.
 * **SuperMassive.Logging** : A set of abstract and base logging components
 * **SuperMassive.Logging.AzureTable** : A concrete implementation of the logging facade for Azure Table
 
 
-### Installation
+## Use them
 
-Pick the features you want by installing the corresponding NuGet package :
+These library are published as nuget packages on [nuget.org](https://www.nuget.org/packages?q=supermassive)
 
-
-```Ìnstall-Package SuperMassive```  
-```Ìnstall-Package SuperMassive.ExceptionHandling```
-```Ìnstall-Package SuperMassive.ExceptionHandling.Logging```
-```Ìnstall-Package SuperMassive.Fakers```  
-```Ìnstall-Package SuperMassive.Logging``` 
-```Ìnstall-Package SuperMassive.Logging.AzureTable``` 
-etc..
-
-If you want the prerelease nugets, dont forget to select *Include prerelease* in the nuget manager window or add ```-Pre``` to your Install Package command.
-
-### Build & Tests
-
-Just download the sources and run the test with Visual Studio Test Explorer.
+Pick what you want, eg. :
 
 
-#### Licence
+```bash
+$ dotnet add SuperMassive
+```
+
+## Inspect or contribute
+
+You need to install [.NET Core SDK 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1).
+
+```bash
+# clone
+$ git clone https://github.com/PulsarBlow/SuperMassive
+
+# build
+$ dotnet build
+
+# test
+$ dotnet test
+
+# test with coverage
+$ dotnet test --collect:"XPlat Code Coverage" --settings ./build/coverlet.runsettings -v m -r .build/
+```
+
+Test coverge results are collected using [Coverlet](https://github.com/tonerdo/coverlet) and written in the `.build` directory using *Cobertura* format
+
+## Licence
 
 http://opensource.org/licenses/MIT

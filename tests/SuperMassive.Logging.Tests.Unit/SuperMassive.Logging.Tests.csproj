@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <Import Project="../../props/common.props" />
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>SuperMassive.Logging.Tests.Unit</AssemblyName>
+    <RootNamespace>SuperMassive.Logging.Tests.Unit</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="$(CoverletCollectorVersion)" />
+    <PackageReference Include="nunit" Version="$(NUnitVersion)" />
+    <PackageReference Include="NUnit3TestAdapter" Version="$(NUnitTestAdapterVersion)" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(TestSdkVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/SuperMassive.Logging/SuperMassive.Logging.csproj" />
+  </ItemGroup>
+</Project>
