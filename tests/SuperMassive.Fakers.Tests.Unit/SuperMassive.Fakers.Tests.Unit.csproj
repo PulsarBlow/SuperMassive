@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../props/common.props" />
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>SuperMassive.Fakers.Tests.Unit</AssemblyName>
+    <RootNamespace>SuperMassive.Fakers.Tests.Units</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="$(CoverletCollectorVersion)" />
+    <PackageReference Include="nunit" Version="$(NUnitVersion)" />
+    <PackageReference Include="NUnit3TestAdapter" Version="$(NUnitTestAdapterVersion)" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(TestSdkVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/SuperMassive.Fakers/SuperMassive.Fakers.csproj" />
+  </ItemGroup>
+</Project>
