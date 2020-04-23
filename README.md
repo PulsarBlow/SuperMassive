@@ -6,22 +6,22 @@
 
 SuperMassive is a small condensed libraries of reusable .NET components and utility classes.
 
+> You are reading v2.x documentation. Looking for [v1.x documentation](https://github.com/PulsarBlow/SuperMassive/blob/master/doc/v1/README.md) ?
+
 ## Libraries
 
-* **SuperMassive** : Core features - SuperMassive swiss army knife!
-* **SuperMassive.ExceptionHandling** : Exception handling as it should be.
-* **SuperMassive.ExceptionHandling.Logging** : Exception handling with logging features.
-* **SuperMassive.Fakers** : A suit of data fakers to feed your hungry unit tests with "almost" real data.
-* **SuperMassive.Logging** : A set of abstract and base logging components
-* **SuperMassive.Logging.AzureTable** : A concrete implementation of the logging facade for Azure Table
-
+*  **SuperMassive** : Core features - SuperMassive swiss army knife!
+*  **SuperMassive.ExceptionHandling** : Exception handling as it should be.
+*  **SuperMassive.ExceptionHandling.Logging** : Exception handling with logging features.
+*  **SuperMassive.Fakers** : A suit of data fakers to feed your hungry unit tests with "almost" real data.
+*  **SuperMassive.Logging** : A set of abstract and base logging components
+*  **SuperMassive.Logging.AzureTable** : A concrete implementation of the logging facade for Azure Table
 
 ## Use them
 
 These library are published as nuget packages on [nuget.org](https://www.nuget.org/packages?q=supermassive)
 
 Pick what you want, eg. :
-
 
 ```bash
 $ dotnet add SuperMassive
@@ -49,4 +49,4 @@ Test coverge results are collected using [Coverlet](https://github.com/tonerdo/c
 
 ## Licence
 
-http://opensource.org/licenses/MIT
+<http://opensource.org/licenses/MIT>

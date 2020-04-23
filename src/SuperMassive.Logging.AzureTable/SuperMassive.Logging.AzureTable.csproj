@@ -5,9 +5,13 @@
 
   <PropertyGroup>
     <Title>Your supermassive swiss army knife</Title>
-    <PackageTags>supermassive;logging;trace;azure;cloudtable</PackageTags>
-    <PackageReleaseNotes />
     <Summary>SuperMassive logging to Microsoft Azure Table Storage. Concrete logging implementation.</Summary>
+    <PackageTags>supermassive;logging;trace;azure;cloudtable</PackageTags>
+    <PackageReleaseNotes>
+v2.0: .NET Core 3.1
+  * Migrate library to .NET Core 3.1
+  * Refactoring and clean up
+    </PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="WindowsAzure.Storage" Version="8.1.1" />

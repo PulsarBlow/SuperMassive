@@ -7,7 +7,11 @@
     <Title>Your supermassive swiss army knife</Title>
     <Summary>SuperMassive fake data generators. Feed your hungry tests with real looking data.</Summary>
     <PackageTags>supermassive;faker;data;generator;testing;testdata</PackageTags>
-    <PackageReleaseNotes/>
+    <PackageReleaseNotes>
+v2.0: .NET Core 3.1
+  * Migrate library to .NET Core 3.1
+  * Refactoring and clean up
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
