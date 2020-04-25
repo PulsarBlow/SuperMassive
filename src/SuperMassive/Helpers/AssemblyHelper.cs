@@ -1,6 +1,5 @@
 ﻿namespace SuperMassive
 {
-    using System.Diagnostics;
     using System.Reflection;
 
     /// <summary>
@@ -9,23 +8,45 @@
     public static class AssemblyHelper
     {
         /// <summary>
+        /// Returns the file version of the executing assembly
+        /// </summary>
+        /// <returns>The file version of the executing assembly</returns>
+        public static string? GetFileVersion()
+        {
+            return GetFileVersion(typeof(AssemblyHelper).Assembly);
+        }
+
+        /// <summary>
+        /// Returns the file version of a given assembly
+        /// </summary>
+        /// <param name="assembly">Assembly used to get the file version</param>
+        /// <returns>The file version of the assembly</returns>
+        public static string? GetFileVersion(Assembly assembly)
+        {
+            return assembly
+                .GetCustomAttribute<AssemblyFileVersionAttribute>()?
+                .Version;
+        }
+
+        /// <summary>
         /// Returns the informational version of the executing assembly.
         /// </summary>
-        /// <returns></returns>
-        public static string GetInformationalVersion()
+        /// <returns>The informational version of the assembly</returns>
+        public static string? GetInformationalVersion()
         {
-            return FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
+            return GetInformationalVersion(typeof(AssemblyHelper).Assembly);
         }
 
         /// <summary>
         /// Returns the informational version of the given assembly.
         /// </summary>
-        /// <param name="assembly"></param>
-        /// <returns></returns>
-        // TODO: Fix Informational Version. Should comes from Assembly attributes
-        public static string GetInformationalVersion(Assembly assembly)
+        /// <param name="assembly">Assembly used to get the informational version</param>
+        /// <returns>The informational version of the assembly</returns>
+        public static string? GetInformationalVersion(Assembly assembly)
         {
-            return FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
+            return assembly
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+                .InformationalVersion;
         }
     }
 }
