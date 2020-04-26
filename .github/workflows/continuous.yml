@@ -9,8 +9,10 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.os }}
+    strategy:
+        matrix:
+            os: [ubuntu-latest, windows-latest, macOS-latest]
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
@@ -19,7 +21,7 @@ jobs:
         dotnet-version: 3.1.201
     - name: Install dependencies
       run: dotnet restore
-    - name: Build
+    - name: Build release
       run: dotnet build --configuration Release --no-restore
     - name: Test & Coverage
       run: dotnet test --no-restore --collect:"XPlat Code Coverage" --settings ./build/coverlet.runsettings -v n -r .build/
