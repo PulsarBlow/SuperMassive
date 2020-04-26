@@ -4,8 +4,8 @@
   <Import Project="../../props/package.props" />
 
   <PropertyGroup>
-    <Title>Your supermassive swiss army knife</Title>
-    <Summary>SuperMassive logging to Microsoft Azure Table Storage. Concrete logging implementation.</Summary>
+    <Title>SuperMassive.Logging.AzureTable</Title>
+    <Summary>SuperMassive logging to Microsoft Azure Table Storage. Concrete logging implementation of SuperMassive.Logging</Summary>
     <PackageTags>supermassive;logging;trace;azure;cloudtable</PackageTags>
     <PackageReleaseNotes>
 v2.0: .NET Core 3.1

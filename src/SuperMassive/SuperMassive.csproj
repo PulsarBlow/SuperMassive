@@ -5,8 +5,8 @@
 
   <PropertyGroup>
     <Nullable>enable</Nullable>
-    <Title>Your supermassive swiss army knife</Title>
-    <Summary>SuperMassive Core features. Stripped to their bare minimum.</Summary>
+    <Title>SuperMassive</Title>
+    <Summary>A small condensed set of reusable .NET components and utility classes</Summary>
     <PackageTags>supermassive;helpers;extensions;converters;crypto</PackageTags>
     <PackageReleaseNotes>
 v2.0: .NET Core 3.1
