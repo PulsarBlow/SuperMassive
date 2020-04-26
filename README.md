@@ -6,7 +6,7 @@
 
 SuperMassive is a small condensed set of reusable .NET components and utility classes.
 
-> This README is for SuperMassive v2.x (the current version). For SuperMassive v1.x, see [here](https://github.com/PulsarBlow/SuperMassive/blob/master/doc/v1/README.md).
+> This README is for SuperMassive v2.x (the current version). For SuperMassive v1.x, see [here](docs/v1/README.md).
 
 > Starting with v2.x, some library are now :small_orange_diamond:*deprecated*:small_orange_diamond:
 > They won't receive new features anymore and will be removed in a future version.
