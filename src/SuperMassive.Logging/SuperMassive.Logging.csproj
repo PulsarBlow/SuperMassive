@@ -2,9 +2,9 @@
   <Import Project="../../props/common.props" />
   <Import Project="../../props/package.props" />
   <PropertyGroup>
-    <Title>Your supermassive swiss army knife</Title>
-    <Summary>SuperMassive logging abstractions. A solid foundation on which to build your logging infrastructure.</Summary>
-    <PackageTags>SuperMassive Logging Abstraction TraceListener Formatter</PackageTags>
+    <Title>SuperMassive.Logging</Title>
+    <Summary>SuperMassive logging abstractions. A solid foundation for your logging infrastructure.</Summary>
+    <PackageTags>supermassive;logging;abstraction;tracelistener;formatter</PackageTags>
     <PackageReleaseNotes>
 v2.0: .NET Core 3.1
   * Migrate library to .NET Core 3.1

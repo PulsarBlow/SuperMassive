@@ -4,8 +4,8 @@
   <Import Project="../../props/package.props"/>
 
   <PropertyGroup>
-    <Title>Your supermassive swiss army knife</Title>
-    <Summary>SuperMassive Exception Handling. Handle your application exceptions like a pro.</Summary>
+    <Title>SuperMassive.ExceptionHandling</Title>
+    <Summary>SuperMassive exception handling. Exception handling as it should be</Summary>
     <PackageTags>supermassive;exception;hanling;exceptionhandling;errors;abstraction</PackageTags>
     <PackageReleaseNotes>
 v2.0: .NET Core 3.1

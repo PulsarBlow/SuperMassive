@@ -4,7 +4,7 @@
   <Import Project="../../props/package.props"/>
 
   <PropertyGroup>
-    <Title>Your supermassive swiss army knife</Title>
+    <Title>SuperMassive.Fakers</Title>
     <Summary>SuperMassive fake data generators. Feed your hungry tests with real looking data.</Summary>
     <PackageTags>supermassive;faker;data;generator;testing;testdata</PackageTags>
     <PackageReleaseNotes>

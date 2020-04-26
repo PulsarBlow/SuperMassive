@@ -4,8 +4,8 @@
   <Import Project="../../props/package.props"/>
 
   <PropertyGroup>
-    <Title>Your supermassive swiss army knife</Title>
-    <Summary>SuperMassive exception handling with logging. Plug logging features to your exception handling pipeline.</Summary>
+    <Title>SuperMassive.ExceptionHandling.Logging</Title>
+    <Summary>SuperMassive exception handling with logging. Add logging to your exception handling pipeline.</Summary>
     <PackageTags>supermassive;exception;handling;exceptionhandling;logging</PackageTags>
     <PackageReleaseNotes>
 v2.0: .NET Core 3.1
