@@ -289,9 +289,9 @@
             Assert.That(actual, Is.EqualTo(expected));
         }
 
-        private class TestCases
+        private static class TestCases
         {
-            public static object[] Md5 =
+            public static readonly object[] Md5 =
             {
                 new object[] { null, null },
                 new object[] { string.Empty, "d41d8cd98f00b204e9800998ecf8427e" },
@@ -299,13 +299,13 @@
                 new object[] { "SuperMassive", "cad0d67d052f61ad42b0010983663a45" },
             };
 
-            public static object[] Md5File =
+            public static readonly object[] Md5File =
             {
                 new object[] { "SuperMassive", "cad0d67d052f61ad42b0010983663a45", false },
                 new object[] { "SuperMassive", "ytDWfQUvYa1CsAEJg2Y6RQ==", true },
             };
 
-            public static object[] Sha1 =
+            public static readonly object[] Sha1 =
             {
                 new object[] { null, null },
                 new object[] { string.Empty, "da39a3ee5e6b4b0d3255bfef95601890afd80709" },
@@ -313,13 +313,13 @@
                 new object[] { "SuperMassive", "ba3fff6f7041385c8b75901f421e5c2db081ebea" },
             };
 
-            public static object[] Sha1File =
+            public static readonly object[] Sha1File =
             {
                 new object[] { "SuperMassive", "ba3fff6f7041385c8b75901f421e5c2db081ebea", false },
                 new object[] { "SuperMassive", "uj//b3BBOFyLdZAfQh5cLbCB6+o=", true },
             };
 
-            public static object[] Sha256 =
+            public static readonly object[] Sha256 =
             {
                 new object[] { null, null },
                 new object[] { string.Empty, "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" },
@@ -327,14 +327,14 @@
                 new object[] { "SuperMassive", "9296c1a118328aad1201f1dcfead4d5aeb84580fae41157afacc4367f3e8b3d9" },
             };
 
-            public static object[] Sha256File =
+            public static readonly object[] Sha256File =
             {
                 new object[]
                     { "SuperMassive", "9296c1a118328aad1201f1dcfead4d5aeb84580fae41157afacc4367f3e8b3d9", false },
                 new object[] { "SuperMassive", "kpbBoRgyiq0SAfHc/q1NWuuEWA+uQRV6+sxDZ/Pos9k=", true },
             };
 
-            public static object[] Crc32 =
+            public static readonly object[] Crc32 =
             {
                 new object[] { null, null },
                 new object[] { string.Empty, "00000000" },
@@ -342,13 +342,13 @@
                 new object[] { "SuperMassive", "93ba819f" },
             };
 
-            public static object[] Crc32File =
+            public static readonly object[] Crc32File =
             {
                 new object[] { "SuperMassive", "93ba819f", false },
                 new object[] { "SuperMassive", "k7qBnw==", true },
             };
 
-            public static object[] Crc16 =
+            public static readonly object[] Crc16 =
             {
                 new object[] { null, null },
                 new object[] { string.Empty, "0000" },
@@ -356,7 +356,7 @@
                 new object[] { "SuperMassive", "184b" },
             };
 
-            public static object[] ByteToHex =
+            public static readonly object[] ByteToHex =
             {
                 new object[] { null, null },
                 new object[] { Encoding.UTF8.GetBytes(string.Empty), string.Empty },
@@ -364,7 +364,7 @@
                 new object[] { Encoding.UTF8.GetBytes("SuperMassive"), "53757065724d617373697665" },
             };
 
-            public static object[] Base64 =
+            public static readonly object[] Base64 =
             {
                 new object[] { null, null },
                 new object[] { string.Empty, string.Empty },
