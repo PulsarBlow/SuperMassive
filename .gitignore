@@ -418,3 +418,5 @@ MigrationBackup/
 
 # SuperMassive
 .build/
+.sonar
+.sonarqube
