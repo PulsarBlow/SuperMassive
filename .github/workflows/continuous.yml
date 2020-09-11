@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-
+    name: Build
     runs-on: ${{ matrix.os }}
     strategy:
         matrix:
@@ -25,3 +25,34 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test & Coverage
       run: dotnet test --no-restore --collect:"XPlat Code Coverage" --settings ./build/coverlet.runsettings -v n -r .build/
+  sonar-analysis:
+    name: Sonar Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache SonarCloud scanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v1
+        with:
+          path: ./.sonar/scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
+      - name: Install SonarCloud scanner
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        run: |
+          dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          ./build/code-analysis.sh
+

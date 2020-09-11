@@ -1,11 +1,10 @@
 <Project>
 
   <PropertyGroup Label="Package Versions">
-    <CoverletMsBuildVersion>2.7.0</CoverletMsBuildVersion>
+    <CoverletMsBuildVersion>2.9.0</CoverletMsBuildVersion>
     <TestSdkVersion>16.5.0</TestSdkVersion>
     <NUnitVersion>3.12.0</NUnitVersion>
     <NUnitTestAdapterVersion>3.16.1</NUnitTestAdapterVersion>
-    <CoverletCollectorVersion>1.2.1</CoverletCollectorVersion>
   </PropertyGroup>
 
 </Project>
