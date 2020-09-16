@@ -19,14 +19,11 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.201
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build release
-      run: dotnet build --configuration Release --no-restore
-    - name: Test & Coverage
-      run: dotnet test --no-restore --collect:"XPlat Code Coverage" --settings ./build/coverlet.runsettings -v n -r .build/
+    - name: Build Release
+      run: |
+        ./build/build-release.sh
   sonar-analysis:
-    name: Sonar Analysis
+    name: Code analysis
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -49,10 +46,28 @@ jobs:
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
         run: |
           dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
-      - name: Build and analyze
+      - name: Run Sonar analysis
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          ./build/code-analysis.sh
-
+          ./build/sonar-analysis.sh
+      - name: Publish coverage artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-reports
+          path: ./.build/coverage/
+  codacy-coverage:
+    name: Codacy coverage coverage-reports
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: coverage-reports
+          path: ./.build/coverage/
+      - name: Publish coverage to Codacy
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: .build/coverage/coverage.cobertura.xml
