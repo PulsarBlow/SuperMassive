@@ -2,9 +2,6 @@
 SONARQUBE_PROJECTVERSION="$(date +%Y%m%d%H%M%S).$(git rev-parse --short HEAD)"
 echo "SonarQube Project Version=${SONARQUBE_PROJECTVERSION}"
 
-# Update (or install) Scanner
-dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
-
 # Start scanner
 ./.sonar/scanner/dotnet-sonarscanner begin \
     /v:$SONARQUBE_PROJECTVERSION \
