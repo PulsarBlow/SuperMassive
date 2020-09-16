@@ -8,30 +8,16 @@ on:
 
 jobs:
   build:
-    name: Build
-    runs-on: ${{ matrix.os }}
-    strategy:
-        matrix:
-            os: [ubuntu-latest, windows-latest, macOS-latest]
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.201
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build release
-      run: dotnet build --configuration Release --no-restore
-    - name: Test & Coverage
-      run: dotnet test --no-restore --collect:"XPlat Code Coverage" --settings ./build/coverlet.runsettings -v n -r .build/
-  sonar-analysis:
-    name: Sonar Analysis
+    name: Build & run code analysis
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis with Sonar
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.201
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
@@ -48,11 +34,14 @@ jobs:
       - name: Install SonarCloud scanner
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
         run: |
-          dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
-      - name: Build and analyze
+          .build/sonar-install.sh
+      - name: Run Sonar analysis
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          ./build/code-analysis.sh
-
+        run: ./build/sonar-analysis.sh # Start scanner/ build / test / consolidate coverage / end scanner
+      - name: Publish coverage to Codacy
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: .build/coverage/coverage.cobertura.xml # produced by the sonar analysis step
