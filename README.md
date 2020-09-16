@@ -21,6 +21,7 @@ SuperMassive is a small condensed set of reusable .NET components and utility cl
 *  **SuperMassive.Logging.AzureTable** : A concrete implementation of the logging facade for Azure Table. :small_orange_diamond:*deprecated*:small_orange_diamond:
 
 ## Getting Started
+hi
 
 These library are published as nuget packages on [nuget.org](https://www.nuget.org/packages?q=supermassive)
 
