@@ -1,4 +1,4 @@
-[![GitHub version](https://badge.fury.io/gh/PulsarBlow%2Fsupermassive.svg)](https://github.com/PulsarBlow/SuperMassive/releases/latest) [![NuGet Downloads](https://img.shields.io/nuget/dt/SuperMassive.svg)](https://www.nuget.org/packages/supermassive) ![Continuous Integration](https://github.com/PulsarBlow/SuperMassive/workflows/Continuous%20Integration/badge.svg)
+[![GitHub version](https://badge.fury.io/gh/PulsarBlow%2Fsupermassive.svg)](https://github.com/PulsarBlow/SuperMassive/releases/latest) [![NuGet Downloads](https://img.shields.io/nuget/dt/SuperMassive.svg)](https://www.nuget.org/packages/supermassive) ![Continuous Integration](https://github.com/PulsarBlow/SuperMassive/workflows/Continuous%20Integration/badge.svg) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=PulsarBlow_SuperMassive&metric=alert_status)](https://sonarcloud.io/dashboard?id=PulsarBlow_SuperMassive)
 
 ![SuperMassive Logo](https://github.com/PulsarBlow/SuperMassive/blob/master/supermassive.png)
 
